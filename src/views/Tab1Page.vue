@@ -12,8 +12,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <!-- <ExploreContainer name="Tab 1 page" /> -->
-      <v-card text="Some text"></v-card>
+      <ExploreContainer name="Tab 1 page" />
     </ion-content>
   </ion-page>
 </template>
