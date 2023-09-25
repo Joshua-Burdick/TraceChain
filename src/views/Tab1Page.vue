@@ -1,10 +1,10 @@
 <template>
   <ion-page>
-    <ion-header>
+    <!-- <ion-header>
       <ion-toolbar>
         <ion-title>Tab 1</ion-title>
       </ion-toolbar>
-    </ion-header>
+    </ion-header> -->
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
@@ -12,7 +12,8 @@
         </ion-toolbar>
       </ion-header>
 
-      <ExploreContainer name="Tab 1 page" />
+      <!-- <ExploreContainer name="Tab 1 page" /> -->
+      <v-card text="Some text"></v-card>
     </ion-content>
   </ion-page>
 </template>

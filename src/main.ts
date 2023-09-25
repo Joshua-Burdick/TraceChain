@@ -4,6 +4,12 @@ import router from './router';
 
 import { IonicVue } from '@ionic/vue';
 
+// Vuetify
+import 'vuetify/styles'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
 
@@ -23,9 +29,15 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+const vuetify = createVuetify({
+  components,
+  directives,
+})
+
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
+  .use(router)
+  .use(vuetify);
   
 router.isReady().then(() => {
   app.mount('#app');
