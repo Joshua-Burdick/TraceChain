@@ -1,8 +1,8 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Profile</ion-title>
+        <ion-header class="flex items-center justify-center">
+            <ion-toolbar class="flex items-center justify-center">
+                <ion-title class="flex items-center justify-center">Profile</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true">
@@ -18,20 +18,25 @@
                 </ion-img>
             </div> -->
 
+            <!-- Divided the screen into 2 columns, sum of both columns = 100% -->
             <div class="grid grid-cols-10 h-full">
+
+                <!-- 20% of the screen is this column, which holds the menu for a profile -->
                 <div class="col-span-2 flex items-center justify-center">
-                    <ion-list class="w-full">
+                    <ion-list class="w-full bg-transparent">
                         <ion-item class="">
-                            <h1 class="ion-text-wrap">Posts</h1>
+                            <h1 class="ion-text-wrap" style="font-size: 1.5rem;">Posts</h1>
                         </ion-item>
                         <ion-item class="">
-                            <h1 class="ion-text-wrap">Media</h1>
+                            <h1 class="ion-text-wrap" style="font-size: 1.5rem;">Media</h1>
                         </ion-item>
                         <ion-item class="">
-                            <h1 class="ion-text-wrap">Communities</h1>
+                            <h1 class="ion-text-wrap" style="font-size: 1.5rem;">Communities</h1>
                         </ion-item>
                     </ion-list>
                 </div>
+
+                <!-- 20% of the screen is this column, which holds profile and its   -->
                 <div class="col-span-8 whitespace-normal">
                     <div class="max-w-full flex justify-center items-center flex-col mt-10 whitespace-normal">
                         <!-- Profile Image -->
@@ -47,37 +52,44 @@
 
                         <!-- Username -->
                         <div class="text center block">
-                            <ion-label class="text-3xl font-semibold" v-model="username">USRENAME5125</ion-label>
+                            <ion-label class="text-3xl font-semibold" style="font-size: 1.75rem;" v-model="username">USRENAME5125</ion-label>
                         </div>
 
                         <!-- User's @ tag' -->
                         <div class="text center block ">
-                            <ion-label class="text-lg">@usertag123</ion-label>
+                            <ion-label class="text-lg" style="font-size: 1.5rem;">@usertag123</ion-label>
                         </div>
 
                         <!-- Communities User is involved in -->
                         <div class="text center block mb-5">
-                            <ion-label class="text-lg">Involved in {{ numCommunities }} communities.</ion-label>
+                            <ion-label class="text-lg" style="font-size: 1.25rem;">Involved in {{ numCommunities }} communities.</ion-label>
                         </div>
 
                         <!-- Recent posts section -->
-                        <ion-list class="max-w-full h-screen overflow-hidden">
+                        <ion-list class="max-w-full h-screen overflow-hidden bg-transparent">
                             <ion-item class="max-w-full overflow-hidden md:my-5">
-                                <ion-label class="ion-text-wrap max-w-full whitespace-normal overflow-hidden text- sm:my-7 md:my-5">
+                                <ion-label
+                                    class="ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5"
+                                    style="font-size: 1.5rem;">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quod, nesciunt
                                     reiciendis laborum possimus, deserunt eius iusto qui culpa animi consequatur assumenda
                                     incidunt dolor, non perferendis et doloremque alias odio!
                                 </ion-label>
                             </ion-item>
                             <ion-item class="max-w-full whitespace-normal overflow-hidden">
-                                <ion-label class="ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-7 md:my-5">
+                                <ion-label
+                                    class="ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5"
+                                    style="font-size: 1.5rem;">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, distinctio magni
                                     optio cumque id doloremque porro, harum enim consectetur reprehenderit ipsa hic voluptas
                                     blanditiis quis, nemo cupiditate ea aperiam exercitationem.
                                 </ion-label>
                             </ion-item>
+                            <!-- on screens with 280px width this one is not appearing -->
                             <ion-item class="max-w-full whitespace-normal overflow-hidden">
-                                <ion-label class="ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-7 md:my-5">
+                                <ion-label
+                                    class="ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5"
+                                    style="font-size: 1.5rem;">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium minima porro neque
                                     quis hic provident suscipit facilis, dolorum perferendis nesciunt nihil aut perspiciatis
                                     nobis iste amet eaque recusandae illo reprehenderit.

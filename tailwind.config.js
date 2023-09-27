@@ -5,13 +5,13 @@ export default {
   theme: {
     extend: {},
     screens: {
-      'sm': '360px',
+      'sm': '200px',
       // => @media (min-width: 640px) { ... }
 
-      'md': '480px',
+      'md': '360px',
       // => @media (min-width: 768px) { ... }
 
-      'lg': '1024px',
+      'lg': '480px',
       // => @media (min-width: 1024px) { ... }
 
       'xl': '1280px',
