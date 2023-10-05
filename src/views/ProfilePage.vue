@@ -122,7 +122,7 @@ export default {
     },
     data() {
         return {
-            username: "initial",
+            username: "initial",    
             numCommunities: 3
         };
     }
