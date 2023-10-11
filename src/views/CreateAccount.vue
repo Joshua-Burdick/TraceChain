@@ -46,35 +46,19 @@
   </ion-page>
 </template>
 
-data() {
-	return {
-		form: {
-			email: null
-			password: null
-		},
-	};
-},
-
-<script>
+<script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar } from '@ionic/vue';
-export default {
-    components: {
-        IonPage,
-        IonHeader,
-        IonToolbar,
-        IonTitle,
-        IonContent,
-        IonImg,
-        IonLabel,
-        IonList,
-        IonItem,
-        IonAvatar
-    },
-    data() {
-        return {
-            username: "initial",
-            numCommunities: 3
-        };
-    }
-};
+import { ref } from 'vue';
+
+const username = ref("initial");
+const numCommunities = ref(3);
+const email = ref("email@email.com");
+const password = ref("password");
+const firstname = ref("fname");
+const lastname = ref("lname");
+
+function handleLogin() {
+  // TODO - handle login
+}
+
 </script>
