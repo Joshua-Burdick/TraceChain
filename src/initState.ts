@@ -6,6 +6,6 @@ dotenv.config();
 
 export async function init() {
 
-  const mongodbUri = process.env.MONGO_CONNECTION_URI;
-  axios.defaults.baseURL = "";
+  // TODO - Server URL goes here
+  axios.defaults.baseURL = "https://trace-chain-server.vercel.app/api";
 }
