@@ -42,7 +42,7 @@
               <div v-if="isInformative" class="p-2 h-2/3 w-1/2 overflow-scroll rounded-lg border-2 border-zinc-800">
                 <div v-for="(value, index) in sources">
                   <input type="text" class="p-2 m-2 rounded-lg border-2 focus:outline-zinc-600 outline-offset-0 border-zinc-600 bg-zinc-800 outline-none" v-model="sources[index]" placeholder="Source URL" />
-                  <ion-icon :icon="trash" @click="sources.splice(index, 1)" class="hover:text-xl text-red-500"/>
+                  <ion-icon :icon="trash" @click="sources.splice(index, 1)" class="hover:text-xl hover:cursor-pointer text-red-500"/>
                 </div>
                 <br/>
               </div>
