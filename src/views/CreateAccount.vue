@@ -10,6 +10,7 @@
    <div class="row">
    <div class = "col">
       <div class="text-center">
+        <h5 style = "text-align: center;">Welcome to TraceChain!</h5>
         <p style = "text-align: center;">Sign up by entering your information below</p>
       </div>
       </div>
@@ -33,6 +34,7 @@
             <ion-input v-model="firstname" name="firstname" autocomplete type="firstname"></ion-input>
           </ion-item>
           <ion-item>
+          </ion-item><ion-item>
             <ion-label position="stacked">Last Name</ion-label>
             <ion-input v-model="lastname" name="lastname" autocomplete type="lastname"></ion-input>
           </ion-item>
@@ -40,6 +42,7 @@
           </div>
         </form>
       </ion-list>
+      <p>{{email}}</p>
     </ion-content>
 
   </ion-page>

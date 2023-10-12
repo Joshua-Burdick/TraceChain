@@ -16,7 +16,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/createAccount',
     component: () => import('@/views/CreateAccount.vue')
   }
-]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
