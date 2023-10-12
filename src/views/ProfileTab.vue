@@ -44,7 +44,7 @@
                             <!-- <ion-img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Frog_on_palm_frond.jpg"
                                 alt="Profile Image"></ion-img> -->
                             <ion-avatar class="cursor-pointer max-w-full">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Frog_on_palm_frond.jpg"
+                                <img src="https://i.scdn.co/image/ab6761610000e5ebba025c8f62612b2ca6bfa375"
                                     alt="Profile Image">
                             </ion-avatar>
                         </div>
@@ -111,4 +111,6 @@ import { ref } from 'vue';
 
 const username = ref("initial");
 const numCommunities = ref(3);
+
+
 </script>
