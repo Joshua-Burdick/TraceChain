@@ -105,26 +105,10 @@
     </ion-page>
 </template>
 
-<script>
+<script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar } from '@ionic/vue';
-export default {
-    components: {
-        IonPage,
-        IonHeader,
-        IonToolbar,
-        IonTitle,
-        IonContent,
-        IonImg,
-        IonLabel,
-        IonList,
-        IonItem,
-        IonAvatar
-    },
-    data() {
-        return {
-            username: "initial",    
-            numCommunities: 3
-        };
-    }
-};
+import { ref } from 'vue';
+
+const username = ref("initial");
+const numCommunities = ref(3);
 </script>

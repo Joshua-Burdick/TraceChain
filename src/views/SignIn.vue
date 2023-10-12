@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import {createAccount} from "@/views/CreateAccount.vue";
+import CreateAccount from "@/views/CreateAccount.vue";
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar } from '@ionic/vue';
 import { ref } from 'vue';
 
