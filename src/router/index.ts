@@ -9,10 +9,13 @@ const routes: Array<RouteRecordRaw> = [
     component: TabsPage
   },
   {
+    path: '/signIn',
+    component: () => import('@/views/SignIn.vue')
+  },
+  {
     path: '/createAccount',
     component: () => import('@/views/CreateAccount.vue')
-  },
-]
+  }
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

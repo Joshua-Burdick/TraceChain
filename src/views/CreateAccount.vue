@@ -32,6 +32,8 @@
           <div class="ion-text-center"><ion-item>
             <ion-label position="stacked">First Name</ion-label>
             <ion-input v-model="firstname" name="firstname" autocomplete type="firstname"></ion-input>
+          </ion-item>
+          <ion-item>
           </ion-item><ion-item>
             <ion-label position="stacked">Last Name</ion-label>
             <ion-input v-model="lastname" name="lastname" autocomplete type="lastname"></ion-input>
