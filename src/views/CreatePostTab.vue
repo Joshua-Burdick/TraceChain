@@ -11,13 +11,14 @@
             <ion-icon :icon="pencilSharp" class="ml-2" />
           </div>
           <div class="flex flex-row lg:h-2/3 h-5/6">
-            <div class="px-1 py-1 w-full rounded-lg border-2 border-zinc-600 bg-zinc-800">
+            <div class="px-1 py-1 w-full rounded-lg border-2 border-zinc-600 bg-zinc-800 mb-5">
               <textarea
                 class="focus:outline-none text-white text-lg w-full h-full resize-none"
-                maxlength="500"
+                :maxlength="maxLength"
                 v-model="postContent"
                 placeholder="Write something..."
               ></textarea>
+              <p :class="postContent.length == maxLength ? 'text-red' : 'text-white'" class="flex w-full justify-end pt-1 pr-2">{{ postContent.length }}</p>
             </div>
           </div>
           <div class="flex flex-row">
@@ -57,6 +58,7 @@ import ComingSoon from '@/components/ComingSoon.vue';
 
 const postContent = ref('');
 const isInformative = ref(true);
+const maxLength = 255;
 const sources = ref(['']);
 const error = ref('');
 
