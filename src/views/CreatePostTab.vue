@@ -2,13 +2,8 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div class="flex h-full py-1 px-1">
-        <div class="flex flex-col lg:w-1/3 justify-center font-semibold mr-10 px-10 border-2 border-yellow-700 bg-gradient-to-tr from-yellow-800 to-yellow-950">
-          <p class="text-gray-300">App Navigation</p>
-          <div class="text-yellow-400 text-3xl">
-            COMING SOON
-            <ion-icon :icon="alertCircle" class="text-yellow-400" />
-          </div>
-          <p class="text-yellow-600 text-2xl">WORK IN PROGRESS</p>
+        <div class="flex flex-col lg:w-1/3 mr-10">
+          <ComingSoon name="App Navigation"/>
         </div>
         <div class="flex flex-col lg:w-1/3 w-full">
           <div class="flex flex-row lg:h-1/6 align-center justify-center text-6xl font-semibold">
@@ -18,7 +13,7 @@
           <div class="flex flex-row lg:h-2/3 h-5/6">
             <div class="px-1 py-1 w-full rounded-lg border-2 border-zinc-600 bg-zinc-800">
               <textarea
-                class="focus:outline-none text-white text-lg font-semibold w-full h-full resize-none"
+                class="focus:outline-none text-white text-lg w-full h-full resize-none"
                 maxlength="500"
                 v-model="postContent"
                 placeholder="Write something..."
@@ -58,6 +53,7 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
 import { pencilSharp, trash, alertCircle } from 'ionicons/icons';
 import { ref, watch } from 'vue';
+import ComingSoon from '@/components/ComingSoon.vue';
 
 const postContent = ref('');
 const isInformative = ref(true);
