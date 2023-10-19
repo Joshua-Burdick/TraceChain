@@ -11,7 +11,7 @@
             <ion-icon :icon="pencilSharp" class="ml-2" />
           </div>
           <div class="flex flex-row lg:h-2/3 h-5/6">
-            <div class="px-1 py-1 w-full rounded-lg border-2 border-zinc-600 bg-zinc-800 mb-5">
+            <div class="px-2 py-2 w-full rounded-lg border-2 border-zinc-600 bg-zinc-800 mb-5">
               <textarea
                 class="focus:outline-none text-white text-lg w-full h-full resize-none"
                 :maxlength="maxLength"
