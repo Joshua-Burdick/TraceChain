@@ -44,25 +44,27 @@
                             <!-- <ion-img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Frog_on_palm_frond.jpg"
                                 alt="Profile Image"></ion-img> -->
                             <ion-avatar class="cursor-pointer max-w-full">
-                                <img src="https://i.scdn.co/image/ab6761610000e5ebba025c8f62612b2ca6bfa375"
-                                    alt="Profile Image">
+                                <!-- <img src="https://i.scdn.co/image/ab6761610000e5ebba025c8f62612b2ca6bfa375"
+                                    alt="Profile Image"> -->
                             </ion-avatar>
                         </div>
 
 
                         <!-- Username -->
                         <div class="text center block">
-                            <ion-label class="text-3xl font-semibold" style="font-size: 1.75rem;" v-model="username">USRENAME5125</ion-label>
+                            <ion-label class="text-3xl font-semibold" style="font-size: 1.75rem;"
+                                v-model="username">{{ username }}</ion-label>
                         </div>
 
                         <!-- User's @ tag' -->
                         <div class="text center block ">
-                            <ion-label class="text-lg" style="font-size: 1.5rem;">@usertag123</ion-label>
+                            <ion-label class="text-lg" style="font-size: 1.5rem;">{{ usertag }}</ion-label>
                         </div>
 
                         <!-- Communities User is involved in -->
                         <div class="text center block mb-5">
-                            <ion-label class="text-lg" style="font-size: 1.25rem;">Involved in {{ numCommunities }} communities.</ion-label>
+                            <ion-label class="text-lg" style="font-size: 1.25rem;">Involved in {{ numCommunities }}
+                                communities.</ion-label>
                         </div>
 
                         <!-- Recent posts section -->
@@ -70,8 +72,7 @@
                             <ion-item class="cursor-pointer max-w-full overflow-hidden md:my-5">
                                 <ion-label
                                     class="sm:text-sm md:text-2
-                                    xl lg:text-3xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5"
-                                    >
+                                    xl lg:text-3xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quod, nesciunt
                                     reiciendis laborum possimus, deserunt eius iusto qui culpa animi consequatur assumenda
                                     incidunt dolor, non perferendis et doloremque alias odio!
@@ -79,8 +80,7 @@
                             </ion-item>
                             <ion-item class="cursor-pointer max-w-full whitespace-normal overflow-hidden">
                                 <ion-label
-                                    class="sm:text-xs md:text-lg lg:text-2xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5"
-                                    >
+                                    class="sm:text-xs md:text-lg lg:text-2xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, distinctio magni
                                     optio cumque id doloremque porro, harum enim consectetur reprehenderit ipsa hic voluptas
                                     blanditiis quis, nemo cupiditate ea aperiam exercitationem.
@@ -89,8 +89,7 @@
                             <!-- on screens with 280px width this one is not appearing -->
                             <ion-item class="cursor-pointer max-w-full whitespace-normal overflow-hidden">
                                 <ion-label
-                                    class="sm:text-xs md:text-lg lg:text-2xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5"
-                                    >
+                                    class="sm:text-xs md:text-lg lg:text-2xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium minima porro neque
                                     quis hic provident suscipit facilis, dolorum perferendis nesciunt nihil aut perspiciatis
                                     nobis iste amet eaque recusandae illo reprehenderit.
@@ -107,10 +106,20 @@
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar } from '@ionic/vue';
-import { ref } from 'vue';
+import axios from "axios";
+import { ref, onMounted } from 'vue';
 
 const username = ref("initial");
+const usertag = ref("initial");
 const numCommunities = ref(3);
+
+
+onMounted(async () => {
+    const response = await axios.get("/account/65318daae491ca0391dc0805").then((res) => res.data);
+    username.value = response.username;
+    usertag.value = response.usertag;
+    console.log(response);
+});
 
 
 </script>
