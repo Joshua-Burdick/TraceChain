@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content :fullscreen="true">
-      <div class="flex h-full py-1 px-1">
+      <div class="flex h-full py-1 px-1 bg-[#141313]">
         <div class="flex flex-col lg:w-1/3 mr-10">
           <ComingSoon name="App Navigation"/>
         </div>
@@ -35,8 +35,14 @@
               <ion-toggle v-model="isInformative" label-placement="end" class="py-5">Is this source informative?</ion-toggle>
               <br/>
               <button v-if="isInformative" class="mb-2 p-2 h-10 hover:bg-gray-700 active:bg-gray-600" @click.stop="sources.push('')">+ Add Source</button>
-              <div v-if="isInformative" class="p-2 h-2/3 w-1/2 overflow-scroll rounded-lg border-2 border-zinc-800">
+              <div v-if="isInformative" class="p-2 h-2/3 w-2/3 overflow-scroll rounded-lg border-2 border-zinc-600">
                 <div v-for="(value, index) in sources">
+                  <!-- <label for="source-select" class="text-sm">Type</label> -->
+                  <select name="source-select" class="bg-zinc-600 hover:bg-zinc-700 rounded-lg p-2 hover:cursor-pointer">
+                    <option selected>Article</option>
+                    <option>Book</option>
+                    <option>Video</option>
+                  </select>
                   <input type="text" class="p-2 m-2 rounded-lg border-2 focus:outline-zinc-600 outline-offset-0 border-zinc-600 bg-zinc-800 outline-none" v-model="sources[index]" placeholder="Source URL" />
                   <ion-icon :icon="trash" @click="sources.splice(index, 1)" class="hover:text-xl hover:cursor-pointer text-red-500"/>
                 </div>
@@ -51,26 +57,43 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue';
+
+// import { Article, Book, Video } from '@/types/postTypes';
+
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
 import { pencilSharp, trash, alertCircle } from 'ionicons/icons';
-import { ref, watch } from 'vue';
+
 import ComingSoon from '@/components/ComingSoon.vue';
 
 const postContent = ref('');
 const isInformative = ref(true);
-const maxLength = 255;
 const sources = ref(['']);
+
+const maxLength = 255;
+
 const error = ref('');
 
 const submitPost = () => {
-  if (isInformative) {
+  if (isInformative.value) {
     if (sources.value.length === 0 || (sources.value.length === 1 && sources.value[0] === '') ) {
       error.value = 'Please add at least one source.';
-    } else {
-      error.value = '';
-      console.log('Post submitted!');
+      return;
     }
   }
+
+  error.value = '';
+  
+  const post = {
+    author: null,
+    content: postContent.value,
+    sources: [... new Set(sources.value)],
+    isInformative: isInformative.value,
+    isEdited: false,
+    timestamp: new Date().toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false }),
+  };
+
+  console.log("Submitted: ", post);
 };
 
 </script>
