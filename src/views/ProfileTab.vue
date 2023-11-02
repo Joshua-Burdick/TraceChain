@@ -1,29 +1,13 @@
 <template>
     <ion-page>
-        <ion-header class="">
-            <ion-toolbar class="">
-                <ion-title class=""></ion-title>
-            </ion-toolbar>
-        </ion-header>
         <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <!-- <ion-title size="xx-large">profile
-                    </ion-title> -->
-                </ion-toolbar>
-            </ion-header>
+            <!-- <ion-header collapse="condense">
+                <ion-toolbar></ion-toolbar>
+            </ion-header> -->
 
-            <!-- <div class="rounded-lg w-50">
-                <ion-img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Frog_on_palm_frond.jpg" alt="A frog">
-                </ion-img>
-            </div> -->
-
-            <!-- Divided the screen into 2 columns, sum of both columns = 100% -->
-            <div class="h-full">
-
-                <!-- 20% of the screen is this column, which holds profile and its   -->
-                <div class="whitespace-normal">
-                    <div class="max-w-340px flex justify-center items-center flex-col mt-10 whitespace-normal">
+            <div class="h-full text-slate-50 bg-[#141313]">
+                <div class="whitespace-normal bg-[#141313]">
+                    <div class="max-w-340px flex justify-center items-center flex-col pt-10 bg-[#141313] whitespace-normal">
                         <!-- Profile Image -->
                         <div class="text-center block overflow-hidden mb-5">
                             <!-- <ion-img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Frog_on_palm_frond.jpg"
@@ -67,17 +51,21 @@
                             </ul>
                         </div>
 
+                        <br>
+
                         <!-- Recent posts section -->
-                        <ion-list class="w-1/2 h-screen overflow-hidden bg-transparent">
-                            <ion-item class="cursor-pointer w-full" v-for="post in posts">
-                                <div
-                                    class="block sm:text-sm md:text-lg lg:text-lg ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
-                                    <h1>
-                                        {{ post.content }}
-                                    </h1>
-                                    <p class="text-xs mt-3">on {{ post.time }}</p>
-                                </div>
-                            </ion-item>
+                        <ion-list class="w-1/2 h-screen overflow-hidden bg-[#141313]">
+                            <div class="bg-[#141313]">
+                                <li class="cursor-pointer w-full bg-[#141313]" v-for="post in posts">
+                                    <div
+                                        class="block sm:text-sm md:text-lg lg:text-lg ion-text-wrap max-w-full my-10 bg-[#141313] whitespace-normal overflow-hidden sm:my-8 md:my-5">
+                                        <h1 class="text-white text-2xl">
+                                            {{ post.content }}
+                                        </h1>
+                                        <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
+                                    </div>
+                                </li>
+                            </div>
                             <!-- <ion-item class="cursor-pointer max-w-full overflow-hidden md:my-5">
                                 <ion-label
                                     class="sm:text-sm md:text-2
@@ -126,7 +114,7 @@ interface Post {
 
 const username = ref("initial");
 const usertag = ref("initial");
-const numCommunities = ref(3);
+const numCommunities = ref(3);  
 const posts = ref<Array<Post>>([]);
 
 onMounted(async () => {
