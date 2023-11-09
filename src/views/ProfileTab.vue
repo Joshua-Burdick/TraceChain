@@ -62,36 +62,18 @@
                                         <h1 class="text-white text-2xl">
                                             {{ post.content }}
                                         </h1>
-                                        <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
+                                        <p class="text-sm mt-3 text-white">on {{ post.time.toDateString() }}</p>
+                                        <div class="">
+                                            <ion-icon :icon="thumbsUpSharp"
+                                                class="w-10 h-10  mx-10 text-green-500 hover:scale-150 transform transition duration-500"></ion-icon>
+                                            <h6 class="text-white">{{ post.likes }}</h6>
+                                            <ion-icon :icon="thumbsDownSharp"
+                                                class="w-10 h-10  text-red-500 hover:scale-150 transform transition duration-500"></ion-icon>
+                                            <h6 class="text-white">{{ post.dislikes }}</h6>
+                                        </div>
                                     </div>
                                 </li>
                             </div>
-                            <!-- <ion-item class="cursor-pointer max-w-full overflow-hidden md:my-5">
-                                <ion-label
-                                    class="sm:text-sm md:text-2
-                                    xl lg:text-3xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quod, nesciunt
-                                    reiciendis laborum possimus, deserunt eius iusto qui culpa animi consequatur assumenda
-                                    incidunt dolor, non perferendis et doloremque alias odio!
-                                </ion-label>
-                            </ion-item>
-                            <ion-item class="cursor-pointer max-w-full whitespace-normal overflow-hidden">
-                                <ion-label
-                                    class="sm:text-xs md:text-lg lg:text-2xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, distinctio magni
-                                    optio cumque id doloremque porro, harum enim consectetur reprehenderit ipsa hic voluptas
-                                    blanditiis quis, nemo cupiditate ea aperiam exercitationem.
-                                </ion-label>
-                            </ion-item> -->
-                            <!-- on screens with 280px width this one is not appearing -->
-                            <!-- <ion-item class="cursor-pointer max-w-full whitespace-normal overflow-hidden">
-                                <ion-label
-                                    class="sm:text-xs md:text-lg lg:text-2xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium minima porro neque
-                                    quis hic provident suscipit facilis, dolorum perferendis nesciunt nihil aut perspiciatis
-                                    nobis iste amet eaque recusandae illo reprehenderit.
-                                </ion-label>
-                            </ion-item>  -->
                         </ion-list>
                     </div>
                 </div>
@@ -102,19 +84,22 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, IonIcon } from '@ionic/vue';
 import axios from "axios";
 import { ref, onMounted } from 'vue';
+import { thumbsUpSharp, thumbsDownSharp } from 'ionicons/icons';
 
 interface Post {
     time: Date,
     content: String,
-    sources: [String]
+    sources: [String],
+    likes: Number,
+    dislikes: Number
 }
 
 const username = ref("initial");
 const usertag = ref("initial");
-const numCommunities = ref(3);  
+const numCommunities = ref(3);
 const posts = ref<Array<Post>>([]);
 
 onMounted(async () => {
@@ -126,13 +111,23 @@ onMounted(async () => {
     const postsResponse = await axios.get('post/65318daae491ca0391dc0805').then((res) => posts.value = res.data);
     // console.log("postsResponse", postsResponse);
     // console.log("type of postsResponse", typeof(postsResponse));
-    console.log("posts", posts);
-    posts.value.forEach(post => {
+
+    posts.value.map(post => {
         console.log(post, " has type ", typeof (post));
-        const datePosted = new Date(post.time).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-        post.time = post.time as Date;
-        post.time = datePosted;
+        post.time = new Date(post.time)
+        // const datePosted = new Date(post.time).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+        // post.time = post.time as Date;
+        // console.log("post.time has type: ", typeof (post.time));
+        // console.log("datePosted has type: ", typeof(datePosted));
+        //post.time = datePosted;
+        // Sort posts by date in ascending order
     });
+
+    const sortedPosts = posts.value.sort(
+        (postA, postB) => postB.time.getTime() - postA.time.getTime(),
+    );
+
+    console.log("sortedPosts: ", sortedPosts);
 });
 
 
