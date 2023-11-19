@@ -1,8 +1,10 @@
 <template>
     <ion-searchbar :animated="true" placeholder="Search..." v-model="searchContent" @keydown.enter="search"></ion-searchbar>
-    <div v-for="result in searchResults" :key="result">
-        <strong>{{ result.username }}</strong>
-        <h2>{{ result.usertag }}</h2>
+    <div class="transition hover:bg-sky-500 pb-6 hover:text-black" v-for="result in searchResults" :key="result">
+        <div class="ml-40 cursor-pointer">
+            <h1 class="text-xl font-bold">{{ result.username }}</h1>
+            <h2 class="text-grey">{{ result.usertag }}</h2>
+        </div>
     </div>
 </template>
 
@@ -21,7 +23,6 @@ interface User {
 
 const searchContent = ref('');
 const searchResults = ref<Array<User>>([]);
-
 
 const search = () => {
     console.log(searchContent.value);
