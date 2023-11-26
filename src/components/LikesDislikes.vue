@@ -1,39 +1,53 @@
 
 <template>
-    <div>
-      <ion-icon @click="likePost" :color="likeColor" name="thumbs-up-outline"></ion-icon>
+  <div>
+    <ion-button @click="likePost" :color="likeColor">
+      <ion-icon aria-hidden="true" :icon="thumbsUpSharp" color="dark" size="medium"></ion-icon>
       {{ likes }}
-      
-      <ion-icon @click="dislikePost" :color="dislikeColor" name="thumbs-down-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button @click="dislikePost" :color="dislikeColor">
+      <ion-icon aria-hidden="true" :icon="thumbsDownSharp" color="dark" size="medium"></ion-icon>
       {{ dislikes }}
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref } from 'vue';
-  
-  // Props to receive data from the parent component
-  const props = defineProps(['initialLikes', 'initialDislikes']);
-  
-  const likes = ref(props.initialLikes);
-  const dislikes = ref(props.initialDislikes);
-  const likeColor = ref('medium');
-  const dislikeColor = ref('medium');
-  
-  const likePost = () => {
-    likes.value++;
-    likeColor.value = 'success';
-    dislikeColor.value = 'medium';
-  };
-  
-  const dislikePost = () => {
-    dislikes.value++;
-    likeColor.value = 'medium';
-    dislikeColor.value = 'danger';
-  };
-  </script>
-  
-  <style scoped>
-  /* Add your custom styles here */
-  </style>
-  
+    </ion-button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, defineProps } from 'vue';
+import { IonButton, IonIcon } from '@ionic/vue';
+import { thumbsDownSharp, thumbsUpSharp } from 'ionicons/icons';
+
+
+const { post } = defineProps(['post']); 
+
+const likes = ref(post.likes || 0);
+const dislikes = ref(post.dislikes || 0);
+const likeColor = ref('light');
+const dislikeColor = ref('light');
+
+const likePost = () => {
+  likes.value++;
+  likeColor.value = 'success';
+  dislikeColor.value = 'light';
+};
+
+const dislikePost = () => {
+  dislikes.value++;
+  likeColor.value = 'light';
+  dislikeColor.value = 'danger';
+};
+</script>
+
+<style scoped>
+div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ion-button {
+  margin-right: 10px;
+}
+
+</style>

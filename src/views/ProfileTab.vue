@@ -63,35 +63,10 @@
                                             {{ post.content }}
                                         </h1>
                                         <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
+                                        <LikesDislikes :post="post"/>
                                     </div>
                                 </li>
                             </div>
-                            <!-- <ion-item class="cursor-pointer max-w-full overflow-hidden md:my-5">
-                                <ion-label
-                                    class="sm:text-sm md:text-2
-                                    xl lg:text-3xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quod, nesciunt
-                                    reiciendis laborum possimus, deserunt eius iusto qui culpa animi consequatur assumenda
-                                    incidunt dolor, non perferendis et doloremque alias odio!
-                                </ion-label>
-                            </ion-item>
-                            <ion-item class="cursor-pointer max-w-full whitespace-normal overflow-hidden">
-                                <ion-label
-                                    class="sm:text-xs md:text-lg lg:text-2xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, distinctio magni
-                                    optio cumque id doloremque porro, harum enim consectetur reprehenderit ipsa hic voluptas
-                                    blanditiis quis, nemo cupiditate ea aperiam exercitationem.
-                                </ion-label>
-                            </ion-item> -->
-                            <!-- on screens with 280px width this one is not appearing -->
-                            <!-- <ion-item class="cursor-pointer max-w-full whitespace-normal overflow-hidden">
-                                <ion-label
-                                    class="sm:text-xs md:text-lg lg:text-2xl ion-text-wrap max-w-full whitespace-normal overflow-hidden sm:my-8 md:my-5">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium minima porro neque
-                                    quis hic provident suscipit facilis, dolorum perferendis nesciunt nihil aut perspiciatis
-                                    nobis iste amet eaque recusandae illo reprehenderit.
-                                </ion-label>
-                            </ion-item>  -->
                         </ion-list>
                     </div>
                 </div>
@@ -102,14 +77,17 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar,} from '@ionic/vue';
 import axios from "axios";
 import { ref, onMounted } from 'vue';
+import LikesDislikes from '@/components/LikesDislikes.vue';
 
 interface Post {
     time: Date,
     content: String,
-    sources: [String]
+    sources: [String],
+    likes: Number,
+    dislikes: Number,
 }
 
 const username = ref("initial");
@@ -131,9 +109,8 @@ onMounted(async () => {
         console.log(post, " has type ", typeof (post));
         const datePosted = new Date(post.time).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
         post.time = post.time as Date;
-        post.time = datePosted;
+        //post.time = datePosted;
     });
 });
-
 
 </script>
