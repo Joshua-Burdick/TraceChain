@@ -2,10 +2,8 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div class="flex h-full py-1 px-1 bg-[#141313]">
-        <div class="flex flex-col lg:w-1/3 mr-10">
-          <ComingSoon name="App Navigation" />
-        </div>
-        <div class="flex flex-col lg:w-1/3 w-full">
+        <div class="flex flex-col min-[1000px]:w-1/3 mr-10"></div>
+        <div class="flex flex-col min-[1000px]:w-1/3 w-full">
           <div class="flex flex-row lg:h-1/6 align-center justify-center text-6xl font-semibold">
             Make a Post
             <ion-icon :icon="pencilSharp" class="ml-2" />
