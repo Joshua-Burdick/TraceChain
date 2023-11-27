@@ -1,13 +1,12 @@
-
 <template>
   <div>
     <ion-button @click="likePost" :color="likeColor">
-      <ion-icon aria-hidden="true" :icon="thumbsUpSharp" color="dark" size="medium"></ion-icon>
+      <ion-icon aria-hidden="true" :icon="thumbsUpSharp" color="dark" size="medium" class="mr-2"></ion-icon>
       {{ likes }}
     </ion-button>
 
     <ion-button @click="dislikePost" :color="dislikeColor">
-      <ion-icon aria-hidden="true" :icon="thumbsDownSharp" color="dark" size="medium"></ion-icon>
+      <ion-icon aria-hidden="true" :icon="thumbsDownSharp" color="dark" size="medium" class="mr-2"></ion-icon>
       {{ dislikes }}
     </ion-button>
   </div>

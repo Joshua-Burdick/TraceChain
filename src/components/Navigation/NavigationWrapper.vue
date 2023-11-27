@@ -2,7 +2,7 @@
     <ion-page>
       <ion-content :fullscreen="true">
         <div class="flex flex-col h-full">
-          <div class="flex flex-row h-full bg-[#141313]">
+          <div class="flex flex-row h-full bg-[#1d1f20]">
             <div v-if="$vuetify.display.lgAndUp" class="flex flex-col w-1/4">
               <NavigationSidebar />
             </div>

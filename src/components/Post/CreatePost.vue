@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col min-[1000px]:w-1/3 w-full ml-10">
+    <div class="flex flex-col min-[1000px]:w-1/3 w-full ml-20">
         <div class="flex flex-row lg:h-1/6 align-center justify-center text-6xl font-semibold">
             Make a Post
             <ion-icon :icon="pencilSharp" class="ml-2" />
