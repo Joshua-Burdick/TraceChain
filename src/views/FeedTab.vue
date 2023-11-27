@@ -1,13 +1,21 @@
 <template>
-    <ion-page>
-      <ion-content :fullscreen="true">
-        <NavigationWrapper :pageComponent="ComingSoon"/>
-      </ion-content>
-    </ion-page>
+  <ion-page>
+    <!-- <ion-header>
+      <ion-toolbar>
+        <ion-title>Tab 1</ion-title>
+      </ion-toolbar>
+    </ion-header> -->
+    <ion-content :fullscreen="true" class=" bg-[#141313]">
+      <Search v-if="isSearchVisible" />
+      <FeedPage />
+    </ion-content>
+  </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar } from '@ionic/vue';
+import { ref, onMounted } from 'vue';
 import ComingSoon from '@/components/ComingSoon.vue';
-import NavigationWrapper from '@/components/Navigation/NavigationWrapper.vue';
+import Search from '@/components/Search.vue';
+import FeedPage from './FeedPage.vue';
 </script>
