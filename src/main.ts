@@ -39,7 +39,9 @@ const vuetify = createVuetify({
 })
 
 const app = createApp(App)
-  .use(IonicVue)
+  .use(IonicVue, {
+   navAnimation: 'none'
+  })
   .use(router)
   .use(vuetify);
   

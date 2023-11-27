@@ -7,6 +7,7 @@
 </template>
 
 <script setup lang="ts">
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
 import NavigationWrapper from '@/components/Navigation/NavigationWrapper.vue';
 import CreatePost from '@/components/Post/CreatePost.vue';
 

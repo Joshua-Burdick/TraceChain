@@ -6,7 +6,7 @@
             <div v-if="$vuetify.display.lgAndUp" class="flex flex-col w-1/4">
               <NavigationSidebar />
             </div>
-            <component :is="pageComponent"/>
+            <component :is="pageComponent" class="flex flex-col w-3/4"/>
           </div>
           <div v-if="$vuetify.display.mdAndDown" class="flex flex-row">
             <NavigationBottomBar />
