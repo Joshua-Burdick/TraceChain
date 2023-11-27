@@ -1,47 +1,40 @@
 <template>
-    <ion-page>
-        <!-- <ion-header>
-        <ion-toolbar>
-          <ion-title>Tab 1</ion-title>
-        </ion-toolbar>
-      </ion-header> -->
-        <ion-content :fullscreen="true" class=" bg-[#141313]">
-            <Search v-if="isSearchVisible" />
-            <!-- <ComingSoon name="Account Feed" /> -->
-            <div class="flex justify-center  text-slate-50 bg-[#141313]">
-                <div class="">
-                    <ul>
-                        <li class="cursor-pointer w-full " v-for="post in feed">
-                            <div
-                                class="block sm:text-sm md:text-lg lg:text-lg ion-text-wrap max-w-full my-10 whitespace-normal overflow-hidden sm:my-8 md:my-5">
-                                <div class="flex ">
+    <div class="overflow-scroll">
+        <Search v-if="isSearchVisible" />
+        <!-- <ComingSoon name="Account Feed" /> -->
+        <div class="flex justify-center  text-slate-50 bg-[#141313]">
+            <div class="">
+                <ul>
+                    <li class="cursor-pointer w-full " v-for="post in feed">
+                        <div class="flex bg-stone-700 hover:bg-stone-800 active:bg-stone-900 block border-2 border-stone-400 p-3 rounded sm:text-sm md:text-lg lg:text-lg ion-text-wrap max-w-full h-full my-5 whitespace-normal overflow-hidden">
+                            <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-green mr-3"></div>
+                            <div v-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-red mr-3"></div>
+                            <div class="flex flex-col items-start">
+                                <div class="flex flex-row">
                                     <h4 class="font-bold">author</h4>
-                                    <h4 class="ml-12">@tag</h4>
+                                    <h2>@tag</h2>
                                 </div>
-                                <h1 class="text-2xl">
+                                <h1 class="text-white text-2xl">
                                     {{ post.content }}
                                 </h1>
-                                <p class="text-sm mt-3 text-darkgrey">on {{ post.createdAt }}</p>
-                                <h3 class="font-bold">Sources:
-                                    <a v-for="source in post.sources" :key="source" :href="formatSource(source)"
-                                        target="_blank"> {{ source }}</a>
-                                </h3>
+                                <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
+                                <LikesDislikes :post="post" class="mt-3"/>
                             </div>
-                        </li>
-                    </ul>
-                </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </ion-content>
-    </ion-page>
+        </div>
+    </div>
 </template>
 
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
-import ComingSoon from '@/components/ComingSoon.vue';
-import Search from '@/components/Search.vue';
 import axios from 'axios';
+import Search from '@/components/Search.vue';
+import LikesDislikes from '@/components/LikesDislikes.vue';
 
 interface User {
     username: String,
@@ -51,7 +44,10 @@ interface User {
 interface Post {
     content: String,
     createdAt: Date,
-    sources: [String]
+    sources: [String],
+    isInformative: String,
+    likes: number,
+    dislikes: number
 }
 
 let isSearchVisible = true;
@@ -69,8 +65,6 @@ onMounted(async () => {
             console.log(post, " has type ", typeof (post));
             const datePosted = new Date(post.createdAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
             post.createdAt = post.createdAt as Date;
-            post.createdAt = datePosted;
-
         });
 
 
@@ -79,7 +73,7 @@ onMounted(async () => {
     }
 });
 
-const formatSource = (source) => {
+const formatSource = (source: any) => {
     if (source.startsWith('http://') || source.startsWith('https://')) {
         return source;
     } else {
