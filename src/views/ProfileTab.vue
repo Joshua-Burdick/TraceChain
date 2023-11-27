@@ -123,7 +123,7 @@ onMounted(async () => {
     usertag.value = userResponse.usertag;
     // console.log("userResponse", userResponse);
 
-    const postsResponse = await axios.get('post/65318daae491ca0391dc0805').then((res) => posts.value = res.data);
+    const postsResponse = await axios.get('/post/65318daae491ca0391dc0805').then((res) => posts.value = res.data);
     // console.log("postsResponse", postsResponse);
     // console.log("type of postsResponse", typeof(postsResponse));
     console.log("posts", posts);
