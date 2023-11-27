@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <ion-content :fullscreen="true">
-            <ProfilePage />
+            <NavigationWrapper :pageComponent="ProfilePage"/>
         </ion-content>
     </ion-page>
 </template>

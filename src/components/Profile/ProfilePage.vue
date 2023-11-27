@@ -78,7 +78,7 @@ interface Post {
     content: String,
     sources: [String],
     likes: Number,
-    dislikes: Number,
+    dislikes: Number
 }
 
 const username = ref("initial");
@@ -100,7 +100,6 @@ onMounted(async () => {
         console.log(post, " has type ", typeof (post));
         const datePosted = new Date(post.time).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
         post.time = post.time as Date;
-        //post.time = datePosted;
     });
 });
 </script>

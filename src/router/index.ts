@@ -1,27 +1,22 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import TabsPage from '../views/TabsPage.vue';
-
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    component: TabsPage,
     redirect: '/feed',
-    children: [
-      {
-        path: '/feed',
-        component: () => import('@/views/FeedTab.vue')
-      },
-      {
-        path: '/create_post',
-        component: () => import('@/views/CreatePostTab.vue')
-      },
-      {
-        path: '/profile',
-        component: () => import('@/views/ProfileTab.vue')
-      },
-    ]
+  },
+  {
+    path: '/feed',
+    component: () => import('@/views/FeedTab.vue')
+  },
+  {
+    path: '/create_post',
+    component: () => import('@/views/CreatePostTab.vue')
+  },
+  {
+    path: '/profile',
+    component: () => import('@/views/ProfileTab.vue')
   },
   {
     path: '/signIn',
