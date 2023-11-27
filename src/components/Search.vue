@@ -1,6 +1,6 @@
 <template>
     <ion-searchbar :animated="true" placeholder="Search..." v-model="searchContent" @keydown.enter="search"></ion-searchbar>
-    <div class="transition hover:bg-sky-500 pb-6 hover:text-black" v-for="result in searchResults" :key="result">
+    <div v-if="searchContent !== ''" class="transition hover:bg-sky-500 pb-6 hover:text-black" v-for="result in searchResults" :key="result">
         <div class="ml-40 cursor-pointer">
             <h1 class="text-xl font-bold">{{ result.username }}</h1>
             <h2 class="text-grey">{{ result.usertag }}</h2>
