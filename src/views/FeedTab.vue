@@ -18,6 +18,4 @@ import { ref, onMounted } from 'vue';
 import ComingSoon from '@/components/ComingSoon.vue';
 import Search from '@/components/Search.vue';
 import FeedPage from './FeedPage.vue';
-import axios from 'axios';
-
 </script>
