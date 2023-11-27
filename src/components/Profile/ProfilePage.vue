@@ -97,7 +97,6 @@ onMounted(async () => {
         console.log(post, " has type ", typeof (post));
         const datePosted = new Date(post.time).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
         post.time = post.time as Date;
-        post.time = datePosted;
     });
 });
 
