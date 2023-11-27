@@ -1,6 +1,7 @@
 <template>
-    <ion-searchbar :animated="true" placeholder="Search..." v-model="searchContent" @keydown.enter="search"></ion-searchbar>
-    <div v-if="searchContent !== ''" class="transition hover:bg-sky-500 pb-6 hover:text-black" v-for="result in searchResults" :key="result">
+    <!-- <ion-searchbar :animated="true" color="dark" placeholder="Search..." v-model="searchContent" @keydown.enter="search"></ion-searchbar> -->
+    <input type="text" class="bg-[#141313] text-white block w-full p-4 ps-10 text-xl border border-gray-300  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white " placeholder="Search..." v-model="searchContent" @keydown.enter="search">
+    <div v-if="searchContent !== ''" class="text-white bg-stone-900 transition hover:bg-sky-500 pb-6 hover:text-black" v-for="result in searchResults" :key="result">
         <div class="ml-40 cursor-pointer">
             <h1 class="text-xl font-bold">{{ result.username }}</h1>
             <h2 class="text-grey">{{ result.usertag }}</h2>

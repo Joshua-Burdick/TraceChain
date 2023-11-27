@@ -5,10 +5,10 @@
         <ion-title>Tab 1</ion-title>
       </ion-toolbar>
     </ion-header> -->
-    <ion-content :fullscreen="true">
+    <ion-content :fullscreen="true" class=" bg-[#141313]">
       <Search v-if="isSearchVisible" />
       <!-- <ComingSoon name="Account Feed" /> -->
-      <div class="flex justify-center">
+      <div class="flex justify-center  text-slate-50 bg-[#141313]">
         <div class="">
           <ul>
             <li class="cursor-pointer w-full " v-for="post in feed">
