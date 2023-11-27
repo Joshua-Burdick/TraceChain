@@ -30,6 +30,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/createAccount',
     component: () => import('@/views/CreateAccount.vue')
+  },
+  {
+    path: '/test',
+    component: () => import('@/components/Navigation/NavigationBottomBar.vue')
   }
 ]
 
