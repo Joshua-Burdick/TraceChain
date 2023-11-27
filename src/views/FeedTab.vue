@@ -22,8 +22,8 @@
                   {{ post.content }}
                 </h1>
                 <p class="text-sm mt-3 text-darkgrey">on {{ post.createdAt }}</p>
-                <h3 class="font-bold" v-for="source in post.sources">Sources:
-                  <a> {{ source }}</a>
+                <h3 class="font-bold">Sources:
+                  <a v-for="source in post.sources" :key="source" :href="formatSource(source)" target="_blank"> {{ source }}</a>
                 </h3>
               </div>
             </li>
@@ -76,6 +76,14 @@ onMounted(async () => {
     console.error('Error fetching feed:', error);
   }
 });
+
+const formatSource = (source) => {
+  if(source.startsWith('http://') || source.startsWith('https://')) {
+    return source;
+  } else {
+    return 'http://' + source;
+  }
+}
 
 // console.log("userResponse", userResponse);
 
