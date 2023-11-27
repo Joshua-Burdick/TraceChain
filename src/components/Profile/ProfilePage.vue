@@ -57,6 +57,7 @@
                                     {{ post.content }}
                                 </h1>
                                 <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
+                                <LikesDislikes :post="post"/>
                             </div>
                         </li>
                     </div>
@@ -66,16 +67,18 @@
     </div>
 </template>
 
-
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon, IonAvatar, IonList, IonLabel } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar,} from '@ionic/vue';
 import axios from "axios";
 import { ref, onMounted } from 'vue';
+import LikesDislikes from '@/components/LikesDislikes.vue';
 
 interface Post {
     time: Date,
     content: String,
-    sources: [String]
+    sources: [String],
+    likes: Number,
+    dislikes: Number
 }
 
 const username = ref("initial");
@@ -99,5 +102,4 @@ onMounted(async () => {
         post.time = post.time as Date;
     });
 });
-
 </script>

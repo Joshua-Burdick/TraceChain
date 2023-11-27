@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
-import NavigationWrapper from '@/components/Navigation/NavigationWrapper.vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar,} from '@ionic/vue';
 import ProfilePage from '@/components/Profile/ProfilePage.vue';
+import LikesDislikes from '@/components/LikesDislikes.vue';
 </script>
