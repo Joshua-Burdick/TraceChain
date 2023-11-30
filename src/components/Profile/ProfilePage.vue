@@ -1,7 +1,11 @@
 <template>
     <div class="flex flex-col">
         <ProfileHeader :displayName="username" :usertag="usertag" :numCommunities="numCommunities" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
-        <div class="flex justify-center">Test</div>
+        <div class="flex justify-center">
+            <div>Posts</div>
+            <div>Media</div>
+            <div>Communities</div>
+        </div>
         <div class="flex h-full"></div>
     </div>
     <!-- <div class="flex flex-row h-full text-slate-50 bg-[#1d1f20] overflow-scroll whitespace-normal">
@@ -58,7 +62,7 @@ interface Post {
 
 const username = ref("initial");
 const usertag = ref("initial");
-const numCommunities = ref(3);  
+const numCommunities = ref(0);  
 const posts = ref<Array<Post>>([]);
 
 onMounted(async () => {

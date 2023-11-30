@@ -22,18 +22,18 @@
                 </div>
 
                 <div class="flex flex-row text-md mt-7 ml-2">
-                    <div class="flex flex-col align-center mr-5 hover:bg-slate-700 hover:bg-opacity-70 rounded-lg p-3 cursor-pointer">
+                    <button class="flex flex-col align-center mr-5 hover:bg-slate-700 hover:bg-opacity-70 rounded-lg p-3 cursor-pointer">
                         <p>{{ numFollowers ? numFollowers : 0 }}</p>
                         <p>Followers</p>
-                    </div>
-                    <div class="flex flex-col align-center mr-5 hover:bg-slate-700 hover:bg-opacity-70 rounded-lg p-3 cursor-pointer">
+                    </button>
+                    <button class="flex flex-col align-center mr-5 hover:bg-slate-700 hover:bg-opacity-70 rounded-lg p-3 cursor-pointer">
                         <p>{{ numFollowing ? numFollowing : 0 }}</p>
                         <p>Following</p>
-                    </div>
-                    <div class="flex flex-col align-center hover:bg-slate-700 hover:bg-opacity-70 rounded-lg p-3 cursor-pointer">
+                    </button>
+                    <button class="flex flex-col align-center hover:bg-slate-700 hover:bg-opacity-70 rounded-lg p-3 cursor-pointer">
                         <p>{{ numCommunities ? numCommunities : 0 }}</p>
                         <p>Communities</p>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
