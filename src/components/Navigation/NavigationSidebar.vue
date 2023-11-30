@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col align-center bg-stone-800 min-[1000px]:h-full max-[999px]:h-0 max-[999px]:w-0 text-slate-50">
-        <div class=" flex flex-row mt-10 mb-20">
-            <img aria-hidden="true" src="/favicon.png" class="w-10"/>
-            <p class="ml-2 text-4xl font-semibold">TraceChain</p>
+        <div class=" flex flex-row mt-10 mb-20 align-center">
+            <img aria-hidden="true" src="/TraceChain.svg" class="w-20"/>
+            <p class="text-4xl font-semibold">TraceChain</p>
         </div>
 
         <button @click.stop="$router.push({ path: '/feed' })" class="my-2 p-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
