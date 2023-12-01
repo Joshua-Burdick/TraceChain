@@ -1,10 +1,13 @@
 <template>
     <div class="flex flex-col">
         <ProfileHeader :displayName="username" :usertag="usertag" :numCommunities="numCommunities" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
-        <div class="flex justify-center">
-            <div>Posts</div>
-            <div>Media</div>
-            <div>Communities</div>
+        <div class="flex mt-3 text-xl">
+            <div class="flex w-1/3"></div>
+            <div>
+                <button class="mr-10">Posts</button>
+                <button class="mr-10">Media</button>
+                <button>Communities</button>
+            </div>
         </div>
         <div class="flex h-full"></div>
     </div>
@@ -47,7 +50,7 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, IonIcon} from '@ionic/vue';
 import axios from "axios";
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, Ref } from 'vue';
 import ProfileHeader from '@/components/Profile/ProfileHeader.vue';
 import LikesDislikes from '@/components/LikesDislikes.vue';
 
@@ -62,8 +65,9 @@ interface Post {
 
 const username = ref("initial");
 const usertag = ref("initial");
-const numCommunities = ref(0);  
+const numCommunities = ref(0);
 const posts = ref<Array<Post>>([]);
+const selectedTab: Ref<"Posts" | "Media" | "Communities"> = ref("Posts")
 
 onMounted(async () => {
     const userResponse = await axios.get("/account/65318daae491ca0391dc0805").then((res) => res.data);
