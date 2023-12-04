@@ -32,7 +32,7 @@
                 </button>
             </div>
         </div>
-        <div class="flex w-full h-full justify-center">
+        <div class="flex w-full h-full justify-center pt-3">
             <UserPostListEditable v-if="selectedTab === 'Posts' && isThisUser" class="flex flex-row"/>
             <UserPostList v-else-if="selectedTab === 'Posts' && !isThisUser" class="flex flex-row"/>
             <UserMediaList v-else-if="selectedTab === 'Media'" class="flex flex-row"/>

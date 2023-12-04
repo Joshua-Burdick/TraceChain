@@ -44,5 +44,6 @@
 </template>
 
 <script setup lang="ts">
+import { IonIcon, IonLabel } from '@ionic/vue';
 import { homeOutline, personCircleOutline, settingsOutline } from 'ionicons/icons';
 </script>
