@@ -25,6 +25,18 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/createAccount',
     component: () => import('@/views/CreateAccount.vue')
+  },
+  {
+    path: '/settings',
+    component: () => import('@/views/AccountSettings.vue')
+  },
+  {
+    path: '/settings/appearance',
+    component: () => import('@/views/Appearance.vue')
+  },
+  {
+    path: '/settings/privacy',
+    component: () => import('@/views/Privacy.vue')
   }
 ]
 
