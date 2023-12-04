@@ -1,50 +1,44 @@
 <template>
-    <div class="flex flex-col">
-        <ProfileHeader :displayName="username" :usertag="usertag" :numCommunities="numCommunities" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
-        <div class="flex mt-3 text-xl">
-            <div class="flex w-1/3"></div>
+    <div class="flex flex-col overflow-y-scroll">
+        <ProfileHeader :displayName="username" :usertag="usertag" :numCommunities="0" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
+        <div class="flex text-xl bg-slate-800 bg-opacity-40 text-slate-100 justify-center border-b-2 border-slate-500 py-2">
             <div>
-                <button class="mr-10">Posts</button>
-                <button class="mr-10">Media</button>
-                <button>Communities</button>
+                <button
+                    class="mr-10 hover:bg-stone-700 hover:bg-opacity-70 active:bg-stone-800 active:bg-opacity-80 rounded-lg p-2 cursor-pointer"
+                    :class="{
+                        'underline underline-offset-4 decoration-2 decoration-[#096b8e] text-[#0f8ebb] font-semibold': selectedTab === 'Posts'
+                    }"
+                    @click="selectedTab = 'Posts'"
+                >
+                    Posts
+                </button>
+                <button
+                class="mr-10 hover:bg-stone-700 hover:bg-opacity-70 active:bg-stone-800 active:bg-opacity-80 rounded-lg p-2 cursor-pointer"
+                    :class="{
+                        'underline underline-offset-4 decoration-2 decoration-[#096b8e] text-[#0f8ebb] font-semibold': selectedTab === 'Media'
+                    }"
+                    @click="selectedTab = 'Media'"
+                >
+                    Media
+                </button>
+                <button
+                    class="hover:bg-stone-700 hover:bg-opacity-70 active:bg-stone-800 active:bg-opacity-80 rounded-lg p-2 cursor-pointer"
+                    :class="{
+                        'underline underline-offset-4 decoration-2 decoration-[#096b8e] text-[#0f8ebb] font-semibold': selectedTab === 'Communities'
+                    }"
+                    @click="selectedTab = 'Communities'"
+                >
+                    Communities
+                </button>
             </div>
         </div>
-        <div class="flex h-full"></div>
+        <div class="flex w-full h-full justify-center">
+            <UserPostListEditable v-if="selectedTab === 'Posts' && isThisUser" class="flex flex-row"/>
+            <UserPostList v-else-if="selectedTab === 'Posts' && !isThisUser" class="flex flex-row"/>
+            <UserMediaList v-else-if="selectedTab === 'Media'" class="flex flex-row"/>
+            <UserCommunityList v-else-if="selectedTab === 'Communities'" class="flex flex-row"/>
+        </div>
     </div>
-    <!-- <div class="flex flex-row h-full text-slate-50 bg-[#1d1f20] overflow-scroll whitespace-normal">
-        <div class="flex flex-col pt-10 align-center w-full">
-
-            <div class="flex items-center justify-between">
-                <ul class="flex items-center justify-between w-full bg-transparent">
-                    <li class="cursor-pointer rounded-lg hover:bg-stone-700 active:bg-stone-800">
-                        <h1 class="ion-text-wrap text-lg mx-10">Posts</h1>
-                    </li>
-                    <li class="cursor-pointer rounded-lg hover:bg-stone-700 active:bg-stone-800">
-                        <h1 class="ion-text-wrap text-lg mx-10">Media</h1>
-                    </li>
-                    <li class="cursor-pointer rounded-lg hover:bg-stone-700 active:bg-stone-800">
-                        <h1 class="ion-text-wrap text-lg mx-10">Communities</h1>
-                    </li>
-                </ul>
-            </div>
-
-            <ion-list class="w-1/2 bg-[#1d1f20]">
-                <li class="cursor-pointer w-full bg-[#1d1f20]" v-for="post in posts">
-                    <div class="flex bg-stone-700 hover:bg-stone-800 active:bg-stone-900 block border-2 border-stone-400 p-3 rounded sm:text-sm md:text-lg lg:text-lg ion-text-wrap max-w-full h-full my-5 whitespace-normal overflow-hidden">
-                        <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-green mr-3"></div>
-                        <div v-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-red mr-3"></div>
-                        <div class="flex flex-col items-start">
-                            <h1 class="text-white text-2xl">
-                                {{ post.content }}
-                            </h1>
-                            <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
-                            <LikesDislikes :post="post" class="mt-3"/>
-                        </div>
-                    </div>
-                </li>
-            </ion-list>
-        </div>
-    </div> -->
 </template>
 
 <script setup lang="ts">
@@ -52,32 +46,19 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel,
 import axios from "axios";
 import { ref, onMounted, Ref } from 'vue';
 import ProfileHeader from '@/components/Profile/ProfileHeader.vue';
-import LikesDislikes from '@/components/LikesDislikes.vue';
-
-interface Post {
-    time: Date,
-    content: String,
-    sources: [String],
-    isInformative: Boolean,
-    likes: Number,
-    dislikes: Number
-}
+import UserPostList from '@/components/Post/UserPostList.vue';
+import UserPostListEditable from '@/components/Post/UserPostListEditable.vue';
+import UserMediaList from '@/components/Media/UserMediaList.vue';
+import UserCommunityList from '@/components/Communities/UserCommunityList.vue';
 
 const username = ref("initial");
 const usertag = ref("initial");
-const numCommunities = ref(0);
-const posts = ref<Array<Post>>([]);
-const selectedTab: Ref<"Posts" | "Media" | "Communities"> = ref("Posts")
+const selectedTab: Ref<"Posts" | "Media" | "Communities"> = ref("Posts");
+const isThisUser = ref(false);
 
 onMounted(async () => {
     const userResponse = await axios.get("/account/65318daae491ca0391dc0805").then((res) => res.data);
     username.value = userResponse.username;
     usertag.value = userResponse.usertag;
-
-    const postsResponse = await axios.get('post/65318daae491ca0391dc0805').then((res) => posts.value = res.data);
-    posts.value.forEach(post => {
-        const datePosted = new Date(post.time).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-        post.time = post.time as Date;
-    });
 });
 </script>
