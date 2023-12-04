@@ -17,7 +17,7 @@
                                 <h1 class="text-white text-2xl">
                                     {{ post.content }}
                                 </h1>
-                                <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
+                                <p class="text-sm mt-3 text-white">on {{ post.createdAt }}</p>
                                 <LikesDislikes :post="post" class="mt-3"/>
                             </div>
                         </div>
