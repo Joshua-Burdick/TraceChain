@@ -33,6 +33,13 @@
             Settings
             </ion-label>
         </button>
+        <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSckesx4Bz74KLl2mFEGKDQRa7zw2pUYDjRlqHfoX2Ur8kPk-w/viewform"
+            target="_blank"
+            class="text-blue-500 underline text-sm pb-1"
+        >
+            Having Issues? Submit a Bug Report
+        </a>
     </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row h-full w-full justify-center">
         <ion-list class="flex flex-col w-1/2 bg-[#1d1f20]">
-            <li class="flex w-full" v-for="post in posts" :key="post.id">
+            <li class="flex w-full mb-5" v-for="post in posts" :key="post.id">
                 <PostWidget :post="post" class="flex w-full"/>
             </li>
         </ion-list>
