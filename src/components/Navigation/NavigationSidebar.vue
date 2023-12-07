@@ -5,8 +5,17 @@
             <p class="text-4xl font-semibold">TraceChain</p>
         </div>
 
-        <div v-for="target in navTargets" :key="target.path">
-            <button @click.stop="$router.push({ path: target.path })" class="z-20 my-2 p-3 rounded-full hover:bg-blur-sm hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
+        <div
+            v-for="target in navTargets"
+            :key="target.path"
+        >
+            <button
+                @click.stop="$router.push({ path: target.path })"
+                class="z-20 my-2 p-3 rounded-full hover:bg-blur-sm hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]"
+                :class="{
+                    'text-[#0f8ebb]': $route.path === target.path
+                }"
+            >
                 <div class="w-full h-full bg-gradient-to-r from-[#2f0000] via-[#790909] via-35% -inset-1 blur-sm z-0"></div>
                 <ion-label class="text-4xl z-20" position="floating">
                     <ion-icon aria-hidden="true" :icon="target.icon" />

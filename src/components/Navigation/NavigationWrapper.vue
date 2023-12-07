@@ -22,7 +22,7 @@
     </ion-page>
 </template>
   
-<script setup lang="ts">  
+<script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
 import { pencilSharp, trash, alertCircle } from 'ionicons/icons';
 
