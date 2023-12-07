@@ -23,6 +23,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/CommunitiesTab.vue')
   },
   {
+    path: '/search',
+    component: () => import('@/views/SearchTab.vue')
+  },
+  {
     path: '/signIn',
     component: () => import('@/views/SignIn.vue')
   },
@@ -32,13 +36,11 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/settings',
-    component: () => import('@/views/AccountSettings.vue'),
-    children: [
-      {
-        path: '/privacy',
-        component: () => import('@/views/Privacy.vue')
-      }
-    ]
+    component: () => import('@/views/AccountSettings.vue')
+  },
+  {
+    path: '/settings/privacy',
+    component: () => import('@/views/Privacy.vue')
   },
   {
     path: '/settings/appearance',

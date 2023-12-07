@@ -17,7 +17,7 @@
 
         <div class="flex flex-col h-[100px]"></div>
         
-        <button @click.stop="$router.push({ path: '/create_post' })" class="mt-3 p-3 rounded-full h-12 w-[175px] text-slate-50 text-xl bg-orange-500 hover:bg-orange-600 active:bg-orange-700">
+        <button @click.stop="$router.push({ path: '/create_post' })" class="mt-3 p-3 rounded-full h-20 w-[175px] text-slate-50 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]">
             + Create Post
         </button>
 
