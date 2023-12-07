@@ -28,15 +28,17 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/settings',
-    component: () => import('@/views/AccountSettings.vue')
+    component: () => import('@/views/AccountSettings.vue'),
+    children: [
+      {
+        path: '/privacy',
+        component: () => import('@/views/Privacy.vue')
+      }
+    ]
   },
   {
     path: '/settings/appearance',
     component: () => import('@/views/Appearance.vue')
-  },
-  {
-    path: '/settings/privacy',
-    component: () => import('@/views/Privacy.vue')
   }
 ]
 
