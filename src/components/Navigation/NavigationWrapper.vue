@@ -2,14 +2,20 @@
     <ion-page>
       <ion-content :fullscreen="true">
         <div class="flex flex-col h-full">
-          <div class="flex flex-row h-full bg-[#1d1f20]">
+          <div
+            class="flex h-full bg-[#1d1f20]"
+            :class="{
+              'flex-row' : $vuetify.display.lgAndUp,
+              'flex-col' : $vuetify.display.mdAndDown
+            }"
+          >
             <div v-if="$vuetify.display.lgAndUp" class="flex flex-col w-1/4">
               <NavigationSidebar />
             </div>
             <component :is="pageComponent" class="flex flex-col w-3/4"/>
-          </div>
-          <div v-if="$vuetify.display.mdAndDown" class="flex flex-row">
-            <NavigationBottomBar />
+            <div v-if="$vuetify.display.mdAndDown" class="flex flex-row">
+              <NavigationBottomBar />
+            </div>
           </div>
         </div>
       </ion-content>
