@@ -25,10 +25,12 @@ import { onMounted, ref, PropType } from 'vue';
 import LikesDislikes from '@/components/LikesDislikes.vue';
 
 interface Post {
+    id: string,
     time: Date,
     content: String,
     sources: [String],
     isInformative: Boolean,
+    isEdited: Boolean,
     likes: Number,
     dislikes: Number
 }

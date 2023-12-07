@@ -25,6 +25,7 @@ interface Post {
     content: String,
     sources: [String],
     isInformative: Boolean,
+    isEdited: Boolean,
     likes: Number,
     dislikes: Number
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col overflow-y-scroll">
+    <div class="flex flex-col h-full overflow-y-scroll">
         <ProfileHeader :displayName="username" :usertag="usertag" :numCommunities="0" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
         <div class="flex text-xl bg-slate-800 bg-opacity-40 text-slate-100 justify-center border-b-2 border-slate-500 py-2">
             <div>
@@ -32,7 +32,12 @@
                 </button>
             </div>
         </div>
-        <div class="flex w-full h-full justify-center pt-3">
+        <div
+            class="flex w-full justify-center pt-3"
+            :class="{
+                'h-full' : selectedTab !== 'Posts'
+            }"
+        >
             <UserPostListEditable v-if="selectedTab === 'Posts' && isThisUser" class="flex flex-row"/>
             <UserPostList v-else-if="selectedTab === 'Posts' && !isThisUser" class="flex flex-row"/>
             <UserMediaList v-else-if="selectedTab === 'Media'" class="flex flex-row"/>
