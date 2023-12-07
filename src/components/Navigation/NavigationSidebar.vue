@@ -19,14 +19,14 @@
             </ion-label>
         </button>
 
-        <button @click.stop="$router.push({ path: '/profile' })" class="my-2 p-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
+        <button @click.stop="$router.push({ path: '/communities' })" class="my-2 p-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
             <ion-label class="text-4xl" position="floating">
                 <ion-icon aria-hidden="true" :icon="peopleOutline" />
                 Communities
             </ion-label>
         </button>
 
-        <button @click.stop="$router.push({ path: '/profile' })" class="my-2 p-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
+        <button @click.stop="$router.push({ path: '/search' })" class="my-2 p-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
             <ion-label class="text-4xl" position="floating">
                 <ion-icon aria-hidden="true" :icon="searchOutline" />
                 Search
