@@ -19,6 +19,20 @@
             </ion-label>
         </button>
 
+        <button @click.stop="$router.push({ path: '/profile' })" class="my-2 p-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
+            <ion-label class="text-4xl" position="floating">
+                <ion-icon aria-hidden="true" :icon="peopleOutline" />
+                Communities
+            </ion-label>
+        </button>
+
+        <button @click.stop="$router.push({ path: '/profile' })" class="my-2 p-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
+            <ion-label class="text-4xl" position="floating">
+                <ion-icon aria-hidden="true" :icon="searchOutline" />
+                Search
+            </ion-label>
+        </button>
+
         <div class="flex flex-col h-[100px]"></div>
         
         <button @click.stop="$router.push({ path: '/create_post' })" class="mt-3 p-3 rounded-full h-12 w-[175px] text-slate-50 text-xl bg-orange-500 hover:bg-orange-600 active:bg-orange-700">
@@ -45,5 +59,5 @@
 
 <script setup lang="ts">
 import { IonIcon, IonLabel } from '@ionic/vue';
-import { homeOutline, personCircleOutline, settingsOutline } from 'ionicons/icons';
+import { homeOutline, personCircleOutline, searchOutline, peopleOutline, settingsOutline } from 'ionicons/icons';
 </script>
