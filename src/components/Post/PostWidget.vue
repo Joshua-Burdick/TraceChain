@@ -4,11 +4,14 @@
             <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#068005] via-[#169f0a] via-35% to-[#10aa09]"></div>
             <div v-else-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#800000] via-[#9f0a0a] via-35% to-[#b00700]"></div>
             <div class="flex flex-col items-start w-full">
-                <p class="text-xs text-slate-300">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</p>
-                <div v-if="post.content.length < 200" class="text-2xl px-2 py-3">
+                <div>
+                    <span class="text-md">{{ variant === 'feed' ? 'author@tag ' : '' }}</span>
+                    <span class="text-xs text-slate-300">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</span>
+                </div>
+                <div v-if="post.content.length < 200" class="text-2xl px-2 py-3 mb-2">
                     {{ post.content }}
                 </div>
-                <div v-else class="text-2xl px-2 py-3">
+                <div v-else class="text-2xl px-2 py-3 mb-2">
                     {{ post.content.substr(0,200) + "..." }} <p class="text-sm text-blue-400 hover:underline">Read More</p>
                 </div>
                 <div v-if="post.isInformative" class="mb-2 text-sm hover:text-blue-500">Cites {{ post.sources.length }} {{ post.sources.length > 1 ? 'Sources' : 'Source' }}</div>
@@ -54,6 +57,8 @@ interface Post {
     dislikes: Number
 }
 
+type Variant = "feed" | "profile";
+
 const dateString = ref("");
 const timeString = ref("");
 
@@ -61,6 +66,10 @@ const props = defineProps({
     post: {
         type: Object as PropType<Post>,
         required: true
+    },
+    variant: {
+        type: String as PropType<Variant>,
+        default: "profile"
     }
 });
 
