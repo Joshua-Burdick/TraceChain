@@ -13,7 +13,7 @@
                 @click.stop="$router.push({ path: target.path })"
                 class="z-20 my-2 p-3 rounded-full hover:bg-blur-sm hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]"
                 :class="{
-                    'text-[#0f8ebb]': $route.path === target.path
+                    'text-slate-400': $route.path === target.path
                 }"
             >
                 <div class="w-full h-full bg-gradient-to-r from-[#2f0000] via-[#790909] via-35% -inset-1 blur-sm z-0"></div>
@@ -26,7 +26,7 @@
 
         <div class="flex flex-col h-[100px]"></div>
         
-        <button @click.stop="$router.push({ path: '/create_post' })" class="mt-3 p-3 rounded-full h-20 w-[175px] text-slate-50 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]">
+        <button @click.stop="$router.push({ path: '/create_post' })" class="mt-3 p-3 rounded-full h-20 w-[200px] text-slate-50 text-2xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]">
             + Create Post
         </button>
 

@@ -11,7 +11,7 @@
                 class="flex w-full rounded-full text-4xl"
                 :class="{
                     'text-6xl' : target.path === '/create_post',
-                    'text-[#0f8ebb]': $route.path === target.path
+                    'text-slate-400': $route.path === target.path
                 }"
             >
                 <ion-icon aria-hidden="true" :icon="target.icon" />
