@@ -5,16 +5,20 @@ import TabsPage from '../views/TabsPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    component: TabsPage
-  },
-  {
     path: '/signIn',
     component: () => import('@/views/SignIn.vue')
   },
   {
     path: '/createAccount',
     component: () => import('@/views/CreateAccount.vue')
+  },
+  {
+    path: '/accountSettings',
+    component: () => import('@/views/AccountSettings.vue')
+  },
+  {
+    path: '/',
+    component: TabsPage
   }
 ]
 
