@@ -12,7 +12,7 @@
                     {{ post.content }}
                 </div>
                 <div v-else class="text-2xl px-2 py-3 mb-2">
-                    {{ post.content.substr(0,200) + "..." }} <p class="text-sm text-blue-400 hover:underline">Read More</p>
+                    {{ post.content.substring(0,200) + "..." }} <p class="text-sm text-blue-400 hover:underline">Read More</p>
                 </div>
                 <div v-if="post.isInformative" class="mb-2 text-sm hover:text-blue-500">Cites {{ post.sources.length }} {{ post.sources.length > 1 ? 'Sources' : 'Source' }}</div>
                 <div class="flex flex-row justify-center align-center text-slate-200">
