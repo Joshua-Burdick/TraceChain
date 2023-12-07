@@ -1,14 +1,13 @@
 <template>
-    <div class="overflow-scroll">
-        <Search v-if="isSearchVisible" />
-        <!-- <ComingSoon name="Account Feed" /> -->
-        <div class="flex justify-center  text-slate-50 bg-[#141313]">
-            <div class="">
-                <ul>
-                    <li class="cursor-pointer w-full " v-for="post in feed" :key="post.id">
-                        <PostWidget :post="post" :variant="'feed'" />
-                    </li>
-                </ul>
+    <div class="flex h-full overflow-y-scroll">
+        <div class="flex flex-row w-full justify-center">
+            <ion-list v-if="!loading" class="flex flex-col w-1/2 bg-[#1d1f20]">
+                <li class="flex w-full mb-5" v-for="post in feed" :key="post.id">
+                    <PostWidget :post="post" class="flex w-full" :variant="'feed'"/>
+                </li>
+            </ion-list>
+            <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
+                <v-progress-circular color="blue-lighten-3" class="flex w-1/2 h-1/2 justify-center items-center" :width="15" indeterminate></v-progress-circular>
             </div>
         </div>
     </div>
@@ -40,6 +39,7 @@ interface Post {
 
 let isSearchVisible = true;
 const feed = ref<Array<Post>>([]);
+const loading = ref(true);
 
 onMounted(async () => {
     try {
@@ -49,6 +49,8 @@ onMounted(async () => {
     } catch (error) {
         console.error('Error fetching feed:', error);
     }
+
+    loading.value = false;
 });
 
 const formatSource = (source: any) => {
