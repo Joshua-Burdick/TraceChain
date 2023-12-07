@@ -72,7 +72,12 @@
                                 </ion-item>
                             </ion-router-link>
                             <ion-item>
+<<<<<<< HEAD
                                 <ion-button @click="logout" expand="full" color="danger" class="logout-button"> Logout</ion-button>
+=======
+                                <ion-icon slot="start" :icon="logOutOutline" style="margin-right: 12px;"></ion-icon>
+                                <ion-label>Log Out</ion-label>
+>>>>>>> origin/dev
                             </ion-item>
                     </ion-menu-toggle>
                 </ion-list>
@@ -84,11 +89,17 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
  IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
+<<<<<<< HEAD
 import {ref} from 'vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline } from 'ionicons/icons';
 import {useRouter} from 'vue-router';
 const router = useRouter()
 
+=======
+
+import {ref} from 'vue';
+import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline } from 'ionicons/icons';
+>>>>>>> origin/dev
 
 const isMenuOpen = ref(false);
 
@@ -103,6 +114,7 @@ const highlightItem = (event: MouseEvent) => {
 const unhighlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.remove('item-highlight');
 };
+<<<<<<< HEAD
 const logout = () => {
   // Clear user authentication state
   sessionStorage.removeItem('user_token');
@@ -112,6 +124,8 @@ const logout = () => {
   console.log(document.cookie);
   router.push({path: '/signIn'});
 };
+=======
+>>>>>>> origin/dev
 
 </script>
 
