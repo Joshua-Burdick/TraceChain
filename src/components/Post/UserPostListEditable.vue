@@ -10,7 +10,6 @@
                             {{ post.content }}
                         </h1>
                         <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
-                        <LikesDislikes :post="post" class="mt-3"/>
                     </div>
                 </div>
             </li>
@@ -22,8 +21,6 @@
 import { IonPage, IonHeader, IonContent, IonList, IonItem} from '@ionic/vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-
-import LikesDislikes from '@/components/LikesDislikes.vue';
 
 interface Post {
     time: Date,

@@ -10,7 +10,6 @@
                             {{ post.content }}
                         </h1>
                         <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
-                        <LikesDislikes :post="post" class="mt-3"/>
                     </div>
                 </div>
             </li>
@@ -21,8 +20,6 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonContent, IonList, IonItem} from '@ionic/vue';
 import { onMounted, ref, PropType } from 'vue';
-
-import LikesDislikes from '@/components/LikesDislikes.vue';
 
 interface Post {
     id: string,

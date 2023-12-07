@@ -44,7 +44,6 @@
 import { IonPage, IonHeader, IonContent, IonList, IonItem} from '@ionic/vue';
 import { onMounted, ref, PropType } from 'vue';
 import { thumbsDownSharp, thumbsUpSharp, chatbubbleEllipsesOutline } from 'ionicons/icons';
-import LikesDislikes from '@/components/LikesDislikes.vue';
 
 interface Post {
     id: string,

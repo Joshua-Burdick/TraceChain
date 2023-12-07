@@ -5,22 +5,8 @@
         <div class="flex justify-center  text-slate-50 bg-[#141313]">
             <div class="">
                 <ul>
-                    <li class="cursor-pointer w-full " v-for="post in feed">
-                        <div class="flex bg-stone-700 hover:bg-stone-800 active:bg-stone-900 block border-2 border-stone-400 p-3 rounded sm:text-sm md:text-lg lg:text-lg ion-text-wrap max-w-full h-full my-5 whitespace-normal overflow-hidden">
-                            <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-green mr-3"></div>
-                            <div v-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-red mr-3"></div>
-                            <div class="flex flex-col items-start">
-                                <div class="flex flex-row">
-                                    <h4 class="font-bold">author</h4>
-                                    <h2>@tag</h2>
-                                </div>
-                                <h1 class="text-white text-2xl">
-                                    {{ post.content }}
-                                </h1>
-                                <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
-                                <LikesDislikes :post="post" class="mt-3"/>
-                            </div>
-                        </div>
+                    <li class="cursor-pointer w-full " v-for="post in feed" :key="post.id">
+                        <PostWidget :post="post" :variant="'feed'" />
                     </li>
                 </ul>
             </div>
@@ -34,7 +20,7 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar } fr
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import Search from '@/components/Search.vue';
-import LikesDislikes from '@/components/LikesDislikes.vue';
+import PostWidget from '@/components/Post/PostWidget.vue';
 
 interface User {
     username: String,
@@ -42,12 +28,14 @@ interface User {
 }
 
 interface Post {
+    id: string,
+    time: Date,
     content: String,
-    createdAt: Date,
     sources: [String],
-    isInformative: String,
-    likes: number,
-    dislikes: number
+    isInformative: Boolean,
+    isEdited: Boolean,
+    likes: Number,
+    dislikes: Number
 }
 
 let isSearchVisible = true;
@@ -58,16 +46,6 @@ onMounted(async () => {
         const feedResponse = await axios.get("/post/feed");
         feed.value = feedResponse.data;
         console.log(feed.value);
-
-        feed.value.forEach(post => {
-            console.log(post);
-
-            console.log(post, " has type ", typeof (post));
-            const datePosted = new Date(post.createdAt).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-            post.createdAt = post.createdAt as Date;
-        });
-
-
     } catch (error) {
         console.error('Error fetching feed:', error);
     }

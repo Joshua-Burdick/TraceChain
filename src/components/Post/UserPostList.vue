@@ -17,7 +17,6 @@ import axios from 'axios';
 import { onMounted, Ref, ref } from 'vue';
 
 import PostWidget from '@/components/Post/PostWidget.vue';
-import LikesDislikes from '@/components/LikesDislikes.vue';
 
 interface Post {
     id: string,
