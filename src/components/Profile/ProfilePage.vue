@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-full overflow-y-scroll">
+    <div class="flex flex-col w-full h-full overflow-y-scroll">
         <ProfileHeader :displayName="username" :usertag="usertag" :numCommunities="0" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
         <div class="flex text-xl bg-slate-800 bg-opacity-40 text-slate-100 justify-center border-b-2 border-slate-500 py-2">
             <div>

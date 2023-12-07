@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonContent, IonList, IonItem} from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon, IonItem } from '@ionic/vue';
 import { onMounted, ref, PropType } from 'vue';
 import { thumbsDownSharp, thumbsUpSharp, chatbubbleEllipsesOutline } from 'ionicons/icons';
 
