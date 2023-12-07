@@ -1,14 +1,18 @@
 <template>
     <div class="flex flex-row h-full w-full rounded-lg text-slate-50 justify-center cursor-pointer shadow-lg shadow-black">
         <div class="flex w-full rounded-lg bg-stone-700 block p-3 sm:text-sm md:text-lg lg:text-lg ion-text-wrap">
-            <!-- <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-green mr-3"></div>
-            <div v-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-red mr-3"></div> -->
-            <div class="flex flex-col items-start">
-                <p class="text-xs text-white">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</p>
-                <h1 class="text-white text-2xl p-2">
+            <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#068005] via-[#169f0a] via-35% to-[#10aa09]"></div>
+            <div v-else-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#800000] via-[#9f0a0a] via-35% to-[#b00700]"></div>
+            <div class="flex flex-col items-start w-full">
+                <p class="text-xs text-slate-300">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</p>
+                <div v-if="post.content.length < 200" class="text-2xl px-2 py-3">
                     {{ post.content }}
-                </h1>
-                <div class="flex flex-row justify-center align-center">
+                </div>
+                <div v-else class="text-2xl px-2 py-3">
+                    {{ post.content.substr(0,200) + "..." }} <p class="text-sm text-blue-400 hover:underline">Read More</p>
+                </div>
+                <div v-if="post.isInformative" class="mb-2 text-sm hover:text-blue-500">Cites {{ post.sources.length }} {{ post.sources.length > 1 ? 'Sources' : 'Source' }}</div>
+                <div class="flex flex-row justify-center align-center text-slate-200">
                     <div class="mr-2">
                         <button class="hover:text-green-500">
                             <ion-icon :icon="thumbsUpSharp"></ion-icon>
@@ -25,7 +29,7 @@
                         <button class="hover:text-blue-500">
                             <ion-icon :icon="chatbubbleEllipsesOutline"></ion-icon>
                         </button>
-                        {{ 0 }}
+                        {{ 0 }} <!-- TODO add comments array to posts and display array.length -->
                     </div>
                 </div>
             </div>
