@@ -7,7 +7,7 @@
   </ion-header>
     <ion-content class="ion-padding">
       <div class="signin-container">
-        <ion-img class="logo" src="@/assets/TraceChain.png" alt="Logo"></ion-img>
+        <ion-img class="logo" src="/TraceChain.svg" alt="Logo"></ion-img>
         <ion-card class="signin-card">
           <ion-card-header>
             <ion-card-title class="sign-in-text" >Sign In</ion-card-title>
@@ -16,33 +16,80 @@
             <ion-list>
               <ion-item>
                 <ion-label position="floating">Username</ion-label>
-                <ion-input v-model="username" type="username"></ion-input>
+                <ion-input v-model="username" name="username" type="text"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Password</ion-label>
-                <ion-input v-model="password" type="password"></ion-input>
+                <ion-input v-model="password" name="password" type="password"></ion-input>
               </ion-item>
               </ion-list>
-              <ion-button expand="full" color="danger" class="sign-in-button">Sign In</ion-button>
+              <ion-button expand="full" color="danger" @click="signInUser" class="sign-in-button">Sign In</ion-button>
               <router-link to="/createAccount">
               <ion-button expand="full" class="join-now-button" color="dark" > Not a Member? <br> Join Now</ion-button>
               </router-link>
           </ion-card-content>
         </ion-card>
       </div>
+      <ion-alert
+      class="showAlert"
+      v-model="showAlert"
+      :header="'Error'"
+      :subHeader="'Sign-in failed'"
+      :message="alertMessage"
+      :buttons="[{ text: 'OK', handler: () => showAlert = false }]"
+    />
     </ion-content>
   </ion-page>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonInput, IonButton, IonImg } from '@ionic/vue';
-import { useIonRouter } from '@ionic/vue';
+import { IonAlert, IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonInput, IonButton, IonImg } from '@ionic/vue';
 import axios from 'axios';
+import router from '@/router';
+
+
+
+
 
 const username = ref('');
 const password = ref('');
-const router = useIonRouter();
+const showAlert = ref(false);
+const alertMessage = ref<string>('');
+
+
+const showErrorAlert = (message: string) => {
+  console.log('Error alert triggered:', message);
+  alert('Enter a valid Username or Password, or register below ');
+};
+
+const signInUser = () => {
+  const userSignIn = {
+    username: username.value, // Input field for username or email
+    password: password.value,
+  };
+  console.log("user logged in: ", userSignIn.username);
+
+  axios.post('http://localhost:1776/api/login', userSignIn)
+    .then((res) => {
+      const token = res.data.token;
+
+      sessionStorage.setItem('user_token', token);
+
+      document.cookie = `access_token=${token}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/; secure; samesite=None`;
+
+      console.log(res.data);
+      console.log("User Logged In: ", userSignIn);
+      router.push({path: '/accountSettings'});
+      // Handle successful sign-in
+    })
+    .catch((error) => {
+      console.log('Sign-in error:', error.response.data.message);
+      showErrorAlert('Incorrect Username/Password');
+      // Handle sign-in error
+    });
+};
+
 
 
 </script>
@@ -66,12 +113,13 @@ const router = useIonRouter();
 }
 
 .logo {
-  width: 100px;
-  height: 100px;
-  
+  width: 150px;
+  height: 150px;
   margin-top: 20px;
 }
-
+.showAlert{
+  color: #000;
+}
 .signin-card {
   background: radial-gradient(circle, #050505, #0d0d0d, #1a1a1a, #2a2a2a, #3b3b3b);
 color: #fff; 

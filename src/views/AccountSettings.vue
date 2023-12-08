@@ -72,6 +72,7 @@
                                 </ion-item>
                             </ion-router-link>
                             <ion-item>
+                                <ion-button @click="logout" expand="full" color="danger" class="logout-button"> Logout</ion-button>
                                 <ion-icon slot="start" :icon="logOutOutline" style="margin-right: 12px;"></ion-icon>
                                 <ion-label>Log Out</ion-label>
                             </ion-item>
@@ -85,9 +86,10 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
  IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
-
 import {ref} from 'vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline } from 'ionicons/icons';
+import {useRouter} from 'vue-router';
+const router = useRouter();
 
 const isMenuOpen = ref(false);
 
@@ -101,6 +103,16 @@ const highlightItem = (event: MouseEvent) => {
 
 const unhighlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.remove('item-highlight');
+};
+    
+const logout = () => {
+  // Clear user authentication state
+  sessionStorage.removeItem('user_token');
+  sessionStorage.removeItem('user');
+  document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/signIn;';
+  // Navigate to the login page (or any other desired route)
+  console.log(document.cookie);
+  router.push({path: '/signIn'});
 };
 
 </script>
