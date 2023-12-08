@@ -1,33 +1,50 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import TabsPage from '../views/TabsPage.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
+    redirect: '/feed',
   },
   {
-    path: '/tabs/',
-    component: TabsPage,
-    children: [
-      {
-        path: '',
-        redirect: '/tabs/tab1'
-      },
-      {
-        path: 'tab1',
-        component: () => import('@/views/Tab1Page.vue')
-      },
-      {
-        path: 'tab2',
-        component: () => import('@/views/Tab2Page.vue')
-      },
-      {
-        path: 'tab3',
-        component: () => import('@/views/Tab3Page.vue')
-      }
-    ]
+    path: '/feed',
+    component: () => import('@/views/FeedTab.vue')
+  },
+  {
+    path: '/create_post',
+    component: () => import('@/views/CreatePostTab.vue')
+  },
+  {
+    path: '/profile',
+    component: () => import('@/views/ProfileTab.vue')
+  },
+  {
+    path: '/communities',
+    component: () => import('@/views/CommunitiesTab.vue')
+  },
+  {
+    path: '/search',
+    component: () => import('@/views/SearchTab.vue')
+  },
+  {
+    path: '/signIn',
+    component: () => import('@/views/SignIn.vue')
+  },
+  {
+    path: '/createAccount',
+    component: () => import('@/views/CreateAccount.vue')
+  },
+  {
+    path: '/settings',
+    component: () => import('@/views/AccountSettings.vue')
+  },
+  {
+    path: '/settings/privacy',
+    component: () => import('@/views/Privacy.vue')
+  },
+  {
+    path: '/settings/appearance',
+    component: () => import('@/views/Appearance.vue')
   }
 ]
 

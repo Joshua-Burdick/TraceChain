@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+import { init } from './initState';
 
 import { IonicVue } from '@ionic/vue';
 
@@ -38,10 +39,14 @@ const vuetify = createVuetify({
 })
 
 const app = createApp(App)
-  .use(IonicVue)
+  .use(IonicVue, {
+   navAnimation: 'none'
+  })
   .use(router)
   .use(vuetify);
   
 router.isReady().then(() => {
   app.mount('#app');
 });
+
+init();
