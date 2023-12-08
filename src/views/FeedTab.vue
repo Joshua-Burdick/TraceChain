@@ -1,17 +1,14 @@
 <template>
-    <ion-page>
-      <!-- <ion-header>
-        <ion-toolbar>
-          <ion-title>Tab 1</ion-title>
-        </ion-toolbar>
-      </ion-header> -->
-      <ion-content :fullscreen="true">
-        <ComingSoon name="Account Feed"/>
-      </ion-content>
-    </ion-page>
-  </template>
-  
-  <script setup lang="ts">
-  import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
-  import ComingSoon from '@/components/ComingSoon.vue';
-  </script>
+  <ion-page>
+    <ion-content :fullscreen="true" class="bg-[#141313]">
+      <NavigationWrapper :pageComponent="FeedPage" />
+    </ion-content>
+  </ion-page>
+</template>
+
+<script setup lang="ts">
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar } from '@ionic/vue';
+import { ref, onMounted } from 'vue';
+import FeedPage from '../components/FeedPage.vue';
+import NavigationWrapper from '@/components/Navigation/NavigationWrapper.vue';
+</script>
