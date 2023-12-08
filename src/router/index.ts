@@ -3,8 +3,6 @@ import { RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
-<<<<<<< HEAD
-=======
     path: '/',
     redirect: '/feed',
   },
@@ -29,7 +27,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/SearchTab.vue')
   },
   {
->>>>>>> origin/dev
     path: '/signIn',
     component: () => import('@/views/SignIn.vue')
   },
@@ -38,14 +35,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/CreateAccount.vue')
   },
   {
-<<<<<<< HEAD
-    path: '/accountSettings',
-    component: () => import('@/views/AccountSettings.vue')
-  },
-  {
-    path: '/',
-    component: TabsPage
-=======
     path: '/settings',
     component: () => import('@/views/AccountSettings.vue')
   },
@@ -56,7 +45,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/settings/appearance',
     component: () => import('@/views/Appearance.vue')
->>>>>>> origin/dev
   }
 ]
 
