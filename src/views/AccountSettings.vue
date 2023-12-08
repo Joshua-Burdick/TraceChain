@@ -11,7 +11,6 @@
 
 
         <ion-content class="ion-padding">
-        <div :class="{'settings-container': true, 'menu-open': isMenuOpen}">
             <div class="settings-section">
                 <h2 class="settings-title" style="font-weight: 800;">Account Settings</h2>
                 <div class="settings-group">
@@ -43,7 +42,6 @@
                     </div>
                 </div>
             </div>
-        </div>
         </ion-content>
     </ion-page> 
 
@@ -55,22 +53,18 @@
                         Settings
                     </ion-list-header>
                     <ion-menu-toggle auto-hide="false">
-                            <ion-item @mouseover="highlightItem" @mouseleave="unhighlightItem">
+                            <ion-item @click="$router.push('/settings')" @mouseover="highlightItem" @mouseleave="unhighlightItem">
                                 <ion-icon slot="start" :icon="personCircleOutline" style="margin-right: 12px;"></ion-icon>
                                 <ion-label>Account</ion-label>
                             </ion-item>
-                            <ion-router-link href="/settings/appearance">
-                                <ion-item>
+                                <ion-item @click="$router.push('/settings/appearance')">
                                     <ion-icon slot="start" :icon="sunnyOutline" style="margin-right: 12px;"></ion-icon>
                                     <ion-label>Appearance</ion-label>
                                 </ion-item>
-                            </ion-router-link>
-                            <ion-router-link href="/settiings/privacy">
-                                <ion-item>
+                                <ion-item @click="$router.push('/settings/privacy')">
                                     <ion-icon slot="start" :icon="lockClosedOutline" style="margin-right: 12px;"></ion-icon>
                                     <ion-label>Privacy</ion-label>
                                 </ion-item>
-                            </ion-router-link>
                             <ion-item>
                                 <ion-icon slot="start" :icon="logOutOutline" style="margin-right: 12px;"></ion-icon>
                                 <ion-label>Log Out</ion-label>
@@ -86,14 +80,8 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
  IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
 
-import {ref} from 'vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline } from 'ionicons/icons';
 
-const isMenuOpen = ref(false);
-
-const toggleMenu = () => {
-isMenuOpen.value = !isMenuOpen.value;
-}
 
 const highlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.add('item-highlight');
@@ -117,11 +105,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 height: 100%;
-padding: 0;
---padding-top: 0;
---padding-bottom: 0;
---padding-start: 0;
---padding-end: 0;
+
 }
 
 .settings-container {
