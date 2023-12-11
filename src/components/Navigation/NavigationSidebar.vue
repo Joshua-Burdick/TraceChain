@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col align-center bg-stone-800 min-[1000px]:h-full max-[999px]:h-0 max-[999px]:w-0 text-slate-50">
+    <div class="flex flex-col align-center bg-stone-800 min-[1000px]:h-full max-[999px]:h-0 max-[999px]:w-0 text-slate-100">
         <div class=" flex flex-row mt-10 mb-20 align-center">
             <img aria-hidden="true" src="/TraceChain.svg" class="w-20"/>
             <p class="text-4xl font-semibold">TraceChain</p>
@@ -16,7 +16,6 @@
                     'text-slate-400': $route.path === target.path
                 }"
             >
-                <div class="w-full h-full bg-gradient-to-r from-[#2f0000] via-[#790909] via-35% -inset-1 blur-sm z-0"></div>
                 <ion-label class="text-4xl z-20" position="floating">
                     <ion-icon aria-hidden="true" :icon="target.icon" />
                     {{ target.label }}
@@ -26,7 +25,7 @@
 
         <div class="flex flex-col h-[100px]"></div>
         
-        <button @click.stop="$router.push({ path: '/create_post' })" class="mt-3 p-3 rounded-full h-20 w-[200px] text-slate-50 text-2xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]">
+        <button @click.stop="$router.push({ path: '/create_post' })" class="mt-3 p-3 rounded-full h-20 w-[200px] text-slate-100 text-2xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]">
             + Create Post
         </button>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row h-full w-full rounded-lg text-slate-50 justify-center cursor-pointer shadow-lg shadow-black">
+    <div class="flex flex-row h-full w-full rounded-lg text-slate-100 justify-center cursor-pointer shadow-lg shadow-black">
         <div class="flex w-full rounded-lg bg-stone-700 block p-3 sm:text-sm md:text-lg lg:text-lg ion-text-wrap">
             <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#068005] via-[#169f0a] via-35% to-[#10aa09]"></div>
             <div v-else-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#800000] via-[#9f0a0a] via-35% to-[#b00700]"></div>
