@@ -1,101 +1,122 @@
 <template>
-    <ion-page id="main-content">
+    <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title style="text-align: center; padding-right: 50px;">TraceChain</ion-title>
                 <ion-buttons slot="start">
                     <ion-menu-button></ion-menu-button>
+                </ion-buttons>
+                <ion-buttons slot="end">
+                    <ion-button @click="$router.push('/feed')">
+                        <ion-icon slot="icon-only" :icon="homeOutline"></ion-icon>
+                    </ion-button>
                 </ion-buttons>
             </ion-toolbar>
         </ion-header>
 
 
-        <ion-content class="ion-padding">
-        <div :class="{'settings-container': true, 'menu-open': isMenuOpen}">
-            <div class="settings-section">
-                <h2 class="settings-title" style="font-weight: 800;">Account Settings</h2>
-                <div class="settings-group">
-                    <label class="settings-label" style="font-weight: 800;">Basic Info</label>
-                    <div class="settings-input-group">
-                        <ion-item lines="full">
-                            <ion-label position="floating" style="font-weight: 550;">First Name</ion-label>
-                            <ion-input type="text" placeholder="Hatsune"></ion-input>
-                        </ion-item>
-                        <ion-item lines="full">
-                            <ion-label position="floating" style="font-weight: 550;">Last Name</ion-label>
-                            <ion-input type="text" placeholder="Miku"></ion-input>
-                        </ion-item>
-                        <ion-item lines="full">
-                            <ion-label position="floating" style="font-weight: 550;">Email</ion-label>
-                            <ion-input type="email" placeholder="hatsune.miku@snhu.edu"></ion-input>
-                        </ion-item>
+        <ion-content id="main-content">
+            <div class="min-h-screen bg-neutral-900 flex flex-col items-center justify-center">
+                <div class="absolute top-0 w-full h-[200px] h-1/2 bg-neutral-800"></div>
+
+                <div class="w-11/12 md:2/3 lg:w-[900px] h-[580px] bg-neutral-900 rounded-sm shadow-xl z-10 p-9
+                flex flex-col lg:flex-row -mt-10 space-x-0 lg:space-x-10">
+
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-semibold">Account Settings</h2>
+                        <p class="text-stone-600 text-sm mb-6">Edit your name, avatar, etc</p>
+                        <form>
+                            <div class="mb-4">
+                                <label for="fName" class="block text-stone-300 text-sm font-bold mb-2">First Name</label>
+                                <input type="text" id="fName" placeholder="Hatsune" class="shadow appearance-none
+                                border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
+                                focus:shadow-outline mb-4">
+                                <label for="lName" class="block text-stone-300 text-sm font-bold mb-2">Last Name</label>
+                                <input type="text" id="lName" placeholder="Miku" class="shadow appearance-none
+                                border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
+                                focus:shadow-outline mb-4">
+                                <label for="uName" class="block text-stone-300 text-sm font-bold mb-2">Username</label>
+                                <input type="text" id="uName" placeholder="@HatsuneMikuOfficial" class="shadow appearance-none
+                                border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
+                                focus:shadow-outline mb-10">
+                                <label for="email" class="block text-stone-300 text-sm font-bold mb-2">Email</label>
+                                <input type="email" id="email" placeholder="hatsunemiku@snhu.edu" class="shadow appearance-none
+                                border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
+                                focus:shadow-outline mb-4">
+                                <label for="password" class="block text-stone-300 text-sm font-bold mb-2">Password</label>
+                                <input type="password" id="password" placeholder="12345" class="shadow appearance-none
+                                border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
+                                focus:shadow-outline">
+                            </div>
+                        </form>
                     </div>
-                    <label class="settings-label-account" style="font-weight: 800;">Account Info</label>
-                    <div class="settings-input-group">
-                        <ion-item lines="full">
-                            <ion-label position="floating" style="font-weight: 550;">Username</ion-label>
-                            <ion-input type="text" placeholder="Ex: HatsuneMikuOfficial"></ion-input>
-                        </ion-item>
-                        <ion-item lines="full">
-                            <ion-label position="floating" style="font-weight: 550;">Password</ion-label>
-                            <ion-input type="password"></ion-input>
-                        </ion-item>
+
+                    <!--Profile Picture-->
+                    <div class="flex lg:flex-1 lg:flex-col items-center justify-start lg:justify-start">
+                        <div class="w-28 h-28 md:w-36 md:h-36 xl:w-44 xl:h-44 rounded-full overflow-hidden
+                        bg-stone-800 mt-6 ml-4">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png"
+                            alt="Profile Image">
+                    </div>
+                    <ion-buttons>
+                        <ion-button fill="solid" color="light" class="mt-6 ml-5 bg-neutral-800 py-2 px-4
+                        rounded-md text-sm" style="--background-activated: transparent; --background-focused: transparent;">Upload Picture</ion-button>
+                    </ion-buttons>
+
+                    <div class="w-full mt-4">
+                        <label for="bio" class="block text-stone-300 text-sm font-bold mb-1 ml-8">Bio</label>
+                        <textarea id="bio" rows="4" placeholder="Tell us about yourself..." class="ml-8 w-[350px] h-[198px] px-3
+                        py-2 text-white bg-neutral-800 rounded shadow appearance-none
+                        leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        </ion-content>
-    </ion-page> 
-
-    <ion-menu side="start" content-id="main-content">
-        <ion-content>
-            <div class="list-container">
+        </ion-content> 
+        <ion-menu content-id="main-content" side="start">
+            <ion-content>
                 <ion-list lines="none">
-                    <ion-list-header style="font-size: 1.5em;  padding-left: 40px; font-weight: 550;">
-                        Settings
-                    </ion-list-header>
                     <ion-menu-toggle auto-hide="false">
-                            <ion-item @mouseover="highlightItem" @mouseleave="unhighlightItem">
-                                <ion-icon slot="start" :icon="personCircleOutline" style="margin-right: 12px;"></ion-icon>
-                                <ion-label>Account</ion-label>
-                            </ion-item>
-                            <ion-router-link href="/settings/appearance">
-                                <ion-item>
-                                    <ion-icon slot="start" :icon="sunnyOutline" style="margin-right: 12px;"></ion-icon>
-                                    <ion-label>Appearance</ion-label>
-                                </ion-item>
-                            </ion-router-link>
-                            <ion-router-link href="/settiings/privacy">
-                                <ion-item>
-                                    <ion-icon slot="start" :icon="lockClosedOutline" style="margin-right: 12px;"></ion-icon>
-                                    <ion-label>Privacy</ion-label>
-                                </ion-item>
-                            </ion-router-link>
-                            <ion-item>
-                                <ion-button @click="logout" expand="full" color="danger" class="logout-button"> Logout</ion-button>
-                                <ion-icon slot="start" :icon="logOutOutline" style="margin-right: 12px;"></ion-icon>
-                                <ion-label>Log Out</ion-label>
-                            </ion-item>
+                        <h1 class="font-bold text-2xl ml-10 pt-[190px] mb-3">Settings</h1>
+                        <ion-item @click="$router.push('/settings')" class="flex items-center p-3 hover:bg-neutral-700
+                        rounded"
+                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
+                            <ion-icon slot="start" :icon="personCircleOutline" class="text-lg mr-3 ml-4"></ion-icon>
+                            <ion-label>Account</ion-label>
+                        </ion-item>
+                        <ion-item @click="$router.push('/settings/appearance')" class="flex items-center p-3 hover:bg-neutral-700 rounded"
+                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
+                            <ion-icon slot="start" :icon="sunnyOutline" class="text-lg mr-3 ml-4"></ion-icon>
+                            <ion-label>Appearance</ion-label>
+                        </ion-item>
+                        <ion-item @click="$router.push('/settings/privacy')" class="flex items-center p-3 hover:bg-neutral-700 rounded" 
+                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
+                            <ion-icon slot="start" :icon="lockClosedOutline" class="text-lg mr-3 ml-4"></ion-icon>
+                            <ion-label>Privacy</ion-label>
+                        </ion-item>
+                        <ion-item @click="$router.push('/logout')" class="flex items-center p-3 hover:bg-neutral-700 rounded pb-"
+                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
+                            <ion-icon slot="start" :icon="logOutOutline" class="text-lg mr-3 ml-4"></ion-icon>
+                            <ion-label>Log Out</ion-label>
+                        </ion-item>
+                        <div class="pt-20"></div>
+                        <div class="pt-20"></div>
+                        <div class="pt-5"></div>
                     </ion-menu-toggle>
                 </ion-list>
-            </div>
-        </ion-content>
-    </ion-menu>
+            </ion-content>
+        </ion-menu>
+  </ion-page>
 </template>
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
  IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
+import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline } from 'ionicons/icons';
 import {ref} from 'vue';
-import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline } from 'ionicons/icons';
 import {useRouter} from 'vue-router';
 const router = useRouter();
 
 const isMenuOpen = ref(false);
-
-const toggleMenu = () => {
-isMenuOpen.value = !isMenuOpen.value;
-}
 
 const highlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.add('item-highlight');
@@ -114,137 +135,4 @@ const logout = () => {
 //   console.log(document.cookie);
   router.push({path: '/login'});
 };
-
 </script>
-
-<style>
-
-ion-header ion-toolbar {
-justify-content: center;
-}
-
-ion-content {
-overflow-y: auto;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100%;
-padding: 0;
---padding-top: 0;
---padding-bottom: 0;
---padding-start: 0;
---padding-end: 0;
-}
-
-.settings-container {
-background-color: #000;
-color: #fff;
-padding: 25px;
-border-radius: 10px;
-box-sizing: border-box;
-max-width: 800px;
-margin: auto;
-margin-top: 15px;
-}
-
-.list-container {
-height: 100%;
-padding-top: 55%;
-}
-
-.settings-title {
-font-size: 1.2em;
-margin-bottom: 15px;
-color: #fff;
-}
-
-.settings-group {
-background-color: #1c1c1c;
-padding: 30px;
-border-radius: 10px;
-}
-
-.settings-label {
-font-size: 1.0em;
-color: #aaa;
-margin-bottom: 15px;
-display: block;
-}
-
-.settings-label-account {
-font-size: 1.0em;
-color: #aaa;
-margin-bottom: 15px;
-display: block;
-margin-top: 40px;
-}
-
-.settings-input-group ion-item {
---background: #2a2a2a;
---color: #fff;
---placeholder-color: #555;
---border-color: transparent;
-margin-bottom: 15px;
-border-radius: 10px;
-font-size: 0.9em;
-}
-
-ion-menu {
---width: 200px;
---min-width: 300px;
-}
-
-ion-menu {
-height: 100vh;
-}
-
-ion-menu ion-content {
-height: 100%;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
---background: #1e1e1e;
-}
-
-ion-list ion-item {
-padding-bottom: 30px;
-}
-
-
-ion-item {
---background-activated: transparent; /* Background when activated */
---background-hover: transparent; /* Background for hover state */
---background-hover: transparent; /* No background on hover */
---ripple-color: transparent;
---highlight-color-focused: white;
---placeholder-color: white;
---color: white;
-}
-
-/* For browsers that support hover states, you can also use the :hover pseudo-class */
-ion-item:hover::part(native) {
-background-color: #1c1c1c; /* Your desired hover color */
-}
-
-ion-item::part(native):hover {
-background-image: linear-gradient(to right, #632323, transparent);
-}
-
-ion-list {
-height: 100%;
---background: tranparent;
-}
-
-ion-list-header {
-padding-bottom: 30px;
-}
-
-ion-menu-toggle {
---background: transparent;
-}
-
-ion-icon {
-padding-left: 20px;
-}
-</style>

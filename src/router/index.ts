@@ -39,13 +39,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/AccountSettings.vue')
   },
   {
-    path: '/settings/privacy',
-    component: () => import('@/views/Privacy.vue')
-  },
-  {
     path: '/settings/appearance',
     component: () => import('@/views/Appearance.vue')
+  },
+  {
+    path: '/settings/privacy',
+    component: () => import('@/views/Privacy.vue')
   }
+
 ]
 
 const router = createRouter({
