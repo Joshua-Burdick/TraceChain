@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row w-full align-center justify-center bg-stone-800 py-5 px-3">
+    <div class="flex flex-row w-full align-center justify-center bg-neutral-900 py-5 px-3">
         <div class="flex w-2/3"></div>
         <div
             class="flex w-full text-slate-100"

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col align-center bg-stone-800 min-[1000px]:h-full max-[999px]:h-0 max-[999px]:w-0 text-slate-100">
+    <div class="flex flex-col align-center bg-neutral-900 min-[1000px]:h-full max-[999px]:h-0 max-[999px]:w-0 text-slate-100">
         <div class=" flex flex-row mt-10 mb-20 align-center">
             <img aria-hidden="true" src="/TraceChain.svg" class="w-20"/>
             <p class="text-4xl font-semibold">TraceChain</p>
