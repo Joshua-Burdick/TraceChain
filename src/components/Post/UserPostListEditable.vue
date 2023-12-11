@@ -3,7 +3,7 @@
         <ion-list v-if="!loading" class="flex flex-col w-1/2 bg-[#1d1f20]">
             <div v-if="posts.length === 0" class="flex flex-col">
                 <h1 class="text-4xl font-semibold text-gray-300">
-                    {{ 'You Have not Made any Posts Yet' }}
+                    {{ 'This User Has not Made any Posts Yet' }}
                 </h1>
             </div>
             <li v-else class="flex w-full mb-5" v-for="post in posts" :key="post.id">
