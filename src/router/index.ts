@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/CreatePostTab.vue')
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     component: () => import('@/views/ProfileTab.vue')
   },
   {
@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/SearchTab.vue')
   },
   {
-    path: '/signIn',
+    path: '/login',
     component: () => import('@/views/SignIn.vue')
   },
   {
@@ -53,5 +53,17 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/login', '/createAccount'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedInId = sessionStorage.getItem('userId');
+
+  if (authRequired && !loggedInId) {
+    return next('/login');
+  }
+
+  next();
+});
 
 export default router

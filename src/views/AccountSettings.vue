@@ -111,9 +111,12 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
  IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
-
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline } from 'ionicons/icons';
+import {ref} from 'vue';
+import {useRouter} from 'vue-router';
+const router = useRouter();
 
+const isMenuOpen = ref(false);
 
 const highlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.add('item-highlight');
@@ -122,5 +125,14 @@ const highlightItem = (event: MouseEvent) => {
 const unhighlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.remove('item-highlight');
 };
-
+    
+const logout = () => {
+  // Clear user authentication state
+  sessionStorage.removeItem('user_token');
+  sessionStorage.removeItem('userId');
+//   document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/login;';
+  // Navigate to the login page (or any other desired route)
+//   console.log(document.cookie);
+  router.push({path: '/login'});
+};
 </script>

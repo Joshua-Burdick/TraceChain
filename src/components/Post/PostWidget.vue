@@ -1,11 +1,11 @@
 <template>
-    <div class="flex flex-row h-full w-full rounded-lg text-slate-50 justify-center cursor-pointer shadow-lg shadow-black">
+    <div class="flex flex-row h-full w-full rounded-lg text-slate-100 justify-center cursor-pointer shadow-lg shadow-black">
         <div class="flex w-full rounded-lg bg-stone-700 block p-3 sm:text-sm md:text-lg lg:text-lg ion-text-wrap">
             <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#068005] via-[#169f0a] via-35% to-[#10aa09]"></div>
             <div v-else-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#800000] via-[#9f0a0a] via-35% to-[#b00700]"></div>
             <div class="flex flex-col items-start w-full">
                 <div>
-                    <span class="text-md">{{ variant === 'feed' ? 'author@tag ' : '' }}</span>
+                    <span class="text-md">{{ variant === 'feed' ? `${username}@${usertag} ` : '' }}</span>
                     <span class="text-xs text-slate-300">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</span>
                 </div>
                 <div v-if="post.content.length < 200" class="text-2xl px-2 py-3 mb-2">
@@ -44,9 +44,11 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon, IonItem } from '@ionic/vue';
 import { onMounted, ref, PropType } from 'vue';
 import { thumbsDownSharp, thumbsUpSharp, chatbubbleEllipsesOutline } from 'ionicons/icons';
+import axios from 'axios';
 
 interface Post {
-    id: string,
+    _id: string,
+    userId: string,
     time: Date,
     content: String,
     sources: [String],
@@ -60,6 +62,8 @@ type Variant = "feed" | "profile";
 
 const dateString = ref("");
 const timeString = ref("");
+const username = ref("");
+const usertag = ref("");
 
 const props = defineProps({
     post: {
@@ -72,8 +76,12 @@ const props = defineProps({
     }
 });
 
-onMounted(() => {
+onMounted(async () => {
     dateString.value = new Date(props.post.time).toLocaleDateString('en-US', { year: "numeric", month: "numeric", day: "numeric" });
     timeString.value = new Date(props.post.time).toLocaleTimeString('en-US', { hour12: false });
+
+    const postHeader = await axios.get(`account/${props.post.userId}/header`).then((res) => res.data);
+    username.value = postHeader.username;
+    usertag.value = postHeader.usertag;
 });
 </script>
