@@ -1,10 +1,5 @@
 <template>
-    <ion-page>
-        <ion-header>
-      <ion-toolbar>
-        <ion-title style = "text-align: center;">TraceChain</ion-title>
-      </ion-toolbar>
-    </ion-header>
+    <ion-page class="flex w-full">
       <ion-content class="ion-padding">
         <div class="createAccount-container">
           <ion-img class="logo" src="/TraceChain.svg" alt="Logo"></ion-img>
@@ -65,11 +60,11 @@ import router from '@/router';
 
   console.log("user created: ", userRegister.email);
 
-  axios.post('http://localhost:1776/api/register', userRegister)
+  axios.post('register', userRegister)
     .then((res) => {
       console.log(res);
       console.log("User Submitted: ", userRegister);
-      router.push('/signIn');
+      router.push('/login');
     })
     .catch((error) => {
       console.log('the following error occured when trying to post a new deck', error);

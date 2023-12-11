@@ -108,11 +108,11 @@ const unhighlightItem = (event: MouseEvent) => {
 const logout = () => {
   // Clear user authentication state
   sessionStorage.removeItem('user_token');
-  sessionStorage.removeItem('user');
-  document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/signIn;';
+  sessionStorage.removeItem('userId');
+//   document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/login;';
   // Navigate to the login page (or any other desired route)
-  console.log(document.cookie);
-  router.push({path: '/signIn'});
+//   console.log(document.cookie);
+  router.push({path: '/login'});
 };
 
 </script>

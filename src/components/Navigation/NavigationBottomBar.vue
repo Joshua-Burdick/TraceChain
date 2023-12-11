@@ -31,6 +31,8 @@ type NavTarget = {
     icon: string
 }
 
+const userId = sessionStorage.getItem('userId');
+
 const navTargets: Array<NavTarget> = [
     {
         path: '/feed',
@@ -49,7 +51,7 @@ const navTargets: Array<NavTarget> = [
         icon: peopleOutline
     },
     {
-        path: '/profile',
+        path: `/profile/${userId}`,
         icon: personCircleOutline
     }
 ]

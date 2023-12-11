@@ -1,47 +1,47 @@
 <template>
-    <div class="flex flex-row h-full w-full text-slate-100 justify-center">
-        <ion-list class="w-1/2 bg-red">
-            <li class="cursor-pointer w-full bg-[#1d1f20]" v-for="post in posts">
-                <div class="flex bg-stone-700 hover:bg-stone-800 active:bg-stone-900 block border-2 border-stone-400 p-3 rounded sm:text-sm md:text-lg lg:text-lg ion-text-wrap max-w-full h-full my-5 whitespace-normal overflow-hidden">
-                    <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-green mr-3"></div>
-                    <div v-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-red mr-3"></div>
-                    <div class="flex flex-col items-start">
-                        <h1 class="text-white text-2xl">
-                            {{ post.content }}
-                        </h1>
-                        <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
-                    </div>
-                </div>
+    <div class="flex flex-row h-full w-full justify-center align-center">
+        <ion-list v-if="!loading" class="flex flex-col w-1/2 bg-[#1d1f20]">
+            <div v-if="posts.length === 0" class="flex flex-col">
+                <h1 class="text-4xl font-semibold text-gray-300">
+                    {{ 'This User Has not Made any Posts Yet' }}
+                </h1>
+            </div>
+            <li v-else class="flex w-full mb-5" v-for="post in posts" :key="post.id">
+                <PostWidget :post="post" class="flex w-full"/>
             </li>
         </ion-list>
+        <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
+            <v-progress-circular color="blue-lighten-3" class="flex w-1/2 h-1/2 justify-center items-center" :width="15" indeterminate></v-progress-circular>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonContent, IonList, IonItem} from '@ionic/vue';
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onMounted, Ref, ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+import PostWidget from '@/components/Post/PostWidget.vue';
+
+const route = useRoute();
 
 interface Post {
+    id: string,
     time: Date,
     content: String,
     sources: [String],
     isInformative: Boolean,
+    isEdited: Boolean,
     likes: Number,
     dislikes: Number
 }
 
-const posts = ref<Array<Post>>([]);
-
-defineProps({
-    posts: Array<Post>
-})
+const loading: Ref<boolean> = ref(true);
+const posts: Ref<Array<Post>> = ref<Array<Post>>([]);
 
 onMounted(async () => {
-    const userPosts = await axios.get('post/65318daae491ca0391dc0805').then((res) => posts.value = res.data);
-    posts.value.forEach(post => {
-        const datePosted = new Date(post.time).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
-        post.time = post.time as Date;
-    });
+    const userPosts = await axios.get(`post/${route.params.id}`).then((res) => posts.value = res.data);
+    loading.value = false;
 })
 </script>
