@@ -6,9 +6,9 @@
     </ion-toolbar>
   </ion-header>
     <ion-content class="ion-padding">
-      <div class="signin-container">
+      <div class="login-container">
         <ion-img class="logo" src="/TraceChain.svg" alt="Logo"></ion-img>
-        <ion-card class="signin-card">
+        <ion-card class="login-card">
           <ion-card-header>
             <ion-card-title class="sign-in-text" >Sign In</ion-card-title>
           </ion-card-header>
@@ -23,7 +23,7 @@
                 <ion-input v-model="password" name="password" type="password"></ion-input>
               </ion-item>
               </ion-list>
-              <ion-button expand="full" color="danger" @click="signInUser" class="sign-in-button">Sign In</ion-button>
+              <ion-button expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
               <router-link to="/createAccount">
               <ion-button expand="full" class="join-now-button" color="dark" > Not a Member? <br> Join Now</ion-button>
               </router-link>
@@ -44,13 +44,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IonAlert, IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonInput, IonButton, IonImg } from '@ionic/vue';
+import { IonAlert, IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonInput, IonButton, IonImg, IonTitle, IonToolbar, IonHeader } from '@ionic/vue';
 import axios from 'axios';
-import router from '@/router';
-
-
-
-
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const username = ref('');
 const password = ref('');
@@ -63,34 +60,28 @@ const showErrorAlert = (message: string) => {
   alert('Enter a valid Username or Password, or register below ');
 };
 
-const signInUser = () => {
-  const userSignIn = {
+const loginUser = () => {
+  const userlogin = {
     username: username.value, // Input field for username or email
     password: password.value,
   };
-  console.log("user logged in: ", userSignIn.username);
 
-  axios.post('http://localhost:1776/api/login', userSignIn)
+  axios.post('login', userlogin)
     .then((res) => {
       const token = res.data.token;
 
       sessionStorage.setItem('user_token', token);
+      sessionStorage.setItem('user', res.data.user);
 
       document.cookie = `access_token=${token}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/; secure; samesite=None`;
 
-      console.log(res.data);
-      console.log("User Logged In: ", userSignIn);
-      router.push({path: '/accountSettings'});
-      // Handle successful sign-in
+      router.push({ path: '/feed' });
     })
     .catch((error) => {
       console.log('Sign-in error:', error.response.data.message);
       showErrorAlert('Incorrect Username/Password');
-      // Handle sign-in error
     });
 };
-
-
 
 </script>
 
@@ -103,7 +94,7 @@ const signInUser = () => {
   margin-bottom: 10px;
   margin-top: 10px;
 }
-.signin-container {
+.login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,7 +111,7 @@ const signInUser = () => {
 .showAlert{
   color: #000;
 }
-.signin-card {
+.login-card {
   background: radial-gradient(circle, #050505, #0d0d0d, #1a1a1a, #2a2a2a, #3b3b3b);
 color: #fff; 
 border-radius: 15px;
