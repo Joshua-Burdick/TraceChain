@@ -21,38 +21,39 @@
             </label>
         </div>
         <div
-            class="flex flex-col w-1/3 h-full justify-center align-center overflow-y-scroll mt-5"
+            class="flex flex-col lg:w-1/2 h-full justify-center align-center overflow-y-scroll mt-5"
             :class="{
-                'rounded-lg border-2 border-zinc-600 shadow-sm shadow-black': isInformative && sources.length > 0,
+                'rounded-lg border-2 border-zinc-600 shadow-md shadow-black': isInformative && sources.length > 0,
             }"
         >
             <div
                 v-if="isInformative"
                 class="flex flex-col w-full h-full p-2"
             >
-                <div v-for="(value, index) in sources" :key="index" class="flex w-full justify-center align-center">
+                <div v-for="(value, index) in sources" :key="index" class="flex w-full justify-center align-center mb-3">
                     <select
                         v-model="sourceTypes[index]"
-                        class="bg-gray-50 cursor-pointer border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="bg-gray-50 cursor-pointer border text-sm rounded-lg block w-1/4 dark:bg-stone-700 dark:bg-opacity-90 dark:text-slate-100 mr-2 mt-2 p-2.5 shadow-sm shadow-black"
                     >
-                        <option value="article">Article</option>
-                        <option value="book">Book</option>
-                        <option value="video">Video</option>
+                        <option value="Article">Article</option>
+                        <option value="Book">Book</option>
+                        <option value="Video">Video</option>
                     </select>
 
                     <div class="flex flex-col w-full h-full">
-                        <div v-for="(field, fieldIndex) in sourceFields[sourceTypes[index]]" :key="fieldIndex" class="w-full h-full border-2 border-green-500">
-                            <!-- <input
-                                v-model="sources[index][field]" placeholder="test"/> -->
-                            {{ field }}
+                        <div v-for="(field, fieldIndex) in sourceFields[sourceTypes[index]]" :key="fieldIndex" class="w-full h-full mt-2">
+                            <input
+                                v-model="sources[index][field]" :placeholder="field"
+                                class="w-full h-full rounded-lg bg-zinc-800 p-2 shadow-sm shadow-black"
+                            />
                         </div>
                     </div>
-                    <ion-icon :icon="trash" @click="sources.splice(index, 1)"
-                        class="text-4xl hover:cursor-pointer text-red-500" />
+                    <ion-icon :icon="trash" @click="sourceTypes.splice(index, 1); sources.splice(index, 1)"
+                        class="text-4xl hover:text-5xl hover:cursor-pointer text-red-600 ml-2" />
                 </div>
                 <button
-                    class="p-2 w-full h-14 rounded-lg hover:bg-gray-700 hover:bg-opacity-70 active:bg-gray-600 active:bg-opacity-70 text-2xl"
-                    @click.stop="sourceTypes.push('article'); sources.push({})"
+                    class="p-2 mt-2 w-full h-14 rounded-lg hover:bg-gray-700 hover:bg-opacity-70 active:bg-gray-600 active:bg-opacity-70 text-2xl"
+                    @click.stop="sourceTypes.push('Article'); sources.push({})"
                 >
                     +
                 </button>
@@ -71,58 +72,78 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIco
 import { pencilSharp, trash, alertCircle } from 'ionicons/icons';
 import { ref, Ref, watch } from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 import { Article, Book, Video } from '@/types/postTypes';
+
+const router = useRouter();
 
 const userId = sessionStorage.getItem("userId");
 const postContent = ref('');
 const isInformative = ref(true);
-const sourceTypes: Ref<string[]> = ref(['article']);
-const sources: Ref<object[]> = ref([{}]);
+const sourceTypes: Ref<string[]> = ref(['Article']);
+const sources: Ref<SourceContent[]> = ref([{}]);
 
 interface SourceTypes {
     [key: string]: string[]
 }
 
+interface SourceContent {
+    [key: string]: string
+}
+
 const sourceFields: SourceTypes = {
-    "article": ["url"],
-    "book": ["title", "author"],
-    "video": ["url"]
+    "Article": ["URL"],
+    "Book": ["Title", "Author"],
+    "Video": ["URL"]
 };
 
 const maxLength = 500;
 
 const error = ref('');
 
+console.log("sources", JSON.stringify(sources.value[0]) === '{}');
+
 const submitPost = () => {
-//   if (isInformative.value) {
-//     if (sources.value.length === 0 || (sources.value.length === 1 && sources.value[0] === '')) {
-//       error.value = 'Please add at least one source.';
-//       return;
-//     }
-//   }
+    const reduced = sources.value
+    .map((source, ind) => {
+        if (JSON.stringify(source) === '{}') {
+            return undefined;
+        }
+        return source;
+    })
+    .filter((source) => source !== undefined );
 
-//   error.value = '';
+  if (isInformative.value) {
+    if (reduced.length === 0) {
+      error.value = 'Please add at least one source.';
+      return;
+    }
+  }
 
-//   const post = {
-//     userId: userId,
-//     content: postContent.value,
-//     sources: [... new Set(sources.value)],
-//     isInformative: isInformative.value,
-//     isEdited: false,
-//     timestamp: new Date().toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false }),
-//   };
+  const post = {
+    userId: userId,
+    content: postContent.value,
+    sources: [... new Set(reduced)],
+    isInformative: isInformative.value,
+    isEdited: false,
+    time: Date.now(),
+  };
 
-//   console.log("post content: ", post.content);
+  axios.post(`/post/${userId}`, post)
+    .then((res) => {
+      console.log(res);
+      console.log("Submitted: ", post);
+    })
+    .catch((error) => {
+      console.log('the following error occured when trying to post a new deck', error);
+    })
 
-//   axios.post(`/post/${userId}`, post)
-//     .then((res) => {
-//       console.log(res);
-//       console.log("Submitted: ", post);
-//     })
-//     .catch((error) => {
-//       console.log('the following error occured when trying to post a new deck', error);
-//     })
+    sources.value = [];
+    sourceTypes.value = [];
+    postContent.value = '';
+
+    router.push({ path: `/profile/${userId}` });
 };
 
 </script>

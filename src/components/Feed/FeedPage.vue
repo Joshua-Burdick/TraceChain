@@ -3,7 +3,7 @@
         <FeedHeader class="flex h-auto"/>
         <div class="flex flex-row w-full justify-center pt-10">
             <ion-list v-if="!loading" class="flex flex-col w-1/2 bg-[#1d1f20]">
-                <li class="flex w-full mb-5" v-for="post in feed" :key="post.id">
+                <li class="flex w-full mb-5" v-for="post in feed" :key="post._id">
                     <PostWidget :post="post" class="flex w-full" :variant="'feed'"/>
                 </li>
             </ion-list>
@@ -28,7 +28,8 @@ interface User {
 }
 
 interface Post {
-    id: string,
+    _id: string,
+    userId: string,
     time: Date,
     content: String,
     sources: [String],

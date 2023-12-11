@@ -31,7 +31,7 @@
 
         <div class="flex flex-col h-full"></div>
 
-        <button @click.stop="$router.push({ path: '/settings' })" class="p-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
+        <button @click.stop="$router.push({ path: '/settings' })" class="p-3 mb-3 rounded-full hover:bg-gradient-to-r hover:from-[#2f0000] hover:via-[#790909] hover:via-35% hover:to-[#b00700]">
             <ion-label class="text-3xl" position="floating">
             <ion-icon aria-hidden="true" :icon="settingsOutline" />
             Settings
