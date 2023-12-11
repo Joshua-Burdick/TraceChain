@@ -29,29 +29,6 @@
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonContent, IonList, IonItem} from '@ionic/vue';
-import { onMounted, ref, PropType } from 'vue';
-
-interface Post {
-    id: string,
-    time: Date,
-    content: String,
-    sources: [String],
-    isInformative: Boolean,
-    isEdited: Boolean,
-    likes: Number,
-    dislikes: Number
-}
-
-defineProps({
-    post: {
-        type: Object as PropType<Post>,
-        required: true
-    }
-})
-</script>
-
-<script setup lang="ts">
-import { IonPage, IonHeader, IonContent, IonList, IonItem} from '@ionic/vue';
 import axios from 'axios';
 import { onMounted, Ref, ref } from 'vue';
 import { useRoute } from 'vue-router';
