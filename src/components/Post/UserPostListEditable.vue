@@ -6,7 +6,7 @@
                     {{ 'This User Has not Made any Posts Yet' }}
                 </h1>
             </div>
-            <li v-else class="flex w-full mb-5" v-for="post in posts" :key="post.id">
+            <li v-else class="flex w-full mb-5" v-for="post in posts" :key="post._id">
                 <PostWidget :post="post" class="flex w-full"/>
             </li>
         </ion-list>
@@ -27,7 +27,8 @@ import PostWidget from '@/components/Post/PostWidget.vue';
 const route = useRoute();
 
 interface Post {
-    id: string,
+    _id: string,
+    userId: string,
     time: Date,
     content: String,
     sources: [String],
