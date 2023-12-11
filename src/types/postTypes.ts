@@ -1,12 +1,12 @@
 export type Article = {
-    url: String;
+    URL: String;
 }
 
 export type Book = {
-    title: String;
-    author: String;
+    Title: String;
+    Author: String;
 }
 
 export type Video = {
-    url: String;
+    URL: String;
 }

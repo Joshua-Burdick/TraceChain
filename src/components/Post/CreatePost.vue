@@ -1,97 +1,136 @@
 <template>
-    <div class="flex flex-col min-[1000px]:w-1/3 w-full h-full ml-20">
-        <div class="flex flex-row lg:h-1/6 align-center justify-center text-6xl font-semibold">
+    <div class="flex flex-col w-full h-full align-center">
+        <div class="flex flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold">
             Make a Post
             <ion-icon :icon="pencilSharp" class="ml-2" />
         </div>
-        <div class="flex flex-row lg:h-2/3 h-5/6">
-            <div class="px-2 py-2 w-full rounded-lg border-2 border-zinc-600 bg-zinc-800 mb-5">
-            <textarea class="focus:outline-none text-white text-lg w-full h-full resize-none" :maxlength="maxLength"
-                v-model="postContent" placeholder="Write something..."></textarea>
-            <p :class="postContent.length == maxLength ? 'text-red' : 'text-white'"
-                class="flex w-full justify-end pt-1 pr-2">{{ postContent.length }}</p>
+        <div class="flex flex-col align-center pt-15 w-full h-full">
+            <div class="px-2 py-2 w-3/4 rounded-lg bg-zinc-800 h-full shadow-md shadow-black">
+                <textarea class="focus:outline-none text-white text-lg w-full h-full resize-none" :maxlength="maxLength"
+                    v-model="postContent" placeholder="Write something..."></textarea>
+                <p :class="postContent.length == maxLength ? 'text-red' : 'text-white'"
+                    class="flex w-full justify-end pt-2 pr-2">{{ postContent.length }}/500</p>
             </div>
         </div>
-        <div class="flex flex-row">
-            <div class="flex flex-col lg:w-full"></div>
-            <button class="mt-3 rounded-full lg:w-20 w-full h-10 bg-orange-500 hover:bg-orange-600 active:bg-orange-700"
-            @click.stop="submitPost">Post</button>
+        <div class="flex flex-col w-full h-auto pt-7 justify-center align-center">
+            <p class="text-4xl font-semibold pb-3">Sources</p>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" value="" class="sr-only peer" v-model="isInformative">
+                <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                <span class="ms-3 text-lg text-gray-900 dark:text-gray-300">Is this post informative?</span>
+            </label>
         </div>
-        <div class="text-red">{{ error }}</div>
-        </div>
-        <div class="flex flex-col lg:w-1/3">
-        <div class="flex flex-row lg:h-1/6"></div>
-        <div class="flex flex-row lg:h-2/3 h-5/6">
-            <div class="ml-5 px-1 py-1 w-full">
-            <p class="text-2xl font-semibold">Sources</p>
-            <ion-toggle v-model="isInformative" label-placement="end" class="py-5">Is this source
-                informative?</ion-toggle>
-            <br />
-            <button v-if="isInformative" class="mb-2 p-2 h-10 hover:bg-gray-700 active:bg-gray-600"
-                @click.stop="sources.push('')">+ Add Source</button>
-            <div v-if="isInformative" class="p-2 h-2/3 w-2/3 overflow-scroll rounded-lg border-2 border-zinc-600">
-                <div v-for="(value, index) in sources">
-                <!-- <label for="source-select" class="text-sm">Type</label> -->
-                <select name="source-select" class="bg-zinc-600 hover:bg-zinc-700 rounded-lg p-2 hover:cursor-pointer">
-                    <option selected>Article</option>
-                    <option>Book</option>
-                    <option>Video</option>
-                </select>
-                <input type="text"
-                    class="p-2 m-2 rounded-lg border-2 focus:outline-zinc-600 outline-offset-0 border-zinc-600 bg-zinc-800 outline-none"
-                    v-model="sources[index]" placeholder="Source URL" />
-                <ion-icon :icon="trash" @click="sources.splice(index, 1)"
-                    class="hover:text-xl hover:cursor-pointer text-red-500" />
+        <div
+            class="flex flex-col lg:w-1/2 h-full justify-center align-center overflow-y-scroll mt-5"
+            :class="{
+                'rounded-lg border-2 border-zinc-600 shadow-md shadow-black': isInformative && sources.length > 0,
+            }"
+        >
+            <div
+                v-if="isInformative"
+                class="flex flex-col w-full h-full p-2"
+            >
+                <div v-for="(value, index) in sources" :key="index" class="flex w-full justify-center align-center mb-3">
+                    <select
+                        v-model="sourceTypes[index]"
+                        class="bg-gray-50 cursor-pointer border text-sm rounded-lg block w-1/4 dark:bg-stone-700 dark:bg-opacity-90 dark:text-slate-100 mr-2 mt-2 p-2.5 shadow-sm shadow-black"
+                    >
+                        <option value="Article">Article</option>
+                        <option value="Book">Book</option>
+                        <option value="Video">Video</option>
+                    </select>
+
+                    <div class="flex flex-col w-full h-full">
+                        <div v-for="(field, fieldIndex) in sourceFields[sourceTypes[index]]" :key="fieldIndex" class="w-full h-full mt-2">
+                            <input
+                                v-model="sources[index][field]" :placeholder="field"
+                                class="w-full h-full rounded-lg bg-zinc-800 p-2 shadow-sm shadow-black"
+                            />
+                        </div>
+                    </div>
+                    <ion-icon :icon="trash" @click="sourceTypes.splice(index, 1); sources.splice(index, 1)"
+                        class="text-4xl hover:text-5xl hover:cursor-pointer text-red-600 ml-2" />
                 </div>
-                <br />
+                <button
+                    class="p-2 mt-2 w-full h-14 rounded-lg hover:bg-gray-700 hover:bg-opacity-70 active:bg-gray-600 active:bg-opacity-70 text-2xl"
+                    @click.stop="sourceTypes.push('Article'); sources.push({})"
+                >
+                    +
+                </button>
             </div>
-            </div>
+        </div>
+        <div class="flex flex-row align-center justify-center p-5">
+            <button class="rounded-full w-36 h-14 text-slate-100 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]"
+            @click.stop="submitPost">Post</button>
         </div>
     </div>
 </template>
 
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import axios from 'axios';
-
-// import { Article, Book, Video } from '@/types/postTypes';
-
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
 import { pencilSharp, trash, alertCircle } from 'ionicons/icons';
+import { ref, Ref, watch } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 
-const tempUserId = `65318daae491ca0391dc0805`;
+import { Article, Book, Video } from '@/types/postTypes';
 
+const router = useRouter();
+
+const userId = sessionStorage.getItem("userId");
 const postContent = ref('');
 const isInformative = ref(true);
-const sources = ref(['']);
+const sourceTypes: Ref<string[]> = ref(['Article']);
+const sources: Ref<SourceContent[]> = ref([{}]);
 
-const maxLength = 255;
+interface SourceTypes {
+    [key: string]: string[]
+}
+
+interface SourceContent {
+    [key: string]: string
+}
+
+const sourceFields: SourceTypes = {
+    "Article": ["URL"],
+    "Book": ["Title", "Author"],
+    "Video": ["URL"]
+};
+
+const maxLength = 500;
 
 const error = ref('');
 
+console.log("sources", JSON.stringify(sources.value[0]) === '{}');
+
 const submitPost = () => {
+    const reduced = sources.value
+    .map((source, ind) => {
+        if (JSON.stringify(source) === '{}') {
+            return undefined;
+        }
+        return source;
+    })
+    .filter((source) => source !== undefined );
+
   if (isInformative.value) {
-    if (sources.value.length === 0 || (sources.value.length === 1 && sources.value[0] === '')) {
+    if (reduced.length === 0) {
       error.value = 'Please add at least one source.';
       return;
     }
   }
 
-  error.value = '';
-
   const post = {
-    userId: tempUserId,
+    userId: userId,
     content: postContent.value,
-    sources: [... new Set(sources.value)],
+    sources: [... new Set(reduced)],
     isInformative: isInformative.value,
     isEdited: false,
-    timestamp: new Date().toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false }),
+    time: Date.now(),
   };
 
-  console.log("post content: ", post.content);
-
-  axios.post(`/post/${tempUserId}`, post)
+  axios.post(`/post/${userId}`, post)
     .then((res) => {
       console.log(res);
       console.log("Submitted: ", post);
@@ -99,6 +138,12 @@ const submitPost = () => {
     .catch((error) => {
       console.log('the following error occured when trying to post a new deck', error);
     })
+
+    sources.value = [];
+    sourceTypes.value = [];
+    postContent.value = '';
+
+    router.push({ path: `/profile/${userId}` });
 };
 
 </script>

@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-row w-full align-center justify-center bg-stone-800 py-5 px-3">
+    <div class="flex flex-row w-full align-center justify-center bg-neutral-900 py-5 px-3">
         <div class="flex w-2/3"></div>
         <div
-            class="flex w-full text-slate-50"
+            class="flex w-full text-slate-100"
             v-for="target in navTargets"
             :key="target.path"
         >
@@ -31,6 +31,8 @@ type NavTarget = {
     icon: string
 }
 
+const userId = sessionStorage.getItem('userId');
+
 const navTargets: Array<NavTarget> = [
     {
         path: '/feed',
@@ -49,7 +51,7 @@ const navTargets: Array<NavTarget> = [
         icon: peopleOutline
     },
     {
-        path: '/profile',
+        path: `/profile/${userId}`,
         icon: personCircleOutline
     }
 ]

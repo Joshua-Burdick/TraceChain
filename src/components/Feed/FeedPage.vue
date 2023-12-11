@@ -1,8 +1,9 @@
 <template>
-    <div class="flex h-full overflow-y-scroll">
-        <div class="flex flex-row w-full justify-center">
+    <div class="flex flex-col w-full h-full overflow-y-scroll divide-y-2">
+        <FeedHeader class="flex h-auto"/>
+        <div class="flex flex-row w-full justify-center pt-10">
             <ion-list v-if="!loading" class="flex flex-col w-1/2 bg-[#1d1f20]">
-                <li class="flex w-full mb-5" v-for="post in feed" :key="post.id">
+                <li class="flex w-full mb-5" v-for="post in feed" :key="post._id">
                     <PostWidget :post="post" class="flex w-full" :variant="'feed'"/>
                 </li>
             </ion-list>
@@ -18,7 +19,7 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonSearchbar, IonList } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import Search from '@/components/Search.vue';
+import FeedHeader from '@/components/Feed/FeedHeader.vue';
 import PostWidget from '@/components/Post/PostWidget.vue';
 
 interface User {
@@ -27,7 +28,8 @@ interface User {
 }
 
 interface Post {
-    id: string,
+    _id: string,
+    userId: string,
     time: Date,
     content: String,
     sources: [String],
