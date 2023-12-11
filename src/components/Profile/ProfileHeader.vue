@@ -36,18 +36,68 @@
                     </button>
                 </div>
             </div>
+            <div v-if="!isThisUser" class="flex flex-col lg:ml-4">
+                <div class="flex lg:h-16 h-10"></div>
+                <button
+                    class="rounded-full h-12 w-28"
+                    :class="{
+                        'bg-blue-600': !isFollowing,
+                        'bg-gray-600': isFollowing
+                    }"
+                    @click.stop="toggleFollow"
+                >
+                    <ion-label position="floating">
+                        {{ isFollowing ? 'Following' : 'Follow' }}
+                        <ion-icon v-if="isFollowing" aria-hidden="true" :icon="checkmarkOutline" />
+                    </ion-label>
+                </button>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, IonIcon} from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, IonIcon } from '@ionic/vue';
+import axios from 'axios';
+import { checkmarkOutline } from 'ionicons/icons';
+import { onMounted, ref, Ref } from 'vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const loggedInId = sessionStorage.getItem('userId') ?? "";
 
-defineProps({
+const followers: Ref<Array<String>> = ref([]);
+const isThisUser = ref(route.params.id === loggedInId);
+const isFollowing: Ref<Boolean> = ref(false);
+
+const props = defineProps({
     displayName: String,
     usertag: String,
     numFollowers: Number,
     numFollowing: Number,
     numCommunities: Number
-})
+});
+
+onMounted(async () => {
+    followers.value = await axios.get(`account/${route.params.id}`).then((res) => res.data.followers);
+    isFollowing.value = followers.value.includes(loggedInId);
+});
+
+const toggleFollow = async () => {
+    if (!isFollowing.value) {
+        axios.put(`account/${route.params.id}/follow`, {
+            followerId: loggedInId
+        }).then((res) => {
+            console.log(res);
+        });
+    } else {
+        axios.put(`account/${route.params.id}/unfollow`, {
+            followerId: loggedInId
+        }).then((res) => {
+            console.log(res);
+        });
+    }
+    
+    followers.value = await axios.get(`account/${route.params.id}`).then((res) => res.data.followers);
+    isFollowing.value = followers.value.includes(loggedInId);
+}
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col w-full h-full overflow-y-scroll">
-        <ProfileHeader :displayName="username" :usertag="usertag" :numCommunities="0" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
+        <ProfileHeader :displayName="user.username" :usertag="user.usertag" :numFollowers="user.followers.length" :numFollowing="user.following.length" :numCommunities="0" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
         <div class="flex text-xl bg-slate-800 bg-opacity-40 text-slate-100 justify-center border-b-2 border-slate-500 py-2">
             <div>
                 <button
@@ -55,15 +55,29 @@ import UserPostList from '@/components/Post/UserPostList.vue';
 import UserPostListEditable from '@/components/Post/UserPostListEditable.vue';
 import UserMediaList from '@/components/Media/UserMediaList.vue';
 import UserCommunityList from '@/components/Communities/UserCommunityList.vue';
+import { useRoute } from 'vue-router';
+const route = useRoute();
 
-const username = ref("initial");
-const usertag = ref("initial");
+type User = {
+    username: string,
+    usertag: string,
+    followers: Array<string>,
+    following: Array<string>
+}
+
+const user: Ref<User> = ref({
+    username: "",
+    usertag: "",
+    followers: [],
+    following: []
+})
 const selectedTab: Ref<"Posts" | "Media" | "Communities"> = ref("Posts");
-const isThisUser = ref(false);
+const userId = ref(sessionStorage.getItem("userId") ?? "");
+const isThisUser = ref(route.params.id === userId.value);
 
 onMounted(async () => {
-    const userResponse = await axios.get("/account/65318daae491ca0391dc0805").then((res) => res.data);
-    username.value = userResponse.username;
-    usertag.value = userResponse.usertag;
+    const userResponse = await axios.get(`account/${route.params.id}`).then((res) => res.data);
+    
+    user.value = userResponse;
 });
 </script>

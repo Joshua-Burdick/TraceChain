@@ -1,19 +1,13 @@
 <template>
-    <div class="flex flex-row h-full w-full text-slate-50 justify-center">
-        <!-- <ion-list class="w-1/2 bg-[#1d1f20]">
-            <li class="cursor-pointer w-full bg-[#1d1f20]" v-for="post in posts">
-                <div class="flex bg-stone-700 hover:bg-stone-800 active:bg-stone-900 block border-2 border-stone-400 p-3 rounded sm:text-sm md:text-lg lg:text-lg ion-text-wrap max-w-full h-full my-5 whitespace-normal overflow-hidden">
-                    <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-green mr-3"></div>
-                    <div v-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg bg-red mr-3"></div>
-                    <div class="flex flex-col items-start">
-                        <h1 class="text-white text-2xl">
-                            {{ post.content }}
-                        </h1>
-                        <p class="text-sm mt-3 text-white">on {{ post.time }}</p>
-                    </div>
-                </div>
+    <div class="flex flex-row h-full w-full justify-center">
+        <ion-list v-if="!loading" class="flex flex-col w-1/2 bg-[#1d1f20]">
+            <li class="flex w-full mb-5" v-for="post in posts" :key="post.id">
+                <PostWidget :post="post" class="flex w-full"/>
             </li>
-        </ion-list> -->
+        </ion-list>
+        <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
+            <v-progress-circular color="blue-lighten-3" class="flex w-1/2 h-1/2 justify-center items-center" :width="15" indeterminate></v-progress-circular>
+        </div>
     </div>
 </template>
 

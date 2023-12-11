@@ -69,11 +69,11 @@ const loginUser = () => {
   axios.post('login', userlogin)
     .then((res) => {
       const token = res.data.token;
-
+      
       sessionStorage.setItem('user_token', token);
-      sessionStorage.setItem('user', res.data.user);
+      sessionStorage.setItem('userId', res.data.user._id);
 
-      document.cookie = `access_token=${token}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/; secure; samesite=None`;
+      // document.cookie = `access_token=${token}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/; secure; samesite=None`;
 
       router.push({ path: '/feed' });
     })

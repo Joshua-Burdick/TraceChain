@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/CreatePostTab.vue')
   },
   {
-    path: '/profile',
+    path: '/profile/:id',
     component: () => import('@/views/ProfileTab.vue')
   },
   {
@@ -56,7 +56,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/createAccount'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = sessionStorage.getItem('user');
+  const loggedIn = sessionStorage.getItem('userId');
   console.log('logged in', loggedIn);
 
   if (authRequired && !loggedIn) {
