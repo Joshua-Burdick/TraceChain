@@ -35,8 +35,8 @@ interface Post {
     sources: [String],
     isInformative: Boolean,
     isEdited: Boolean,
-    likes: Number,
-    dislikes: Number
+    likes: [String],
+    dislikes: [String]
 }
 
 let isSearchVisible = true;

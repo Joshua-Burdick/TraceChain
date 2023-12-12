@@ -4,7 +4,7 @@
     </div>
     <div v-if="!loading" class="flex flex-col w-full h-full align-center justify-center overflow-y-scroll text-slate-100">
         <div class="flex flex-col h-auto w-2/3">
-            <div class="flex flex-row h-full w-full bg-stone-700 p-3 rounded-lg shadow-lg shadow-black">
+            <div class="flex flex-row h-full w-full bg-stone-700 p-5 rounded-lg shadow-lg shadow-black">
                 <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#068005] via-[#169f0a] via-35% to-[#10aa09]"></div>
                 <div v-else-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#800000] via-[#9f0a0a] via-35% to-[#b00700]"></div>
                 <div class="flex flex-col items-start w-full">
@@ -12,7 +12,12 @@
                         <span class="text-4xl">{{ username }}</span>
                         <span class="text-md text-slate-400 ml-3">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</span>
                     </div>
-                    <span class="text-2xl text-slate-300">@{{ usertag }}</span>
+                    <span
+                        class="text-2xl text-slate-300 hover:underline cursor-pointer"
+                        @click.stop="$router.push(`/profile/${post.userId}`)"
+                    >
+                        @{{ usertag }}
+                    </span>
                     <div class="text-5xl px-2 py-3 mb-2 mt-10">
                         {{ post.content }}
                     </div>
@@ -20,16 +25,28 @@
             </div>
             <div class="flex flex-row text-slate-200 mt-3 text-xl">
                 <div class="mr-2">
-                    <button class="hover:text-green-500">
+                    <button
+                        class="hover:text-green-500"
+                        :class="{
+                            'text-green-600': userId && post.likes.includes(userId)
+                        }"
+                        @click.stop="updateLikesDislikes('like')"
+                    >
                         <ion-icon :icon="thumbsUpSharp"></ion-icon>
                     </button>
-                    {{ post.likes || 0}}
+                    {{ post.likes.length || 0}}
                 </div>
                 <div>
-                    <button class="hover:text-red-500">
+                    <button
+                        class="hover:text-red-500"
+                        :class="{
+                            'text-red-600': userId && post.dislikes.includes(userId)
+                        }"
+                        @click.stop="updateLikesDislikes('dislike')"
+                    >
                         <ion-icon :icon="thumbsDownSharp"></ion-icon>
                     </button>
-                    {{ post.dislikes || 0 }}
+                    {{ post.dislikes.length || 0 }}
                 </div>
             </div>
         </div>
@@ -71,6 +88,7 @@ import { onMounted, ref, Ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const route = useRoute();
+const userId = sessionStorage.getItem("userId");
 
 const tempSources = [
     {
@@ -102,8 +120,8 @@ interface Post {
     sources: [Sources],
     isInformative: Boolean,
     isEdited: Boolean,
-    likes: Number,
-    dislikes: Number
+    likes: [String],
+    dislikes: [String]
 }
 
 const post: Ref<Post> = ref({
@@ -114,8 +132,8 @@ const post: Ref<Post> = ref({
     sources: [{ type: "", data: {} }],
     isInformative: false,
     isEdited: false,
-    likes: 0,
-    dislikes: 0
+    likes: [""],
+    dislikes: [""]
 } as Post);
 
 const username: Ref<string> = ref("");
@@ -138,4 +156,63 @@ onMounted(async () => {
     loading.value = false;
 });
 
+const updateLikesDislikes = async (type: string) => {
+    if (!userId) {
+        console.log("Invalid request. No User Id.");
+        return;
+    }
+
+    if (type === 'like') {
+        if (post.value.likes.includes(userId)) {
+            post.value.likes.splice(post.value.likes.indexOf(userId), 1);
+
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
+                userId: userId,
+                like: true,
+                remove: true
+            }).then((res) => res.data);
+            
+            console.log(response);
+        }
+        else {
+            post.value.likes.push(userId);
+            post.value.dislikes.splice(post.value.dislikes.indexOf(userId), 1);
+    
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
+                userId: userId,
+                like: true
+            }).then((res) => res.data);
+
+            console.log(response);
+        }
+
+    }
+    else if (type === 'dislike') {
+        if (post.value.dislikes.includes(userId)) {
+            post.value.dislikes.splice(post.value.dislikes.indexOf(userId), 1);
+
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
+                userId: userId,
+                dislike: true,
+                remove: true
+            }).then((res) => res.data);
+            
+            console.log(response);
+        }
+        else {
+            post.value.dislikes.push(userId);
+            post.value.likes.splice(post.value.dislikes.indexOf(userId), 1);
+
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
+                userId: userId,
+                dislike: true
+            }).then((res) => res.data);
+
+            console.log(response);
+        }
+    }
+    else {
+        console.error("Invalid type passed to updateLikesDislikes");
+    }
+}
 </script>
