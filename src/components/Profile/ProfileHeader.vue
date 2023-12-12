@@ -39,7 +39,7 @@
             <div v-if="!isThisUser" class="flex flex-col lg:ml-4">
                 <div class="flex lg:h-16 h-10"></div>
                 <button
-                    class="rounded-full h-12 w-28"
+                    class="rounded-full h-12 w-32 p-3"
                     :class="{
                         'bg-blue-600': !isFollowing,
                         'bg-gray-600': isFollowing
