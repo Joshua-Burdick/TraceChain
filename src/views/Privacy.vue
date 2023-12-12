@@ -75,7 +75,7 @@
 
         <ion-menu content-id="main-content" side="start">
             <ion-content>
-                <ion-list lines="none">
+                <ion-list lines="none" class="h-full">
                     <ion-menu-toggle auto-hide="false">
                         <h1 class="font-bold text-2xl ml-10 pt-[190px] mb-3">Settings</h1>
                         <ion-item @click="$router.push('/settings')" class="flex items-center p-3 hover:bg-neutral-700
