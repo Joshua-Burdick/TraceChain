@@ -16,9 +16,9 @@
 
         <ion-content id="main-content">
             <div class="min-h-screen bg-neutral-900 flex flex-col items-center justify-center">
-                <div class="absolute top-0 w-full h-[200px] h-1/2 bg-neutral-800"></div>
+                <div class="absolute top-0 w-full h-25 h-1/2 bg-neutral-800"></div>
 
-                <div class="w-11/12 md:2/3 lg:w-[900px] h-[580px] bg-neutral-900 rounded-sm shadow-xl z-10 p-9
+                <div class="w-11/12 md:2/3 w-75 h-100 bg-neutral-900 rounded-sm shadow-xl z-10 p-9
                 flex flex-col lg:flex-row -mt-10 space-x-0 lg:space-x-10">
 
                     <div class="flex-1">
@@ -64,7 +64,7 @@
 
                     <div class="w-full mt-4">
                         <label for="bio" class="block text-stone-300 text-sm font-bold mb-1 ml-8">Bio</label>
-                        <textarea id="bio" rows="4" placeholder="Tell us about yourself..." class="ml-8 w-[350px] h-[198px] px-3
+                        <textarea id="bio" rows="4" placeholder="Tell us about yourself..." class="ml-8 w-[75vh] h-[27vh] px-3
                         py-2 text-white bg-neutral-800 rounded shadow appearance-none
                         leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
@@ -74,7 +74,7 @@
         </ion-content> 
         <ion-menu content-id="main-content" side="start">
             <ion-content>
-                <ion-list lines="none">
+                <ion-list lines="none" class="h-full">
                     <ion-menu-toggle auto-hide="false">
                         <h1 class="font-bold text-2xl ml-10 pt-[190px] mb-3">Settings</h1>
                         <ion-item @click="$router.push('/settings')" class="flex items-center p-3 hover:bg-neutral-700
@@ -98,9 +98,6 @@
                             <ion-icon slot="start" :icon="logOutOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Log Out</ion-label>
                         </ion-item>
-                        <div class="pt-20"></div>
-                        <div class="pt-20"></div>
-                        <div class="pt-5"></div>
                     </ion-menu-toggle>
                 </ion-list>
             </ion-content>
