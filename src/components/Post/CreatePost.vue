@@ -107,7 +107,15 @@ console.log("sources", JSON.stringify(sources.value[0]) === '{}');
 const submitPost = () => {
     const reduced = sources.value
     .map((source, ind) => {
-        if (JSON.stringify(source) === '{}') {
+        return {
+            type: sourceTypes.value[ind],
+            data: {
+                ...source
+            }
+        }
+    })
+    .map((source, ind) => {
+        if (JSON.stringify(source.data) === '{}') {
             return undefined;
         }
         return source;
