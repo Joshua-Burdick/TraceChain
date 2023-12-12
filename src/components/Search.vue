@@ -61,6 +61,4 @@ const search = () => {
         })
         .catch((err) => console.log("This is hte error: ", err))
 }
-
-
 </script>
