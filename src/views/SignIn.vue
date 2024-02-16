@@ -24,6 +24,9 @@
               </ion-item>
               </ion-list>
               <ion-button expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
+              <router-link to="/forgotpass">
+              <ion-button expand="full" color="danger" class="forgot-pass-button mb-2">Forgot Password</ion-button>
+              </router-link>
               <router-link to="/createAccount">
               <ion-button expand="full" class="join-now-button" color="dark" > Not a Member? <br> Join Now</ion-button>
               </router-link>
