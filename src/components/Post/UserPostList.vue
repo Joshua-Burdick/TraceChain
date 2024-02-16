@@ -34,15 +34,15 @@ interface Post {
     sources: [String],
     isInformative: Boolean,
     isEdited: Boolean,
-    likes: Number,
-    dislikes: Number
+    likes: [String],
+    dislikes: [String]
 }
 
 const loading: Ref<boolean> = ref(true);
 const posts: Ref<Array<Post>> = ref<Array<Post>>([]);
 
 onMounted(async () => {
-    const userPosts = await axios.get(`post/${route.params.id}`).then((res) => posts.value = res.data);
+    const userPosts = await axios.get(`post/user/${route.params.id}`).then((res) => posts.value = res.data);
     loading.value = false;
 })
 </script>

@@ -19,6 +19,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/ProfileTab.vue')
   },
   {
+    path: '/post/:id',
+    component: () => import('@/views/PostView.vue')
+  },
+  {
     path: '/communities',
     component: () => import('@/views/CommunitiesTab.vue')
   },

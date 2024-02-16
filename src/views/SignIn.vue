@@ -16,11 +16,11 @@
             <ion-list>
               <ion-item>
                 <ion-label position="floating">Username</ion-label>
-                <ion-input v-model="username" name="username" type="text"></ion-input>
+                <ion-input v-model="username" name="username" type="text" @keyup.enter="loginUser"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-label position="floating">Password</ion-label>
-                <ion-input v-model="password" name="password" type="password"></ion-input>
+                <ion-input v-model="password" name="password" type="password" @keyup.enter="loginUser"></ion-input>
               </ion-item>
               </ion-list>
               <ion-button expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
@@ -56,7 +56,7 @@ const username = ref('');
 const password = ref('');
 const showAlert = ref(false);
 const alertMessage = ref<string>('');
-
+const loading = ref(false);
 
 const showErrorAlert = (message: string) => {
   console.log('Error alert triggered:', message);
@@ -64,6 +64,7 @@ const showErrorAlert = (message: string) => {
 };
 
 const loginUser = () => {
+  loading.value = true;
   const userlogin = {
     username: username.value, // Input field for username or email
     password: password.value,
@@ -84,6 +85,8 @@ const loginUser = () => {
       console.log('Sign-in error:', error.response.data.message);
       showErrorAlert('Incorrect Username/Password');
     });
+
+    loading.value = false;
 };
 
 </script>
