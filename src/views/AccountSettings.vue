@@ -2,14 +2,16 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
+                
                 <ion-buttons slot="start">
                     <ion-menu-button></ion-menu-button>
                 </ion-buttons>
                 <ion-buttons slot="end">
-                    <ion-button @click="$router.push('/feed')">
+                    //<ion-button @click="$router.push('/feed')">
                         <ion-icon slot="icon-only" :icon="homeOutline"></ion-icon>
                     </ion-button>
                 </ion-buttons>
+                
             </ion-toolbar>
         </ion-header>
 
@@ -24,30 +26,30 @@
                     <div class="flex-1">
                         <h2 class="text-2xl font-semibold">Account Settings</h2>
                         <p class="text-stone-600 text-sm mb-6">Edit your name, avatar, etc</p>
-                        <form>
+                        <form @submit.prevent="updateAccount">
                             <div class="mb-4">
-                                <label for="fName" class="block text-stone-300 text-sm font-bold mb-2">First Name</label>
-                                <input type="text" id="fName" placeholder="Hatsune" class="shadow appearance-none
-                                border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
-                                focus:shadow-outline mb-4">
-                                <label for="lName" class="block text-stone-300 text-sm font-bold mb-2">Last Name</label>
-                                <input type="text" id="lName" placeholder="Miku" class="shadow appearance-none
+                                <label for="displayName" class="block text-stone-300 text-sm font-bold mb-2">Display Name</label>
+                                <input type="text" id="displayName" v-model="user.displayName" class="shadow appearance-none
                                 border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
                                 focus:shadow-outline mb-4">
                                 <label for="uName" class="block text-stone-300 text-sm font-bold mb-2">Username</label>
-                                <input type="text" id="uName" placeholder="@HatsuneMikuOfficial" class="shadow appearance-none
+                                <input type="text" id="uName" v-model="user.username" class="shadow appearance-none
                                 border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
                                 focus:shadow-outline mb-10">
                                 <label for="email" class="block text-stone-300 text-sm font-bold mb-2">Email</label>
-                                <input type="email" id="email" placeholder="hatsunemiku@snhu.edu" class="shadow appearance-none
+                                <input type="email" id="email" v-model="user.email" class="shadow appearance-none
                                 border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
                                 focus:shadow-outline mb-4">
                                 <label for="password" class="block text-stone-300 text-sm font-bold mb-2">Password</label>
-                                <input type="password" id="password" placeholder="12345" class="shadow appearance-none
+                                <input type="password" id="password" placeholder="password" class="shadow appearance-none
                                 border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
                                 focus:shadow-outline">
                             </div>
-                        </form>
+                            <ion-buttons>
+                        <ion-button type="submit" fill="solid" color="light" class="mt-6 ml-5 bg-neutral-800 py-2 px-4
+                        rounded-md text-sm" style="--background-activated: transparent; --background-focused: transparent;">Save Changes</ion-button>
+                    </ion-buttons>
+                            </form>
                     </div>
 
                     <!--Profile Picture-->
@@ -115,11 +117,47 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
  IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline } from 'ionicons/icons';
-import {ref} from 'vue';
+import {ref, onMounted} from 'vue';
 import {useRouter} from 'vue-router';
+import axios from 'axios';
 const router = useRouter();
+import { useRoute } from 'vue-router';
+const route = useRoute();
 
 const isMenuOpen = ref(false);
+
+const user = ref({
+    displayName: '',
+    username: '',
+    email: '',
+});
+
+const userId = ref(sessionStorage.getItem("userId") ?? "");
+route.params.id = userId.value;
+
+const fetchAccountInfo = async () => {
+    try {
+        console.log("User ID from route parameter:", route.params.id);
+        const userResponse = await axios.get(`accountVerification/${route.params.id}`).then((res) => res.data);
+        user.value = userResponse;
+        console.log('Fetched account information:', user.value);
+    } catch (error) {
+        console.error('Error fetching account information:', error, route.params.id);
+    }
+};
+
+onMounted(fetchAccountInfo);
+
+const updateAccount = async () => {
+    try {
+        const response = await axios.put(`accountVerification/${route.params.id}/changeAccount`, user.value);
+        console.log('Account updated successfully:', response.data);
+        // Optionally, you can display a success message or navigate to another page
+    } catch (error) {
+        console.error('Error updating account:', error);
+        // Optionally, you can display an error message
+    }
+};
 
 const highlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.add('item-highlight');
