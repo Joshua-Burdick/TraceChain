@@ -59,10 +59,11 @@
                 </button>
             </div>
         </div>
-        <div class="flex flex-row align-center justify-center p-5">
+        <div class="flex flex-row align-center justify-center mt-3 p-5">
             <button class="rounded-full w-36 h-14 text-slate-100 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]"
             @click.stop="submitPost">Post</button>
         </div>
+        <div class="text-red text-lg py-3">{{ error }}</div>
     </div>
 </template>
 
@@ -107,7 +108,15 @@ console.log("sources", JSON.stringify(sources.value[0]) === '{}');
 const submitPost = () => {
     const reduced = sources.value
     .map((source, ind) => {
-        if (JSON.stringify(source) === '{}') {
+        return {
+            type: sourceTypes.value[ind],
+            data: {
+                ...source
+            }
+        }
+    })
+    .map((source, ind) => {
+        if (JSON.stringify(source.data) === '{}') {
             return undefined;
         }
         return source;
