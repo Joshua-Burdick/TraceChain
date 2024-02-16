@@ -68,6 +68,12 @@
                         py-2 text-white bg-neutral-800 rounded shadow appearance-none
                         leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
+
+                    <div class="mt-5 flex justify-center ml-8">
+                        <button  @click="confirmDelete()" class="bg-red-800 w-32 h-12 rounded-lg">Delete Account</button>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -132,4 +138,14 @@ const logout = () => {
 //   console.log(document.cookie);
   router.push({path: '/login'});
 };
+
+const confirmDelete = () => {
+  const confirmation = window.confirm("Are you sure you want to delete this account from TraceChain?");
+  if (confirmation) {
+    // proceed with the deletion
+  }
+  // else do nothing
+}
+
+
 </script>
