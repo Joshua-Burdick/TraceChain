@@ -1,69 +1,67 @@
 <template>
     <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
-        <v-progress-circular color="blue-lighten-3" class="flex w-1/2 h-1/2 justify-center items-center" :width="15" indeterminate></v-progress-circular>
+        <v-progress-circular color="blue-lighten-3" class="flex w-1/2 h-1/2 justify-center items-center" :width="15"
+            indeterminate></v-progress-circular>
     </div>
     <div v-if="!loading" class="flex flex-col w-full h-full align-center justify-center overflow-y-scroll text-slate-100">
         <div class="flex flex-col h-auto w-2/3">
             <div class="flex flex-row h-full w-full bg-stone-700 p-5 rounded-lg shadow-lg shadow-black">
-                <div v-if="post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#068005] via-[#169f0a] via-35% to-[#10aa09]"></div>
-                <div v-else-if="!post.isInformative" class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#800000] via-[#9f0a0a] via-35% to-[#b00700]"></div>
+                <div v-if="post.isInformative"
+                    class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#068005] via-[#169f0a] via-35% to-[#10aa09]">
+                </div>
+                <div v-else-if="!post.isInformative"
+                    class="flex flex-row w-[10px] rounded-lg mr-3 bg-gradient-to-b from-[#800000] via-[#9f0a0a] via-35% to-[#b00700]">
+                </div>
                 <div class="flex flex-col items-start w-full">
                     <div class="flex flex-row align-center">
                         <span class="text-4xl">{{ username }}</span>
-                        <span class="text-md text-slate-400 ml-3">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</span>
+                        <span class="text-md text-slate-400 ml-3">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString
+                        }} on {{ dateString }}</span>
                     </div>
-                    <span
-                        class="text-2xl text-slate-300 hover:underline cursor-pointer"
-                        @click.stop="$router.push(`/profile/${post.userId}`)"
-                    >
+                    <span class="text-2xl text-slate-300 hover:underline cursor-pointer"
+                        @click.stop="$router.push(`/profile/${post.userId}`)">
                         @{{ usertag }}
                     </span>
                     <div class="text-5xl px-2 py-3 mb-2 mt-10">
                         {{ post.content }}
                     </div>
+                    <div>
+                        image
+                    </div>
                 </div>
             </div>
             <div class="flex flex-row text-slate-200 mt-3 text-xl">
                 <div class="mr-2">
-                    <button
-                        class="hover:text-green-500"
-                        :class="{
-                            'text-green-600': userId && post.likes.includes(userId)
-                        }"
-                        @click.stop="updateLikesDislikes('like')"
-                    >
+                    <button class="hover:text-green-500" :class="{
+                        'text-green-600': userId && post.likes.includes(userId)
+                    }" @click.stop="updateLikesDislikes('like')">
                         <ion-icon :icon="thumbsUpSharp"></ion-icon>
                     </button>
-                    {{ post.likes.length || 0}}
+                    {{ post.likes.length || 0 }}
                 </div>
                 <div>
-                    <button
-                        class="hover:text-red-500"
-                        :class="{
-                            'text-red-600': userId && post.dislikes.includes(userId)
-                        }"
-                        @click.stop="updateLikesDislikes('dislike')"
-                    >
+                    <button class="hover:text-red-500" :class="{
+                        'text-red-600': userId && post.dislikes.includes(userId)
+                    }" @click.stop="updateLikesDislikes('dislike')">
                         <ion-icon :icon="thumbsDownSharp"></ion-icon>
                     </button>
                     {{ post.dislikes.length || 0 }}
                 </div>
             </div>
         </div>
-        <div v-if="post.isInformative" class="h-auto mt-7 mb-10 p-5 border-2 border-gray-600 rounded-lg shadow-md shadow-black">
-            <div class="text-2xl text-slate-300 mb-5">This post cites {{ post.sources.length }} {{ post.sources.length !== 1 ? 'Sources' : 'Source' }}:</div>
+        <div v-if="post.isInformative"
+            class="h-auto mt-7 mb-10 p-5 border-2 border-gray-600 rounded-lg shadow-md shadow-black">
+            <div class="text-2xl text-slate-300 mb-5">This post cites {{ post.sources.length }} {{ post.sources.length !== 1
+                ? 'Sources' : 'Source' }}:</div>
             <div v-for="(value, index) in post.sources" :key="index">
                 <div class="flex flex-row align-center">
                     <span class="text-xl mr-3">{{ value.type }}: </span>
                     <div class="flex flex-col">
                         <div v-for="(field, fieldIndex) in value.data" :key="fieldIndex" class="flex flex-col">
-                            <span
-                                class="text-xl"
-                                :class="{
-                                    'text-blue-400 hover:underline cursor-pointer': fieldIndex == 'URL',
-                                    'text-slate-300': fieldIndex != 'URL'
-                                }"
-                            >
+                            <span class="text-xl" :class="{
+                                'text-blue-400 hover:underline cursor-pointer': fieldIndex == 'URL',
+                                'text-slate-300': fieldIndex != 'URL'
+                            }">
                                 <a v-if="fieldIndex == 'URL'" :href="field" target="_blank">{{ field }}</a>
                                 <p v-else-if="fieldIndex == 'Title'">"{{ field }}"</p>
                                 <p v-else-if="fieldIndex == 'Author'">By {{ field }}</p>
@@ -81,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar,} from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, } from '@ionic/vue';
 import { thumbsDownSharp, thumbsUpSharp } from 'ionicons/icons';
 import axios from 'axios';
 import { onMounted, ref, Ref } from 'vue';
@@ -166,19 +164,19 @@ const updateLikesDislikes = async (type: string) => {
         if (post.value.likes.includes(userId)) {
             post.value.likes.splice(post.value.likes.indexOf(userId), 1);
 
-            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`, {
                 userId: userId,
                 like: true,
                 remove: true
             }).then((res) => res.data);
-            
+
             console.log(response);
         }
         else {
             post.value.likes.push(userId);
             post.value.dislikes.splice(post.value.dislikes.indexOf(userId), 1);
-    
-            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
+
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`, {
                 userId: userId,
                 like: true
             }).then((res) => res.data);
@@ -191,19 +189,19 @@ const updateLikesDislikes = async (type: string) => {
         if (post.value.dislikes.includes(userId)) {
             post.value.dislikes.splice(post.value.dislikes.indexOf(userId), 1);
 
-            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`, {
                 userId: userId,
                 dislike: true,
                 remove: true
             }).then((res) => res.data);
-            
+
             console.log(response);
         }
         else {
             post.value.dislikes.push(userId);
             post.value.likes.splice(post.value.dislikes.indexOf(userId), 1);
 
-            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`, {
                 userId: userId,
                 dislike: true
             }).then((res) => res.data);

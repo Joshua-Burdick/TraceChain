@@ -55,23 +55,25 @@
                         <div class="w-28 h-28 md:w-36 md:h-36 xl:w-44 xl:h-44 rounded-full overflow-hidden
                         bg-stone-800 mt-6 ml-4">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png"
-                            alt="Profile Image">
-                    </div>
-                    <ion-buttons>
-                        <ion-button fill="solid" color="light" class="mt-6 ml-5 bg-neutral-800 py-2 px-4
-                        rounded-md text-sm" style="--background-activated: transparent; --background-focused: transparent;">Upload Picture</ion-button>
-                    </ion-buttons>
+                                alt="Profile Image">
+                        </div>
+                        <ion-buttons>
+                            <ion-button fill="solid" color="light" class="mt-6 ml-5 bg-neutral-800 py-2 px-4
+                        rounded-md text-sm"
+                                style="--background-activated: transparent; --background-focused: transparent;">Upload
+                                Picture</ion-button>
+                        </ion-buttons>
 
-                    <div class="w-full mt-4">
-                        <label for="bio" class="block text-stone-300 text-sm font-bold mb-1 ml-8">Bio</label>
-                        <textarea id="bio" rows="4" placeholder="Tell us about yourself..." class="ml-8 w-[75vh] h-[27vh] px-3
+                        <div class="w-full mt-4">
+                            <label for="bio" class="block text-stone-300 text-sm font-bold mb-1 ml-8">Bio</label>
+                            <textarea id="bio" rows="4" placeholder="Tell us about yourself..." class="ml-8 w-[75vh] h-[27vh] px-3
                         py-2 text-white bg-neutral-800 rounded shadow appearance-none
                         leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        </ion-content> 
+        </ion-content>
         <ion-menu content-id="main-content" side="start">
             <ion-content>
                 <ion-list lines="none" class="h-full">
@@ -79,22 +81,25 @@
                         <h1 class="font-bold text-2xl ml-10 pt-[190px] mb-3">Settings</h1>
                         <ion-item @click="$router.push('/settings')" class="flex items-center p-3 hover:bg-neutral-700
                         rounded"
-                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
+                            style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
                             <ion-icon slot="start" :icon="personCircleOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Account</ion-label>
                         </ion-item>
-                        <ion-item @click="$router.push('/settings/appearance')" class="flex items-center p-3 hover:bg-neutral-700 rounded"
-                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
+                        <ion-item @click="$router.push('/settings/appearance')"
+                            class="flex items-center p-3 hover:bg-neutral-700 rounded"
+                            style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
                             <ion-icon slot="start" :icon="sunnyOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Appearance</ion-label>
                         </ion-item>
-                        <ion-item @click="$router.push('/settings/privacy')" class="flex items-center p-3 hover:bg-neutral-700 rounded" 
-                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
+                        <ion-item @click="$router.push('/settings/privacy')"
+                            class="flex items-center p-3 hover:bg-neutral-700 rounded"
+                            style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
                             <ion-icon slot="start" :icon="lockClosedOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Privacy</ion-label>
                         </ion-item>
-                        <ion-item @click="$router.push('/logout')" class="flex items-center p-3 hover:bg-neutral-700 rounded pb-"
-                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
+                        <ion-item @click="$router.push('/logout')"
+                            class="flex items-center p-3 hover:bg-neutral-700 rounded pb-"
+                            style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
                             <ion-icon slot="start" :icon="logOutOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Log Out</ion-label>
                         </ion-item>
@@ -102,34 +107,41 @@
                 </ion-list>
             </ion-content>
         </ion-menu>
-  </ion-page>
+    </ion-page>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
- IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
+import {
+    IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
+    IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput
+} from '@ionic/vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline } from 'ionicons/icons';
-import {ref} from 'vue';
-import {useRouter} from 'vue-router';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import VueUploadComponent from 'vue-upload-component';
 const router = useRouter();
 
 const isMenuOpen = ref(false);
 
+
+
 const highlightItem = (event: MouseEvent) => {
-(event.target as HTMLElement).classList.add('item-highlight');
+    (event.target as HTMLElement).classList.add('item-highlight');
 };
 
 const unhighlightItem = (event: MouseEvent) => {
-(event.target as HTMLElement).classList.remove('item-highlight');
+    (event.target as HTMLElement).classList.remove('item-highlight');
 };
-    
+
+
+
 const logout = () => {
-  // Clear user authentication state
-  sessionStorage.removeItem('user_token');
-  sessionStorage.removeItem('userId');
-//   document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/login;';
-  // Navigate to the login page (or any other desired route)
-//   console.log(document.cookie);
-  router.push({path: '/login'});
+    // Clear user authentication state
+    sessionStorage.removeItem('user_token');
+    sessionStorage.removeItem('userId');
+    //   document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/login;';
+    // Navigate to the login page (or any other desired route)
+    //   console.log(document.cookie);
+    router.push({ path: '/login' });
 };
 </script>

@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-col w-full h-full align-center">
-        <div class="flex flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold">
+        <div
+            class="flex flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold">
             Make a Post
             <ion-icon :icon="pencilSharp" class="ml-2" />
         </div>
@@ -16,36 +17,41 @@
             <p class="text-4xl font-semibold pb-3">Sources</p>
             <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" class="sr-only peer" v-model="isInformative">
-                <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                <div
+                    class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+                </div>
                 <span class="ms-3 text-lg text-gray-900 dark:text-gray-300">Is this post informative?</span>
             </label>
         </div>
-        <div
-            class="flex flex-col lg:w-1/2 h-full justify-center align-center overflow-y-scroll mt-5"
-            :class="{
-                'rounded-lg border-2 border-zinc-600 shadow-md shadow-black': isInformative && sources.length > 0,
-            }"
-        >
-            <div
-                v-if="isInformative"
-                class="flex flex-col w-full h-full p-2"
-            >
+        <div class="flex flex-col lg:w-1/2 h-full justify-center align-center overflow-y-scroll mt-5" :class="{
+            'rounded-lg border-2 border-zinc-600 shadow-md shadow-black': isInformative && sources.length > 0,
+        }">
+            <div v-if="isInformative" class="flex flex-col w-full h-full p-2">
                 <div v-for="(value, index) in sources" :key="index" class="flex w-full justify-center align-center mb-3">
-                    <select
-                        v-model="sourceTypes[index]"
-                        class="bg-gray-50 cursor-pointer border text-sm rounded-lg block w-1/4 dark:bg-stone-700 dark:bg-opacity-90 dark:text-slate-100 mr-2 mt-2 p-2.5 shadow-sm shadow-black"
-                    >
+                    <select v-model="sourceTypes[index]"
+                        class="bg-gray-50 cursor-pointer border text-sm rounded-lg block w-1/4 dark:bg-stone-700 dark:bg-opacity-90 dark:text-slate-100 mr-2 mt-2 p-2.5 shadow-sm shadow-black">
                         <option value="Article">Article</option>
+                        <option value="Image">Image</option>
                         <option value="Book">Book</option>
                         <option value="Video">Video</option>
                     </select>
 
                     <div class="flex flex-col w-full h-full">
-                        <div v-for="(field, fieldIndex) in sourceFields[sourceTypes[index]]" :key="fieldIndex" class="w-full h-full mt-2">
-                            <input
-                                v-model="sources[index][field]" :placeholder="field"
-                                class="w-full h-full rounded-lg bg-zinc-800 p-2 shadow-sm shadow-black"
-                            />
+                        <div v-for="(field, fieldIndex) in sourceFields[sourceTypes[index]]" :key="fieldIndex"
+                            class="w-full h-full mt-2">
+                            <template v-if="field !== 'Upload From Local Machine'">
+                                <input v-model="sources[index][field]" :placeholder="field"
+                                    class="w-full h-full rounded-lg bg-zinc-800 p-2 shadow-sm shadow-black" />
+                            </template>
+                            <template v-else>
+                                <!-- <button type="button"
+                                    class="w-full h-full rounded-lg bg-zinc-800 p-2 shadow-sm shadow-black"
+                                    accept="image/jpeg, image/png" @click="handleButtonClick">
+                                    Upload Image
+                                </button> -->
+                                <input id="fileInput" ref="fileInput" type="file" :placeholder="field" multiple
+                                    class="w-full h-full rounded-lg bg-zinc-800 p-2 shadow-sm shadow-black" />
+                            </template>
                         </div>
                     </div>
                     <ion-icon :icon="trash" @click="sourceTypes.splice(index, 1); sources.splice(index, 1)"
@@ -53,15 +59,15 @@
                 </div>
                 <button
                     class="p-2 mt-2 w-full h-14 rounded-lg hover:bg-gray-700 hover:bg-opacity-70 active:bg-gray-600 active:bg-opacity-70 text-2xl"
-                    @click.stop="sourceTypes.push('Article'); sources.push({})"
-                >
+                    @click.stop="sourceTypes.push('Article'); sources.push({})">
                     +
                 </button>
             </div>
         </div>
         <div class="flex flex-row align-center justify-center mt-3 p-5">
-            <button class="rounded-full w-36 h-14 text-slate-100 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]"
-            @click.stop="submitPost">Post</button>
+            <button
+                class="rounded-full w-36 h-14 text-slate-100 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]"
+                @click.stop="submitPost">Post</button>
         </div>
         <div class="text-red text-lg py-3">{{ error }}</div>
     </div>
@@ -84,6 +90,12 @@ const postContent = ref('');
 const isInformative = ref(true);
 const sourceTypes: Ref<string[]> = ref(['Article']);
 const sources: Ref<SourceContent[]> = ref([{}]);
+// const fileInput = ref(null);
+const photoHashes: String[] = [];
+
+interface FileInputElement {
+    readonly inputElement: HTMLInputElement;
+}
 
 interface SourceTypes {
     [key: string]: string[]
@@ -95,6 +107,7 @@ interface SourceContent {
 
 const sourceFields: SourceTypes = {
     "Article": ["URL"],
+    "Image": ["Upload From Local Machine"],
     "Book": ["Title", "Author"],
     "Video": ["URL"]
 };
@@ -105,48 +118,103 @@ const error = ref('');
 
 console.log("sources", JSON.stringify(sources.value[0]) === '{}');
 
-const submitPost = () => {
-    const reduced = sources.value
-    .map((source, ind) => {
-        return {
-            type: sourceTypes.value[ind],
-            data: {
-                ...source
-            }
-        }
-    })
-    .map((source, ind) => {
-        if (JSON.stringify(source.data) === '{}') {
-            return undefined;
-        }
-        return source;
-    })
-    .filter((source) => source !== undefined );
+const handleImages = () => {
+    console.log("handleFileUpload");
 
-  if (isInformative.value) {
-    if (reduced.length === 0) {
-      error.value = 'Please add at least one source.';
-      return;
+    const inputElement: HTMLInputElement = document.getElementById('fileInput');
+    const files: any[] = inputElement.files;
+    console.log(files);
+
+    for (let i: number = 0; i < files.length; i++) {
+            let formData = new FormData();
+            formData.append('file', files[i]);
+
+            let hash: String = '';
+
+            axios.post(`/upload/new`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', 
+                },
+            })
+                .then(res => {
+                    hash = res.data;
+                    photoHashes.push(hash);
+                    console.log("hash: ", hash);
+                })
+                .catch(err => {
+                    console.error("The following error happened in axios.post for an image: ", err);
+                }) // end catch
     }
-  }
 
-  const post = {
-    userId: userId,
-    content: postContent.value,
-    sources: [... new Set(reduced)],
-    isInformative: isInformative.value,
-    isEdited: false,
-    time: Date.now(),
-  };
+    // files.forEach(file => {
+    //     let formData = new FormData();
+    //     formData.append('file', file);
 
-  axios.post(`/post/${userId}`, post)
-    .then((res) => {
-      console.log(res);
-      console.log("Submitted: ", post);
-    })
-    .catch((error) => {
-      console.log('the following error occured when trying to post a new deck', error);
-    })
+    //     let hash: String = '';
+
+    //     axios.post(`/upload/find`, formData, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data', // Important for file uploads
+    //         },
+    //     })
+    //         .then(res => {
+    //             hash = res.data;
+    //             photoHashes.push(hash);
+    //             console.log("hash: ", hash);
+    //         })
+    //         .catch(err => {
+    //             console.error("The following error happened in axios.post for an image: ", err);
+    //         }) // end catch
+    // }); // end for
+}
+
+const submitPost = () => {
+    handleImages();
+    const reduced = sources.value
+        .map((source, ind) => {
+            return {
+                type: sourceTypes.value[ind],
+                data: {
+                    ...source
+                }
+            }
+        })
+        .map((source, ind) => {
+            if (JSON.stringify(source.data) === '{}') {
+                return undefined;
+            }
+            return source;
+        })
+        .filter((source) => source !== undefined);
+
+    if (isInformative.value) {
+        if (reduced.length === 0) {
+            error.value = 'Please add at least one source.';
+            return;
+        }
+    }
+
+    const post = {
+        userId: userId,
+        content: postContent.value,
+        sources: [... new Set(reduced)],
+        photos: [...photoHashes],
+        isInformative: isInformative.value,
+        isEdited: false,
+        time: Date.now(),
+    };
+
+    // let postId = '';
+
+    axios.post(`/post/${userId}`, post)
+        .then((res) => {
+            console.log(res);
+            // postId = res.data;
+            console.log("Submitted: ", post);
+        })
+        .catch((error) => {
+            console.log('the following error occured when trying to post a new deck', error);
+        })
 
     sources.value = [];
     sourceTypes.value = [];

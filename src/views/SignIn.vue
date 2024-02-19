@@ -1,16 +1,16 @@
 <template>
   <ion-page>
-      <ion-header>
-    <ion-toolbar>
-      <ion-title style = "text-align: center;">TraceChain</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title style="text-align: center;">TraceChain</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-content class="ion-padding">
       <div class="login-container">
         <ion-img class="logo" src="/TraceChain.svg" alt="Logo"></ion-img>
         <ion-card class="login-card">
           <ion-card-header>
-            <ion-card-title class="sign-in-text" >Sign In</ion-card-title>
+            <ion-card-title class="sign-in-text">Sign In</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <ion-list>
@@ -22,23 +22,17 @@
                 <ion-label position="floating">Password</ion-label>
                 <ion-input v-model="password" name="password" type="password" @keyup.enter="loginUser"></ion-input>
               </ion-item>
-              </ion-list>
-              <ion-button v-if="loading" expand="full" color="danger" class="sign-in-button">Signing In...</ion-button>
-              <ion-button v-else expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
-              <router-link to="/createAccount">
-              <ion-button expand="full" class="join-now-button" color="dark" > Not a Member? <br> Join Now</ion-button>
-              </router-link>
+            </ion-list>
+            <ion-button v-if="loading" expand="full" color="danger" class="sign-in-button">Signing In...</ion-button>
+            <ion-button v-else expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
+            <router-link to="/createAccount">
+              <ion-button expand="full" class="join-now-button" color="dark"> Not a Member? <br> Join Now</ion-button>
+            </router-link>
           </ion-card-content>
         </ion-card>
       </div>
-      <ion-alert
-      class="showAlert"
-      v-model="showAlert"
-      :header="'Error'"
-      :subHeader="'Sign-in failed'"
-      :message="alertMessage"
-      :buttons="[{ text: 'OK', handler: () => showAlert = false }]"
-    />
+      <ion-alert class="showAlert" v-model="showAlert" :header="'Error'" :subHeader="'Sign-in failed'"
+        :message="alertMessage" :buttons="[{ text: 'OK', handler: () => showAlert = false }]" />
     </ion-content>
   </ion-page>
 </template>
@@ -68,10 +62,14 @@ const loginUser = () => {
     password: password.value,
   };
 
-  axios.post('login', userlogin)
+  console.log("loginUser is actually executing this!! :D ");
+  console.log(userlogin);
+
+  axios.post('/login', userlogin)
     .then((res) => {
       const token = res.data.token;
-      
+      console.log("token: ", token);
+
       sessionStorage.setItem('user_token', token);
       sessionStorage.setItem('userId', res.data.user._id);
 
@@ -84,13 +82,13 @@ const loginUser = () => {
       showErrorAlert('Incorrect Username/Password');
     });
 
-    loading.value = false;
+  loading.value = false;
 };
 
 </script>
 
 <style scoped>
-.sign-in-text{
+.sign-in-text {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,13 +96,14 @@ const loginUser = () => {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+
 .login-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 75vh;
-  
+
 }
 
 .logo {
@@ -112,31 +111,35 @@ const loginUser = () => {
   height: 150px;
   margin-top: 20px;
 }
-.showAlert{
+
+.showAlert {
   color: #000;
 }
+
 .login-card {
   background: radial-gradient(circle, #050505, #0d0d0d, #1a1a1a, #2a2a2a, #3b3b3b);
-color: #fff; 
-border-radius: 15px;
-width: 100%;
-width: 120%; /* Adjust the width as needed */
-max-width: 600px; /* Set a maximum width if necessary */
-margin: auto;
+  color: #fff;
+  border-radius: 15px;
+  width: 100%;
+  width: 120%;
+  /* Adjust the width as needed */
+  max-width: 600px;
+  /* Set a maximum width if necessary */
+  margin: auto;
 }
 
 .sign-in-button {
-background-color: #cf3c4f;
-color: #cf3c4f;
-border-radius: 15px;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-margin-bottom: 10px;
-margin-top: 10px;
+  background-color: #cf3c4f;
+  color: #cf3c4f;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .join-now-button {
-color: dark;
-border-radius: 15px;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: dark;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 </style>
