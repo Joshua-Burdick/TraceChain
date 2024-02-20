@@ -90,21 +90,6 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const userId = sessionStorage.getItem("userId");
 
-const tempSources = [
-    {
-        type: "Video",
-        data: {
-            URL: "https://youtu.be/ErMSHiQRnc8"
-        }
-    },
-    {
-        type: "Article",
-        data: {
-            URL: "https://phys.org/news/2023-12-physicists-entangle-individual-molecules-hastening.html"
-        }
-    }
-]
-
 interface Sources {
     type: string,
     data: {
