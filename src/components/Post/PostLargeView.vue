@@ -74,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex align-center bg-stone-800 w-2/3 p-3 rounded-lg text-slate-400 cursor-pointer">
+        <div class="flex align-center bg-stone-800 w-2/3 p-3 rounded-lg text-slate-400 cursor-pointer" @click="replyDialog = true">
             <p class="flex w-full">Add Your Reply...</p>
             <ion-icon aria-hidden="true" :icon="sendOutline" class="text-lg"></ion-icon>
         </div>
@@ -88,7 +88,7 @@
         </div>
         <v-dialog v-model="replyDialog" class="w-1/3">
             <div class="flex flex-col bg-[#1d1f20] text-slate-100 rounded-lg border-2 border-slate-700 p-5 w-full justify-center">
-                <CreatePost @closeDialog="replyDialog = false"/>
+                <PostReply :parentPostId="post._id" @closeDialog="replyDialog = false"/>
             </div>
         </v-dialog>
     </div>
@@ -100,6 +100,8 @@ import { thumbsDownSharp, thumbsUpSharp, sendOutline } from 'ionicons/icons';
 import axios from 'axios';
 import { onMounted, ref, Ref } from 'vue';
 import { useRoute } from 'vue-router';
+
+import PostReply from './PostReply.vue';
 
 const route = useRoute();
 const userId = sessionStorage.getItem("userId");

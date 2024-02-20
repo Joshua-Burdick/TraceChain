@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col w-full h-full align-center">
-        <div class="flex flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold">
-            Make a Post
+        <div class="flex flex-row w-full h-auto py-7 align-center justify-center text-6xl font-semibold">
+            Post a Reply
             <ion-icon :icon="pencilSharp" class="ml-2" />
         </div>
-        <div class="flex flex-col align-center pt-15 w-full h-full">
+        <div class="flex flex-col align-center pt-10 w-full h-full">
             <div class="px-2 py-2 w-3/4 rounded-lg bg-zinc-800 h-full shadow-md shadow-black">
                 <textarea class="focus:outline-none text-white text-lg w-full h-full resize-none" :maxlength="maxLength"
                     v-model="postContent" placeholder="Write something..."></textarea>
@@ -61,7 +61,7 @@
         </div>
         <div class="flex flex-row align-center justify-center mt-3 p-5">
             <button class="rounded-full w-36 h-14 text-slate-100 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]"
-            @click.stop="submitPost">Post</button>
+            @click.stop="submitPost">Reply</button>
         </div>
         <div v-if="error" class="text-red text-lg py-3">{{ error }}</div>
     </div>
@@ -85,6 +85,12 @@ const isInformative = ref(true);
 const sourceTypes: Ref<string[]> = ref(['Article']);
 const sources: Ref<SourceContent[]> = ref([{}]);
 
+const emit = defineEmits(['closeDialog']);
+
+const props = defineProps<{
+    parentPostId: string
+}>();
+
 interface SourceTypes {
     [key: string]: string[]
 }
@@ -102,7 +108,7 @@ const sourceFields: SourceTypes = {
 const maxLength = 500;
 const error = ref('');
 
-const submitPost = () => {
+const submitPost = async () => {
     const reduced = sources.value
     .map((source, ind) => {
         return {
@@ -136,20 +142,22 @@ const submitPost = () => {
     time: Date.now(),
   };
 
-  axios.post(`/post/${userId}`, post)
-    .then((res) => {
-      console.log(res);
-      console.log("Submitted: ", post);
-    })
-    .catch((error) => {
-      console.log('the following error occured when trying to post a new deck', error);
-    })
+    const postResponse = await axios.post(`/post/${userId}`, post)
+        .then((res) => res.data)
+        .catch((error) => {
+            console.log('the following error occured when trying to post a new deck', error);
+    });
+
+    await axios.put(`/post/${props.parentPostId}/replies`, {
+        replyId: postResponse._id
+    }).then((res) => res.data);
 
     sources.value = [];
     sourceTypes.value = [];
     postContent.value = '';
 
     router.push({ path: `/profile/${userId}` });
+    emit('closeDialog');
 };
 
 </script>
