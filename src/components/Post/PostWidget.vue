@@ -64,7 +64,7 @@
                         >
                             <ion-icon :icon="chatbubbleEllipsesOutline"></ion-icon>
                         </button>
-                        {{ 0 }} <!-- TODO add comments array to posts and display array.length -->
+                        {{ post.replies.length }}
                     </div>
                 </div>
             </div>
