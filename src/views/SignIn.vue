@@ -23,8 +23,10 @@
                 <ion-input v-model="password" name="password" type="password" @keyup.enter="loginUser"></ion-input>
               </ion-item>
               </ion-list>
-              <ion-button v-if="loading" expand="full" color="danger" class="sign-in-button">Signing In...</ion-button>
-              <ion-button v-else expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
+              <ion-button expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
+              <router-link to="/forgotpass">
+              <ion-button expand="full" color="danger" class="forgot-pass-button mb-2">Forgot Password</ion-button>
+              </router-link>
               <router-link to="/createAccount">
               <ion-button expand="full" class="join-now-button" color="dark" > Not a Member? <br> Join Now</ion-button>
               </router-link>

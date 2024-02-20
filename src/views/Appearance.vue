@@ -40,7 +40,7 @@
                             <ion-icon slot="start" :icon="lockClosedOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Privacy</ion-label>
                         </ion-item>
-                        <ion-item @click="$router.push('/logout')" class="flex items-center p-3 hover:bg-neutral-700 rounded pb-"
+                        <ion-item @click="logout" class="flex items-center p-3 hover:bg-neutral-700 rounded pb-"
                         style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
                             <ion-icon slot="start" :icon="logOutOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Log Out</ion-label>
@@ -59,6 +59,9 @@
 import { IonPage, IonTitle, IonHeader, IonToolbar, IonContent, IonMenu } from '@ionic/vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline } from 'ionicons/icons';
 import ComingSoon from '../components/ComingSoon.vue';
+import {useRouter} from 'vue-router';
+
+const router = useRouter();
 
 const highlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.add('item-highlight');
@@ -66,6 +69,13 @@ const highlightItem = (event: MouseEvent) => {
 
 const unhighlightItem = (event: MouseEvent) => {
 (event.target as HTMLElement).classList.remove('item-highlight');
+};
+
+const logout = () => {
+  // Clear user authentication state
+  sessionStorage.removeItem('user_token');
+  sessionStorage.removeItem('userId');
+  router.push({path: '/login'});
 };
 
 </script>

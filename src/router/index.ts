@@ -49,6 +49,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/settings/privacy',
     component: () => import('@/views/Privacy.vue')
+  },
+  {
+    path: '/forgotpass',
+    component: () => import('@/views/ForgotPass.vue')
   }
 
 ]
@@ -59,7 +63,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/createAccount'];
+  const publicPages = ['/login', '/createAccount', '/forgotpass'];
   const authRequired = !publicPages.includes(to.path);
   const loggedInId = sessionStorage.getItem('userId');
 

@@ -76,8 +76,15 @@ const userId = ref(sessionStorage.getItem("userId") ?? "");
 const isThisUser = ref(route.params.id === userId.value);
 
 onMounted(async () => {
-    const userResponse = await axios.get(`account/${route.params.id}`).then((res) => res.data);
+    const userResponse = await axios.get(`account/${route.params.id}`)
+        .then((res) => res.data)
+        .catch();
     
-    user.value = userResponse;
+    user.value = userResponse ?? {
+        username: "deleted",
+        usertag: "deleted-user",
+        followers: [],
+        following: []
+    };
 });
 </script>
