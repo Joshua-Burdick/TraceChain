@@ -7,7 +7,7 @@
                 </h1>
             </div>
             <li v-else class="flex w-full mb-5" v-for="post in posts" :key="post._id">
-                <PostWidget :post="post" class="flex w-full"/>
+                <EditablePostWidget :post="post" class="flex w-full"/>
             </li>
         </ion-list>
         <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
@@ -22,7 +22,7 @@ import axios from 'axios';
 import { onMounted, Ref, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
-import PostWidget from '@/components/Post/PostWidget.vue';
+import EditablePostWidget from '@/components/Post/EditablePostWidget.vue';
 
 const route = useRoute();
 
