@@ -81,12 +81,20 @@ import axios from 'axios';
 
 const route = useRoute();
 
+interface Sources {
+    type: string,
+    data: {
+        [key: string]: string
+    }
+}
+
 interface Post {
     _id: string,
     userId: string,
     time: Date,
     content: String,
-    sources: [String],
+    sources: [Sources],
+    replies: [String],
     isInformative: Boolean,
     isEdited: Boolean,
     likes: [String],

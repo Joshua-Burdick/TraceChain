@@ -74,16 +74,26 @@
                 </div>
             </div>
         </div>
-        <div class="flex align-center bg-stone-800 w-2/3 p-3 rounded-lg text-slate-400 cursor-pointer" @click="replyDialog = true">
+        <div class="flex align-center bg-stone-800 w-2/3 m-3 p-3 rounded-lg text-slate-400 cursor-pointer" @click="replyDialog = true">
             <p class="flex w-full">Add Your Reply...</p>
             <ion-icon aria-hidden="true" :icon="sendOutline" class="text-lg"></ion-icon>
         </div>
         <div>
-            <div v-if="[].length > 0" class="text-4xl text-slate-400 h-auto mt-10">
-                This post has {{ post.replies.length }} {{ post.replies.length !== 1 ? 'Replies' : 'Reply' }}
+            <div v-if="post.replies.length > 0" class="flex flex-col text-2xl text-slate-400 align-start w-full h-auto mt-10">
+                {{ post.replies.length }} {{ post.replies.length !== 1 ? 'Replies' : 'Reply' }}
+                <div class="flex flex-row w-full justify-center pt-10">
+                    <ion-list v-if="!repliesLoading" class="flex flex-col bg-[#1d1f20]">
+                        <li class="flex w-full mb-5" v-for="reply in postReplies" :key="reply._id">
+                            <PostWidget :post="reply" class="flex w-full" :variant="'feed'"/>
+                        </li>
+                    </ion-list>
+                    <div v-if="repliesLoading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
+                        <v-progress-circular color="blue-lighten-3" class="flex w-1/2 h-1/2 justify-center items-center" :width="15" indeterminate></v-progress-circular>
+                    </div>
+                </div>  
             </div>
             <div v-else class="text-4xl text-slate-400 h-auto mt-10">
-                This post does not yet have any comments
+                This post doesn't have any comments yet
             </div>
         </div>
         <v-dialog v-model="replyDialog" class="w-1/3">
@@ -102,6 +112,7 @@ import { onMounted, ref, Ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import PostReply from './PostReply.vue';
+import PostWidget from './PostWidget.vue';
 
 const route = useRoute();
 const userId = sessionStorage.getItem("userId");
@@ -129,12 +140,14 @@ interface Post {
 const post: Ref<Post> = ref({
     content: ""
 } as unknown as Post);
+const postReplies: Ref<Post[]> = ref([]);
 
 const username: Ref<string> = ref("");
 const usertag: Ref<string> = ref("");
 const dateString: Ref<string> = ref("");
 const timeString: Ref<string> = ref("");
 const loading: Ref<boolean> = ref(true);
+const repliesLoading: Ref<boolean> = ref(true);
 const replyDialog: Ref<boolean> = ref(false);
 
 onMounted(async () => {
@@ -157,6 +170,18 @@ onMounted(async () => {
     timeString.value = new Date(post.value.time).toLocaleTimeString('en-US', { hour12: false });
 
     loading.value = false;
+
+    if (post.value.replies.length > 0) {
+        const repliesResponse = await axios.get(`/post/${post.value._id}/replies`)
+            .then((res) => res.data)
+            .catch((err) => {
+                console.error("Error fetching post replies:", err);
+                return [];
+            });
+        postReplies.value = repliesResponse;
+    }
+
+    repliesLoading.value = false;
 });
 
 const updateLikesDislikes = async (type: string) => {
