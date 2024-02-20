@@ -70,6 +70,12 @@
                         py-2 text-white bg-neutral-800 rounded shadow appearance-none
                         leading-tight focus:outline-none focus:shadow-outline"></textarea>
                     </div>
+
+                    <div class="mt-5 flex justify-center ml-8">
+                        <button  @click="onDelete" class="bg-red-800 w-32 h-12 rounded-lg">Delete Account</button>
+                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -95,7 +101,7 @@
                             <ion-icon slot="start" :icon="lockClosedOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Privacy</ion-label>
                         </ion-item>
-                        <ion-item @click="$router.push('/logout')" class="flex items-center p-3 hover:bg-neutral-700 rounded pb-"
+                        <ion-item @click.stop="logout" class="flex items-center p-3 hover:bg-neutral-700 rounded pb-"
                         style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
                             <ion-icon slot="start" :icon="logOutOutline" class="text-lg mr-3 ml-4"></ion-icon>
                             <ion-label>Log Out</ion-label>
@@ -104,6 +110,13 @@
                 </ion-list>
             </ion-content>
         </ion-menu>
+        <ion-alert
+      :isOpen="showDeleteAlert"
+      @onDidDismiss="onDismissAlert"
+      header="Delete Account"
+      message="Are you sure you want to delete your account? This action cannot be undone."
+      :buttons="deleteAlertButtons"
+    ></ion-alert>
   </ion-page>
 </template>
 
@@ -111,14 +124,37 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
  IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline } from 'ionicons/icons';
-import {ref, onMounted} from 'vue';
+import {ref, onMounted, computed} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 
 const route = useRoute();
+const showDeleteAlert = ref(false);
 const router = useRouter();
 
 const isMenuOpen = ref(false);
+
+const showErrorAlert = (message: string) => {
+  console.log('Error alert triggered:', message);
+  alert('Are you  ');
+};
+
+const deleteAlertButtons = computed(() => [
+  { text: 'Cancel', role: 'cancel', handler: onCancel },
+  { text: 'Delete', role: 'delete', handler: onDelete }
+]);
+
+const showDeleteConfirmation = () => {
+  showDeleteAlert.value = true;
+};
+
+const onDismissAlert = () => {
+  showDeleteAlert.value = false;
+};
+
+const onCancel = () => {
+  showDeleteAlert.value = false;
+};
 
 const user = ref({
     displayName: '',
@@ -165,9 +201,20 @@ const logout = () => {
   // Clear user authentication state
   sessionStorage.removeItem('user_token');
   sessionStorage.removeItem('userId');
-//   document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/login;';
-  // Navigate to the login page (or any other desired route)
-//   console.log(document.cookie);
-  router.push({path: '/login'});
+  router.push('/login');
 };
+
+const onDelete = async () => {
+    try {
+    console.log("hello");
+    await axios.delete(`/accountVerification/${route.params.id}/delete`);
+    sessionStorage.removeItem('user_token');
+    sessionStorage.removeItem('userId');
+    router.push('/login');
+  } catch (error) {
+    console.error('Error deleting account:', error);
+  }
+};
+
+
 </script>
