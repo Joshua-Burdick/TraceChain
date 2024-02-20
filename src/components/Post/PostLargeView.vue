@@ -74,15 +74,29 @@
                 </div>
             </div>
         </div>
-        <div class="text-4xl text-slate-400 h-auto mt-10 ">
-            This post does not yet have any comments
+        <div class="flex align-center bg-stone-800 w-2/3 p-3 rounded-lg text-slate-400 cursor-pointer">
+            <p class="flex w-full">Add Your Reply...</p>
+            <ion-icon aria-hidden="true" :icon="sendOutline" class="text-lg"></ion-icon>
         </div>
+        <div>
+            <div v-if="[].length > 0" class="text-4xl text-slate-400 h-auto mt-10">
+                This post has {{ post.replies.length }} {{ post.replies.length !== 1 ? 'Replies' : 'Reply' }}
+            </div>
+            <div v-else class="text-4xl text-slate-400 h-auto mt-10">
+                This post does not yet have any comments
+            </div>
+        </div>
+        <v-dialog v-model="replyDialog" class="w-1/3">
+            <div class="flex flex-col bg-[#1d1f20] text-slate-100 rounded-lg border-2 border-slate-700 p-5 w-full justify-center">
+                <CreatePost @closeDialog="replyDialog = false"/>
+            </div>
+        </v-dialog>
     </div>
 </template>
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar,} from '@ionic/vue';
-import { thumbsDownSharp, thumbsUpSharp } from 'ionicons/icons';
+import { thumbsDownSharp, thumbsUpSharp, sendOutline } from 'ionicons/icons';
 import axios from 'axios';
 import { onMounted, ref, Ref } from 'vue';
 import { useRoute } from 'vue-router';
@@ -103,6 +117,7 @@ interface Post {
     time: Date,
     content: String,
     sources: [Sources],
+    replies: [String],
     isInformative: Boolean,
     isEdited: Boolean,
     likes: [String],
@@ -110,28 +125,29 @@ interface Post {
 }
 
 const post: Ref<Post> = ref({
-    _id: "",
-    userId: "",
-    time: new Date(),
-    content: "",
-    sources: [{ type: "", data: {} }],
-    isInformative: false,
-    isEdited: false,
-    likes: [""],
-    dislikes: [""]
-} as Post);
+    content: ""
+} as unknown as Post);
 
 const username: Ref<string> = ref("");
 const usertag: Ref<string> = ref("");
 const dateString: Ref<string> = ref("");
 const timeString: Ref<string> = ref("");
 const loading: Ref<boolean> = ref(true);
+const replyDialog: Ref<boolean> = ref(false);
 
 onMounted(async () => {
     const response = await axios.get(`/post/${route.params.id}`).then((res) => res.data);
     post.value = response;
 
-    const postHeader = await axios.get(`account/${post.value.userId}/header`).then((res) => res.data);
+    const postHeader = await axios.get(`account/${post.value.userId}/header`)
+        .then((res) => res.data)
+        .catch((err) => {
+            console.error("Error fetching post header:", err);
+            return {
+                username: "deleted",
+                usertag: "deleted-user"
+            }
+        });
     username.value = postHeader.username;
     usertag.value = postHeader.usertag;
 

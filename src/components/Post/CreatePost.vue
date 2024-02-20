@@ -85,6 +85,8 @@ const isInformative = ref(true);
 const sourceTypes: Ref<string[]> = ref(['Article']);
 const sources: Ref<SourceContent[]> = ref([{}]);
 
+const emit = defineEmits(['closeDialog']);
+
 interface SourceTypes {
     [key: string]: string[]
 }
@@ -100,10 +102,7 @@ const sourceFields: SourceTypes = {
 };
 
 const maxLength = 500;
-
 const error = ref('');
-
-console.log("sources", JSON.stringify(sources.value[0]) === '{}');
 
 const submitPost = () => {
     const reduced = sources.value
@@ -153,6 +152,7 @@ const submitPost = () => {
     postContent.value = '';
 
     router.push({ path: `/profile/${userId}` });
+    emit('closeDialog');
 };
 
 </script>

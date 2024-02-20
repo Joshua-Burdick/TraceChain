@@ -116,7 +116,14 @@ onMounted(async () => {
     dateString.value = new Date(props.post.time).toLocaleDateString('en-US', { year: "numeric", month: "numeric", day: "numeric" });
     timeString.value = new Date(props.post.time).toLocaleTimeString('en-US', { hour12: false });
 
-    const postHeader = await axios.get(`account/${props.post.userId}/header`).then((res) => res.data);
+    const postHeader = await axios.get(`account/${props.post.userId}/header`)
+        .then((res) => res.data)
+        .catch((err) => {
+            return {
+                username: "deleted",
+                usertag: "deleted-user"
+            }
+        });
     username.value = postHeader.username;
     usertag.value = postHeader.usertag;
 });
