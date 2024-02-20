@@ -21,7 +21,7 @@
             </label>
         </div>
         <div
-            class="flex flex-col lg:w-1/2 h-full justify-center align-center overflow-y-scroll mt-5"
+            class="flex flex-col h-full justify-center align-center overflow-y-scroll mt-5"
             :class="{
                 'rounded-lg border-2 border-zinc-600 shadow-md shadow-black': isInformative && sources.length > 0,
             }"
@@ -137,6 +137,7 @@ const submitPost = async () => {
     userId: userId,
     content: postContent.value,
     sources: [... new Set(reduced)],
+    parentPostId: props.parentPostId,
     isInformative: isInformative.value,
     isEdited: false,
     time: Date.now(),

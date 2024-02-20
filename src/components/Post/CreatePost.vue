@@ -131,6 +131,7 @@ const submitPost = () => {
     userId: userId,
     content: postContent.value,
     sources: [... new Set(reduced)],
+    parentPostId: "",
     isInformative: isInformative.value,
     isEdited: false,
     time: Date.now(),
