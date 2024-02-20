@@ -112,11 +112,11 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
  IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput } from '@ionic/vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline } from 'ionicons/icons';
 import {ref, onMounted} from 'vue';
-import {useRouter} from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
-const router = useRouter();
-import { useRoute } from 'vue-router';
+
 const route = useRoute();
+const router = useRouter();
 
 const isMenuOpen = ref(false);
 
