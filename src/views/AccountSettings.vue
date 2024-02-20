@@ -7,7 +7,7 @@
                     <ion-menu-button></ion-menu-button>
                 </ion-buttons>
                 <ion-buttons slot="end">
-                    //<ion-button @click="$router.push('/feed')">
+                    <ion-button @click="$router.push('/feed')">
                         <ion-icon slot="icon-only" :icon="homeOutline"></ion-icon>
                     </ion-button>
                 </ion-buttons>
@@ -45,10 +45,8 @@
                                 border rounded bg-neutral-800 w-[400px] py-2 px-3 leading-tight focus:outline-none 
                                 focus:shadow-outline">
                             </div>
-                            <ion-buttons>
-                        <ion-button type="submit" fill="solid" color="light" class="mt-6 ml-5 bg-neutral-800 py-2 px-4
-                        rounded-md text-sm" style="--background-activated: transparent; --background-focused: transparent;">Save Changes</ion-button>
-                    </ion-buttons>
+                        <button type="submit" fill="solid" color="light" class="mt-6 ml-5 bg-neutral-800 py-2 px-4
+                        rounded-md text-sm font-bold" style="--background-activated: transparent; --background-focused: transparent;">Save Changes</button>
                             </form>
                     </div>
 
@@ -59,10 +57,8 @@
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1024px-Default_pfp.svg.png"
                             alt="Profile Image">
                     </div>
-                    <ion-buttons>
-                        <ion-button fill="solid" color="light" class="mt-6 ml-5 bg-neutral-800 py-2 px-4
-                        rounded-md text-sm" style="--background-activated: transparent; --background-focused: transparent;">Upload Picture</ion-button>
-                    </ion-buttons>
+                        <button fill="solid" color="light" class="mt-6 ml-5 bg-neutral-800 py-2 px-4 font-bold
+                        rounded-md text-sm" style="--background-activated: transparent; --background-focused: transparent;">Upload Picture</button>
 
                     <div class="w-full mt-4">
                         <label for="bio" class="block text-stone-300 text-sm font-bold mb-1 ml-8">Bio</label>
@@ -72,7 +68,7 @@
                     </div>
 
                     <div class="mt-5 flex justify-center ml-8">
-                        <button  @click="onDelete" class="bg-red-800 w-32 h-12 rounded-lg">Delete Account</button>
+                        <button  @click="onDelete" class="bg-red-800 w-36 h-12 rounded-lg font-bold">Delete Account</button>
                     </div>
 
 
