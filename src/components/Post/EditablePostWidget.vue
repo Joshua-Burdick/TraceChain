@@ -6,8 +6,12 @@
             <div class="flex flex-col items-start w-full">
                 <div
                     @click.stop="$router.push(`/post/${post._id}`)"
+                    class="w-full"
                 >
-                    <span class="text-xs text-slate-300">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</span>
+                    <div class="flex flex-row w-full align-center">
+                        <span class="text-xs text-slate-300 w-full">{{ post.isEdited ? 'Edited' : 'Posted' }} @{{ timeString }} on {{ dateString }}</span>
+                        <PostContextMenu :postId="post._id"/>
+                    </div>
                     <div v-if="post.content.length < 200" class="text-2xl px-2 py-3 mb-2">
                         {{ post.content }}
                     </div>
@@ -64,10 +68,11 @@
 
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon, IonItem } from '@ionic/vue';
-import { thumbsDownSharp, thumbsUpSharp, chatbubbleEllipsesOutline } from 'ionicons/icons';
-import { onMounted, ref, PropType } from 'vue';
+import { thumbsDownSharp, thumbsUpSharp, chatbubbleEllipsesOutline, ellipsisVerticalOutline, ellipsisVerticalSharp, pencilSharp, trash } from 'ionicons/icons';
+import { onMounted, ref, Ref, PropType } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import PostContextMenu from '@/components/Post/PostContextMenu.vue';
 
 const route = useRoute();
 
@@ -87,6 +92,7 @@ type Variant = "feed" | "profile";
 const dateString = ref("");
 const timeString = ref("");
 const userId = sessionStorage.getItem("userId");
+const contextMenu: Ref<boolean> = ref(false);
 
 const props = defineProps({
     post: {

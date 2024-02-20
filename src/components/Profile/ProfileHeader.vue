@@ -78,26 +78,34 @@ const props = defineProps({
 });
 
 onMounted(async () => {
-    followers.value = await axios.get(`account/${route.params.id}`).then((res) => res.data.followers);
+    followers.value = await axios.get(`account/${route.params.id}`)
+        .then((res) => res.data.followers)
+        .catch((err) => {
+            return [];
+        });
     isFollowing.value = followers.value.includes(loggedInId);
 });
 
 const toggleFollow = async () => {
     if (!isFollowing.value) {
-        axios.put(`account/${route.params.id}/follow`, {
+        await axios.put(`account/${route.params.id}/follow`, {
             followerId: loggedInId
         }).then((res) => {
             console.log(res);
-        });
+        })
+        .catch((err) => console.log(err));
     } else {
-        axios.put(`account/${route.params.id}/unfollow`, {
+        await axios.put(`account/${route.params.id}/unfollow`, {
             followerId: loggedInId
         }).then((res) => {
             console.log(res);
-        });
+        })
+        .catch((err) => console.log(err));
     }
     
-    followers.value = await axios.get(`account/${route.params.id}`).then((res) => res.data.followers);
+    followers.value = await axios.get(`account/${route.params.id}`)
+        .then((res) => res.data.followers)
+        .catch((err) => console.error(err));
     isFollowing.value = followers.value.includes(loggedInId);
 }
 </script>
