@@ -23,6 +23,10 @@
                 <ion-input v-model="password" name="password" type="password" @keyup.enter="loginUser"></ion-input>
               </ion-item>
               </ion-list>
+              <div class="flex items-center mt-2">
+                <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember Me</label>
+              </div>
               <ion-button expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
               <router-link to="/forgotpass">
               <ion-button expand="full" color="danger" class="forgot-pass-button mb-2">Forgot Password</ion-button>
