@@ -24,8 +24,8 @@
               </ion-item>
               </ion-list>
               <div class="flex items-center mt-2">
-                <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <label for="default-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember Me</label>
+                <input id="remember-checkbox" type="checkbox" v-model="rememberMe" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="remember-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember Me</label>
               </div>
               <ion-button expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
               <router-link to="/forgotpass">
@@ -54,6 +54,7 @@ import { ref } from 'vue';
 import { IonAlert, IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonInput, IonButton, IonImg, IonTitle, IonToolbar, IonHeader } from '@ionic/vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
 const router = useRouter();
 
 const username = ref('');
@@ -61,6 +62,7 @@ const password = ref('');
 const showAlert = ref(false);
 const alertMessage = ref<string>('');
 const loading = ref(false);
+const rememberMe = ref(false);
 
 const showErrorAlert = (message: string) => {
   console.log('Error alert triggered:', message);
@@ -76,14 +78,17 @@ const loginUser = () => {
 
   axios.post('login', userlogin)
     .then((res) => {
+      console.log('login reposnse:', res);
       const token = res.data.token;
-      
+      console.log('remember me:', rememberMe.value);
+
+      if (rememberMe.value) {
+        localStorage.setItem('user_token', token);
+        localStorage.setItem('userId', res.data.user._id);
+      }
       sessionStorage.setItem('user_token', token);
       sessionStorage.setItem('userId', res.data.user._id);
-
-      // document.cookie = `access_token=${token}; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/; secure; samesite=None`;
-
-      router.push({ path: '/feed' });
+      router.push({ path: '/feed'});
     })
     .catch((error) => {
       console.log('Sign-in error:', error.response.data.message);
@@ -92,6 +97,21 @@ const loginUser = () => {
 
     loading.value = false;
 };
+
+const checkAuthentication = () => {
+  const token = localStorage.getItem('user_token') || sessionStorage.getItem('user_token');
+  const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+  console.log('Retreived token:', token);
+  console.log('Retreived userId:', userId);
+  if (token && userId) {
+    console.log('User is authenticiated. redirecting to feed....');
+    router.push({ path: '/feed'});
+  } else {
+    console.log('no token found. user is not authenticated');
+  }
+};
+
+onMounted(checkAuthentication);
 
 </script>
 
