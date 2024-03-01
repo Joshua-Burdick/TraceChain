@@ -99,12 +99,11 @@ const loginUser = () => {
 };
 
 const checkAuthentication = () => {
-  const token = localStorage.getItem('user_token') || sessionStorage.getItem('user_token');
-  const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+  const token = sessionStorage.getItem('user_token') || localStorage.getItem('user_token');
+  const userId = sessionStorage.getItem('userId') || localStorage.getItem('userId');
   console.log('Retreived token:', token);
   console.log('Retreived userId:', userId);
   if (token && userId) {
-    console.log('User is authenticiated. redirecting to feed....');
     router.push({ path: '/feed'});
   } else {
     console.log('no token found. user is not authenticated');

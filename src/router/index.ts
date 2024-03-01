@@ -65,11 +65,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/createAccount', '/forgotpass'];
   const authRequired = !publicPages.includes(to.path);
-  const loggedInToken = localStorage.getItem('user_token') || sessionStorage.getItem('user_token');
-  const loggedInId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+  const loggedInToken = sessionStorage.getItem('user_token') || localStorage.getItem('user_token');
+  const loggedInId = sessionStorage.getItem('userId') || localStorage.getItem('userId');
   
 
-  if (authRequired && (!loggedInToken || !loggedInId)) {
+  if (authRequired && (!loggedInToken && !loggedInId)) {
     return next('/login');
   }
 
