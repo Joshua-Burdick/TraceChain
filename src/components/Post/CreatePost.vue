@@ -49,8 +49,8 @@
                                     accept="image/jpeg, image/png" @click="handleButtonClick">
                                     Upload Image
                                 </button> -->
-                                <input id="fileInput" ref="fileInput" type="file" :placeholder="field" multiple
-                                    class="w-full h-full rounded-lg bg-zinc-800 p-2 shadow-sm shadow-black" />
+                                <input id="fileInput" name="fileInput" ref="fileInput" type="file" :placeholder="field" 
+                                    multiple class="w-full h-full rounded-lg bg-zinc-800 p-2 shadow-sm shadow-black" />
                             </template>
                         </div>
                     </div>
@@ -90,8 +90,9 @@ const postContent = ref('');
 const isInformative = ref(true);
 const sourceTypes: Ref<string[]> = ref(['Article']);
 const sources: Ref<SourceContent[]> = ref([{}]);
-// const fileInput = ref(null);
-const photoHashes: String[] = [];
+const fileInput = ref(null);
+//const photoHashes: String[] = [];
+const photosSet: Ref<string[]> = ref([]);
 
 interface FileInputElement {
     readonly inputElement: HTMLInputElement;
@@ -104,6 +105,7 @@ interface SourceTypes {
 interface SourceContent {
     [key: string]: string
 }
+
 
 const sourceFields: SourceTypes = {
     "Article": ["URL"],
@@ -118,33 +120,42 @@ const error = ref('');
 
 console.log("sources", JSON.stringify(sources.value[0]) === '{}');
 
-const handleImages = () => {
+const handleImages = async () => {
     console.log("handleFileUpload");
 
-    const inputElement: HTMLInputElement = document.getElementById('fileInput');
-    const files: any[] = inputElement.files;
+    const inputElement: HTMLInputElement | null = document.getElementById('fileInput') as HTMLInputElement;
+    const files: any[] = inputElement.files as any;
     console.log(files);
 
+    let formData = new FormData();
+    const promises = [];
+
     for (let i: number = 0; i < files.length; i++) {
-            let formData = new FormData();
-            formData.append('file', files[i]);
 
-            let hash: String = '';
+        formData.append('file', files[i]);
 
-            axios.post(`/upload/new`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data', 
-                },
-            })
-                .then(res => {
-                    hash = res.data;
-                    photoHashes.push(hash);
-                    console.log("hash: ", hash);
-                })
-                .catch(err => {
-                    console.error("The following error happened in axios.post for an image: ", err);
-                }) // end catch
-    }
+        let hash: string = '';
+
+        // localhost works but the api on vercel don't becuase not pushed
+        // Create a promise for each axios.post call
+    const promise = axios.post(`http://localhost:1776/api/upload/new`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    })
+    .then(res => {
+        hash = res.data.hash;
+        photosSet.value.push(hash);
+        console.log("hash: ", hash);
+    })
+    .catch(err => {
+        console.error("The following error happened in axios.post for an image: ", err);
+    });   
+    promises.push(promise);
+}
+
+    // Wait for all promises to resolve before continuing
+    await Promise.all(promises);
 
     // files.forEach(file => {
     //     let formData = new FormData();
@@ -198,7 +209,7 @@ const submitPost = () => {
         userId: userId,
         content: postContent.value,
         sources: [... new Set(reduced)],
-        photos: [...photoHashes],
+        photos: [... photosSet.value],
         isInformative: isInformative.value,
         isEdited: false,
         time: Date.now(),
