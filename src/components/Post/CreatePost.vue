@@ -126,36 +126,58 @@ const handleImages = async () => {
     const inputElement: HTMLInputElement | null = document.getElementById('fileInput') as HTMLInputElement;
     const files: any[] = inputElement.files as any;
     console.log(files);
+    let promises = [];
 
     let formData = new FormData();
-    const promises = [];
 
-    for (let i: number = 0; i < files.length; i++) {
+    // for (let i: number = 0; i < files.length; i++) {
 
-        formData.append('file', files[i]);
+    //     formData.append('file', files[i]);
 
-        let hash: string = '';
+    //     let hash: string = '';
 
-        // localhost works but the api on vercel don't becuase not pushed
-        // Create a promise for each axios.post call
-    const promise = axios.post(`http://localhost:1776/api/upload/new`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
-    })
-    .then(res => {
-        hash = res.data.hash;
-        photosSet.value.push(hash);
-        console.log("hash: ", hash);
-    })
-    .catch(err => {
-        console.error("The following error happened in axios.post for an image: ", err);
-    });   
-    promises.push(promise);
-}
+    //     // localhost works but the api on vercel don't becuase not pushed
+    //     // Create a promise for each axios.post call
+    //     const promise = axios.post(`http://localhost:1776/api/upload/new`, formData, {
+    //         headers: {
+    //             'Content-Type': 'multipart/form-data',
+    //         },
+    //     })
+    //     .then(res => {
+    //         hash = res.data.hash;
+    //         photosSet.value.push(hash);
+    //         console.log("hash: ", hash);
+    //     })
+    //     .catch(err => {
+    //         console.error("The following error happened in axios.post for an image: ", err);
+    //     });   
+    //     promises.push(promise);
+    //     console.log("this promise was pushed: ", promise);
+    //     console.log("promises: ", promises);
+    // Map each file to a promise for axios.post
+    promises = Array.from(files).map(async (file) => {
+        formData.append('file', file);
+
+        try {
+            const response = await axios.post(`http://localhost:1776/api/upload/new`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            const hash = response.data.hash;
+            photosSet.value.push(hash);
+            console.log("hash: ", hash);
+        } catch (err) {
+            console.error("The following error happened in axios.post for an image: ", err);
+        }
+    });
 
     // Wait for all promises to resolve before continuing
     await Promise.all(promises);
+
+    console.log("after Promise.all, here is photosSet.value: ", photosSet.value);
+}
+
 
     // files.forEach(file => {
     //     let formData = new FormData();
@@ -177,10 +199,10 @@ const handleImages = async () => {
     //             console.error("The following error happened in axios.post for an image: ", err);
     //         }) // end catch
     // }); // end for
-}
 
-const submitPost = () => {
-    handleImages();
+
+const submitPost = async () => {
+    await handleImages();
     const reduced = sources.value
         .map((source, ind) => {
             return {
@@ -215,9 +237,11 @@ const submitPost = () => {
         time: Date.now(),
     };
 
+    console.log("post.photos: ", post.photos);
+
     // let postId = '';
 
-    axios.post(`/post/${userId}`, post)
+    axios.post(`http://localhost:1776/api/post/${userId}`, post)
         .then((res) => {
             console.log(res);
             // postId = res.data;
