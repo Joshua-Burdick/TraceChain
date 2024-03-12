@@ -11,14 +11,14 @@
             </ion-list>
 
             <!--Dropdown filter-->
-            <div class="absolute right-10 top-0 mt-10">
+            <div class="absolute right-10 top-0 mt-10" v-click-outside="closeDropdown">
               <button @click="open = !open" class="px-4 py-2 mt-2 text-white bg-red-900 rounded-md focus:outline-none focus:shadow-outline">
                   Sort by
               </button>
               <div v-if="open" class="absolute right-0 mt-2 w-40 rounded-md shadow-lg z-10 bg-neutral-700">
-                  <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click.prevent="sortType='Newest'">Newest</a>
-                  <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click.prevent="sortType='Oldest'">Oldest</a>
-                  <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click="sortType = 'Most Popular'">Most Popular</a>
+                  <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click="sortType='Newest'; toggleDropdown()">Newest</a>
+                  <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click="sortType='Oldest'; toggleDropdown()">Oldest</a>
+                  <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click="sortType = 'Most Popular'; toggleDropdown()">Most Popular</a>
               </div>
           </div>
             <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
@@ -39,8 +39,14 @@ import PostWidget from '@/components/Post/PostWidget.vue';
 const open = ref(false);
 const sortType = ref(localStorage.getItem('sortType') || 'Newest');
 
+// Sort button toggle
 function toggleDropdown() {
     open.value = !open.value;
+}
+
+// Sort button close off-click
+function closeDropdown() {
+    open.value = false;
 }
 
 interface User {
@@ -84,6 +90,7 @@ const formatSource = (source: any) => {
     }
 }
 
+// Sort feed functions
 const sortedFeed = computed(() => {
     console.log('Sorting by:', sortType.value);
     switch (sortType.value) {
@@ -98,6 +105,7 @@ const sortedFeed = computed(() => {
     }
 });
 
+// Saves state of feed sort
 watch(sortType, (newValue) => {
     localStorage.setItem('sortType', newValue);
 });
