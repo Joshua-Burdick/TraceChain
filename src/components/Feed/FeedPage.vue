@@ -19,7 +19,6 @@
                   <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click.prevent="sortType='Newest'">Newest</a>
                   <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click.prevent="sortType='Oldest'">Oldest</a>
                   <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" @click="sortType = 'Most Popular'">Most Popular</a>
-                  <a class="block px-4 py-2 text-sm text-white hover:bg-neutral-600" href="#">Following</a>
               </div>
           </div>
             <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
