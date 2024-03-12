@@ -25,8 +25,10 @@
                     <div class="text-5xl px-2 py-3 mb-2 mt-10">
                         {{ post.content }}
                     </div>
-                    <div>
-                        image
+                    <div v-for="(photo, index) in photosArray" :key="index">
+                        <img :src="`data:${photo.contentType};base64,${photo.buffer}`" class="w-100">
+                        <p>{{ photo.data.data }}</p>
+                        <!-- <img :src="getImageUrl()" alt="Image" /> -->
                     </div>
                 </div>
             </div>
@@ -88,6 +90,7 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 const userId = sessionStorage.getItem("userId");
 
+
 const tempSources = [
     {
         type: "Video",
@@ -116,6 +119,7 @@ interface Post {
     time: Date,
     content: String,
     sources: [Sources],
+    photos: [String],
     isInformative: Boolean,
     isEdited: Boolean,
     likes: [String],
@@ -128,11 +132,14 @@ const post: Ref<Post> = ref({
     time: new Date(),
     content: "",
     sources: [{ type: "", data: {} }],
+    photos: [""],
     isInformative: false,
     isEdited: false,
     likes: [""],
     dislikes: [""]
 } as Post);
+
+let photosArray: any[] = []; 
 
 const username: Ref<string> = ref("");
 const usertag: Ref<string> = ref("");
@@ -144,9 +151,23 @@ onMounted(async () => {
     const response = await axios.get(`/post/${route.params.id}`).then((res) => res.data);
     post.value = response;
 
+    console.log("post.photos: ", post.value.photos);
+
     const postHeader = await axios.get(`account/${post.value.userId}/header`).then((res) => res.data);
     username.value = postHeader.username;
     usertag.value = postHeader.usertag;
+
+    let image;
+
+    post.value.photos.forEach(async (photoHash) => {
+        console.log(photoHash);
+        image = await axios.get(`http://localhost:1776/api/upload/${photoHash}`).then((res) => res.data);
+        console.log("image: ", image[0].img);
+        photosArray.push(image[0].img);
+        console.log("photosArray: ", photosArray);
+    });
+
+    //const images = await axios.get(`/`);
 
     dateString.value = new Date(post.value.time).toLocaleDateString('en-US', { year: "numeric", month: "numeric", day: "numeric" });
     timeString.value = new Date(post.value.time).toLocaleTimeString('en-US', { hour12: false });
