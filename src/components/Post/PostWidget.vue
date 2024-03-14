@@ -64,7 +64,7 @@
                         >
                             <ion-icon :icon="chatbubbleEllipsesOutline"></ion-icon>
                         </button>
-                        {{ 0 }} <!-- TODO add comments array to posts and display array.length -->
+                        {{ post.replies.length }}
                     </div>
                 </div>
             </div>
@@ -81,12 +81,20 @@ import axios from 'axios';
 
 const route = useRoute();
 
+interface Sources {
+    type: string,
+    data: {
+        [key: string]: string
+    }
+}
+
 interface Post {
     _id: string,
     userId: string,
     time: Date,
     content: String,
-    sources: [String],
+    sources: [Sources],
+    replies: [String],
     isInformative: Boolean,
     isEdited: Boolean,
     likes: [String],
@@ -99,7 +107,7 @@ const dateString = ref("");
 const timeString = ref("");
 const username = ref("");
 const usertag = ref("");
-const userId = sessionStorage.getItem("userId");
+const userId = sessionStorage.getItem("userId") ?? localStorage.getItem("userId");
 
 const props = defineProps({
     post: {
@@ -116,7 +124,14 @@ onMounted(async () => {
     dateString.value = new Date(props.post.time).toLocaleDateString('en-US', { year: "numeric", month: "numeric", day: "numeric" });
     timeString.value = new Date(props.post.time).toLocaleTimeString('en-US', { hour12: false });
 
-    const postHeader = await axios.get(`account/${props.post.userId}/header`).then((res) => res.data);
+    const postHeader = await axios.get(`account/${props.post.userId}/header`)
+        .then((res) => res.data)
+        .catch((err) => {
+            return {
+                username: "deleted",
+                usertag: "deleted-user"
+            }
+        });
     username.value = postHeader.username;
     usertag.value = postHeader.usertag;
 });

@@ -69,7 +69,7 @@
                 class="rounded-full w-36 h-14 text-slate-100 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]"
                 @click.stop="submitPost">Post</button>
         </div>
-        <div class="text-red text-lg py-3">{{ error }}</div>
+        <div v-if="error" class="text-red text-lg py-3">{{ error }}</div>
     </div>
 </template>
 
@@ -115,7 +115,6 @@ const sourceFields: SourceTypes = {
 };
 
 const maxLength = 500;
-
 const error = ref('');
 
 console.log("sources", JSON.stringify(sources.value[0]) === '{}');
