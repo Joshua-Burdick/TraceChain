@@ -107,7 +107,7 @@ const dateString = ref("");
 const timeString = ref("");
 const username = ref("");
 const usertag = ref("");
-const userId = sessionStorage.getItem("userId");
+const userId = sessionStorage.getItem("userId") ?? localStorage.getItem("userId");
 
 const props = defineProps({
     post: {

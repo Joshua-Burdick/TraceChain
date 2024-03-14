@@ -93,6 +93,8 @@ const navTargets: Array<NavTarget> = [
 
 const logout = () => {
   // Clear user authentication state
+  localStorage.removeItem('user_token');
+  localStorage.removeItem('userId');
   sessionStorage.removeItem('user_token');
   sessionStorage.removeItem('userId');
   router.push({path: '/login'});
