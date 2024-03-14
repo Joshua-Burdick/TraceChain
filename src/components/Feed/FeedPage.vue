@@ -42,10 +42,11 @@ interface Post {
 let isSearchVisible = true;
 const feed = ref<Array<Post>>([]);
 const loading = ref(true);
+const userId = sessionStorage.getItem('userId');
 
 onMounted(async () => {
     try {
-        const feedResponse = await axios.get("/post/feed");
+        const feedResponse = await axios.get(`/account/${userId}/feed`);
         feed.value = feedResponse.data;
     } catch (error) {
         console.error('Error fetching feed:', error);
