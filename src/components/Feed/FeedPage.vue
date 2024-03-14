@@ -69,10 +69,11 @@ interface Post {
 let isSearchVisible = true;
 const feed = ref<Array<Post>>([]);
 const loading = ref(true);
+const userId = sessionStorage.getItem('userId');
 
 onMounted(async () => {
     try {
-        const feedResponse = await axios.get("/post/feed");
+        const feedResponse = await axios.get(`/account/${userId}/feed`);
         feed.value = feedResponse.data;
         console.log('First post:', feed.value[0]);
     } catch (error) {
