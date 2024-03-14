@@ -27,7 +27,7 @@
                     </div>
                     <div v-for="(photo, index) in photosArray" :key="index">
                         <img :src="`data:${photo.contentType};base64,${photo.buffer}`" class="w-100">
-                        <p>{{ photo.data.data }}</p>
+                        <p>{{ photo }}</p>
                         <!-- <img :src="getImageUrl()" alt="Image" /> -->
                     </div>
                 </div>
@@ -177,8 +177,13 @@ onMounted(async () => {
     post.value.photos.forEach(async (photoHash) => {
         console.log(photoHash);
         image = await axios.get(`http://localhost:1776/api/upload/${photoHash}`).then((res) => res.data);
-        console.log("image: ", image[0].img);
-        photosArray.push(image[0].img);
+        let imageBinaryBuffer = image[0].img.data.data.toString('binary');
+        console.log("image: ", image[0].img.data);
+        console.log("imageBinaryBuffer: ", imageBinaryBuffer);
+        let imageBufferBase64 = imageBinaryBuffer.toString('base64');
+        photosArray.push(imageBufferBase64);
+        console.log("imageBufferBase64: ", imageBufferBase64);
+        console.log("typeof(image[0].img.data): ", typeof(image[0].img.data));
         console.log("photosArray: ", photosArray);
     });
 
