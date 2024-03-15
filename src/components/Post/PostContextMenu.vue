@@ -29,7 +29,7 @@
         </v-menu>
         <v-dialog v-model="editDialog" class="w-1/3">
             <div class="flex flex-col bg-[#1d1f20] text-slate-100 rounded-lg border-2 border-slate-700 p-5 w-full justify-center">
-                <EditPost :postId="postId" @closeDialog="editDialog = false"/>
+                <EditPost :postId="postId" @closeDialog="editPost"/>
             </div>
         </v-dialog>
         <v-dialog v-model="deleteDialog" class="w-1/3">
@@ -80,9 +80,16 @@ onMounted(() => {
     deleteDialog.value = false;
 });
 
+const editPost = async () => {
+    editDialog.value = false;
+    window.location.reload();
+}
+
 const deletePost = async () => {
     await axios.delete(`post/${props.postId}`)
         .catch((err) => console.error(err));
     deleteDialog.value = false;
+
+    window.location.reload();
 }
 </script>

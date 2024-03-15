@@ -65,9 +65,12 @@
             </div>
         </div>
         <div class="flex flex-row align-center justify-center mt-3 p-5">
-            <button
-                class="rounded-full w-36 h-14 text-slate-100 text-xl bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]"
-                @click.stop="submitPost">Post</button>
+            <button class="rounded-full w-36 h-14 text-slate-100 text-xl"
+                :class="{
+                    'bg-gradient-to-r from-[#700000] via-[#7d0404] via-35% to-[#930600]': !loading,
+                    'bg-gray-500': loading
+                }"
+            @click.stop="submitPost">Post</button>
         </div>
         <div v-if="error" class="text-red text-lg py-3">{{ error }}</div>
     </div>
@@ -116,6 +119,11 @@ const sourceFields: SourceTypes = {
 
 const maxLength = 500;
 const error = ref('');
+const loading = ref(false);
+
+const submitPost = async () => {
+    loading.value = true;
+    error.value = '';
 
 console.log("sources", JSON.stringify(sources.value[0]) === '{}');
 
@@ -222,6 +230,7 @@ const submitPost = async () => {
     if (isInformative.value) {
         if (reduced.length === 0 && fileElement.files?.length === 0) {
             error.value = 'Please add at least one source.';
+            loading.value = false;
             return;
         }
     }
@@ -240,7 +249,7 @@ const submitPost = async () => {
 
     // let postId = '';
 
-    axios.post(`http://localhost:1776/api/post/${userId}`, post)
+    await axios.post(`http://localhost:1776/api/post/${userId}`, post)
         .then((res) => {
             console.log(res);
             // postId = res.data;
@@ -254,7 +263,10 @@ const submitPost = async () => {
     sourceTypes.value = [];
     postContent.value = '';
 
-    router.push({ path: `/profile/${userId}` });
+    setTimeout(() => {
+        loading.value = false;
+        router.push({ path: `/profile/${userId}/redirect` });
+    }, 100);
 };
 
 </script>
