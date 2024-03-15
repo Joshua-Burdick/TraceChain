@@ -121,13 +121,7 @@ const maxLength = 500;
 const error = ref('');
 const loading = ref(false);
 
-const submitPost = async () => {
-    loading.value = true;
-    error.value = '';
-
-console.log("sources", JSON.stringify(sources.value[0]) === '{}');
-
-const handleImages = async (fileElement: HTMLInputElement | null) => {
+const handleImages = async (fileElement: HTMLInputElement | null, postId: string) => {
     console.log("handleFileUpload");
     
     const files: any[] = fileElement?.files as any;
@@ -136,41 +130,19 @@ const handleImages = async (fileElement: HTMLInputElement | null) => {
 
     let formData = new FormData();
 
-    // for (let i: number = 0; i < files.length; i++) {
-
-    //     formData.append('file', files[i]);
-
-    //     let hash: string = '';
-
-    //     // localhost works but the api on vercel don't becuase not pushed
-    //     // Create a promise for each axios.post call
-    //     const promise = axios.post(`http://localhost:1776/api/upload/new`, formData, {
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data',
-    //         },
-    //     })
-    //     .then(res => {
-    //         hash = res.data.hash;
-    //         photosSet.value.push(hash);
-    //         console.log("hash: ", hash);
-    //     })
-    //     .catch(err => {
-    //         console.error("The following error happened in axios.post for an image: ", err);
-    //     });   
-    //     promises.push(promise);
-    //     console.log("this promise was pushed: ", promise);
-    //     console.log("promises: ", promises);
-    // Map each file to a promise for axios.post
     promises = Array.from(files).map(async (file) => {
         formData.append('file', file);
-
+        
         try {
-            const response = await axios.post(`http://localhost:1776/api/upload/new`, formData, {
+            const response = await axios.post(`http://localhost:1776/api/upload/${postId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                },
-            });
-            const hash = response.data.hash;
+                }
+            })
+            .then((res) => res.data)
+            .catch((err) => console.log(err));
+
+            const hash = response.image.hash;
             photosSet.value.push(hash);
             console.log("hash: ", hash);
         } catch (err) {
@@ -185,31 +157,12 @@ const handleImages = async (fileElement: HTMLInputElement | null) => {
 }
 
 
-    // files.forEach(file => {
-    //     let formData = new FormData();
-    //     formData.append('file', file);
-
-    //     let hash: String = '';
-
-    //     axios.post(`/upload/find`, formData, {
-    //         headers: {
-    //             'Content-Type': 'multipart/form-data', // Important for file uploads
-    //         },
-    //     })
-    //         .then(res => {
-    //             hash = res.data;
-    //             photoHashes.push(hash);
-    //             console.log("hash: ", hash);
-    //         })
-    //         .catch(err => {
-    //             console.error("The following error happened in axios.post for an image: ", err);
-    //         }) // end catch
-    // }); // end for
-
-
 const submitPost = async () => {
+    loading.value = true;
+    error.value = '';
+
     const fileElement: HTMLInputElement | null = document.getElementById('fileInput') as HTMLInputElement;
-    await handleImages(fileElement);
+
     const reduced = sources.value
         .map((source, ind) => {
             return {
@@ -239,25 +192,21 @@ const submitPost = async () => {
         userId: userId,
         content: postContent.value,
         sources: [... new Set(reduced)],
-        photos: [... photosSet.value],
         isInformative: isInformative.value,
         isEdited: false,
         time: Date.now(),
     };
 
-    console.log("post.photos: ", post.photos);
-
-    // let postId = '';
-
-    await axios.post(`http://localhost:1776/api/post/${userId}`, post)
-        .then((res) => {
-            console.log(res);
-            // postId = res.data;
-            console.log("Submitted: ", post);
-        })
+    const postId = await axios.post(`http://localhost:1776/api/post/${userId}`, post)
+        .then((res) => res.data)
         .catch((error) => {
-            console.log('the following error occured when trying to post a new deck', error);
-        })
+            console.log('the following error occured when trying to post a new post', error);
+        });
+    
+    await handleImages(fileElement, postId);
+    await axios.post(`/post/${postId}/images`, {
+        photos: photosSet.value
+    });
 
     sources.value = [];
     sourceTypes.value = [];
