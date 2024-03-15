@@ -40,7 +40,7 @@
   import { ref } from 'vue';
   import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonInput, IonButton, IonImg } from '@ionic/vue';
   import axios from 'axios';
-import router from '@/router';
+  import router from '@/router';
  
   
   const username = ref('');
@@ -58,12 +58,25 @@ import router from '@/router';
     password: password.value,
   };
 
+  const userVerification = {
+    recipientEmail: email.value,
+    recipientName: displayName.value
+  }
+
   console.log("user created: ", userRegister.email);
 
   axios.post('register', userRegister)
     .then((res) => {
       console.log(res);
       console.log("User Submitted: ", userRegister);
+
+      axios.post('register/sendConfirmationEmail', userVerification)
+      .then((response) => {
+        console.log('Verification email sent successfully', response.data)
+      })
+      .catch((error) => {
+        console.error('Error sending verification email:', error);
+      })
       router.push('/login');
     })
     .catch((error) => {

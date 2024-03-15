@@ -49,8 +49,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/settings/privacy',
     component: () => import('@/views/Privacy.vue')
+  },
+  {
+    path: '/:id/verify',
+    component: () => import('@/views/AccountVerification.vue')
   }
-
 ]
 
 const router = createRouter({
