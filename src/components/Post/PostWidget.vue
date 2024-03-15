@@ -122,7 +122,7 @@ const props = defineProps({
 
 onMounted(async () => {
     dateString.value = new Date(props.post.time).toLocaleDateString('en-US', { year: "numeric", month: "numeric", day: "numeric" });
-    timeString.value = new Date(props.post.time).toLocaleTimeString('en-US', { hour12: false });
+    timeString.value = new Date(props.post.time).toLocaleTimeString('en-US', { hour: "2-digit", minute: "2-digit", hour12: false });
 
     const postHeader = await axios.get(`account/${props.post.userId}/header`)
         .then((res) => res.data)

@@ -167,7 +167,7 @@ onMounted(async () => {
     usertag.value = postHeader.usertag;
 
     dateString.value = new Date(post.value.time).toLocaleDateString('en-US', { year: "numeric", month: "numeric", day: "numeric" });
-    timeString.value = new Date(post.value.time).toLocaleTimeString('en-US', { hour12: false });
+    timeString.value = new Date(post.value.time).toLocaleTimeString('en-US', { hour: "2-digit", minute: "2-digit", hour12: false });
 
     loading.value = false;
 

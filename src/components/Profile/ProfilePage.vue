@@ -49,14 +49,15 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, IonIcon} from '@ionic/vue';
 import axios from "axios";
-import { ref, onMounted, Ref } from 'vue';
+import { ref, Ref, onMounted, onBeforeUpdate } from 'vue';
 import ProfileHeader from '@/components/Profile/ProfileHeader.vue';
 import UserPostList from '@/components/Post/UserPostList.vue';
 import UserPostListEditable from '@/components/Post/UserPostListEditable.vue';
 import UserMediaList from '@/components/Media/UserMediaList.vue';
 import UserCommunityList from '@/components/Communities/UserCommunityList.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
+const router = useRouter();
 
 type User = {
     username: string,
