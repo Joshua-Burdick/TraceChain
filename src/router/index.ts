@@ -53,6 +53,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/forgotpass',
     component: () => import('@/views/ForgotPass.vue')
+  },
+  {
+    path: '/createCommunity',
+    component: () => import('@/views/CreateCommunity.vue')
   }
 
 ]
