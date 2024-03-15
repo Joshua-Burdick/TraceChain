@@ -119,11 +119,10 @@ const error = ref('');
 
 console.log("sources", JSON.stringify(sources.value[0]) === '{}');
 
-const handleImages = async () => {
+const handleImages = async (fileElement: HTMLInputElement | null) => {
     console.log("handleFileUpload");
-
-    const inputElement: HTMLInputElement | null = document.getElementById('fileInput') as HTMLInputElement;
-    const files: any[] = inputElement.files as any;
+    
+    const files: any[] = fileElement?.files as any;
     console.log(files);
     let promises = [];
 
@@ -201,7 +200,8 @@ const handleImages = async () => {
 
 
 const submitPost = async () => {
-    await handleImages();
+    const fileElement: HTMLInputElement | null = document.getElementById('fileInput') as HTMLInputElement;
+    await handleImages(fileElement);
     const reduced = sources.value
         .map((source, ind) => {
             return {
@@ -220,7 +220,7 @@ const submitPost = async () => {
         .filter((source) => source !== undefined);
 
     if (isInformative.value) {
-        if (reduced.length === 0) {
+        if (reduced.length === 0 && fileElement.files?.length === 0) {
             error.value = 'Please add at least one source.';
             return;
         }
