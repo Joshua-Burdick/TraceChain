@@ -58,7 +58,7 @@
                         >
                             <ion-icon :icon="chatbubbleEllipsesOutline"></ion-icon>
                         </button>
-                        {{ 0 }} <!-- TODO add comments array to posts and display array.length -->
+                        {{ post.replies.length }}
                     </div>
                 </div>
             </div>
@@ -76,11 +76,20 @@ import PostContextMenu from '@/components/Post/PostContextMenu.vue';
 
 const route = useRoute();
 
+interface Sources {
+    type: string,
+    data: {
+        [key: string]: string
+    }
+}
+
 interface Post {
     _id: string,
+    userId: string,
     time: Date,
     content: String,
-    sources: [String],
+    sources: [Sources],
+    replies: [String],
     isInformative: Boolean,
     isEdited: Boolean,
     likes: [String],

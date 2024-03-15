@@ -115,7 +115,7 @@ const error = ref('');
 const userId = sessionStorage.getItem("userId");
 
 onMounted(async () => {
-    post.value = await axios.get(`/post/${props.postId}`)
+    post.value = await axios.get(`post/${props.postId}`)
         .then((res) => res.data);
 });
 
@@ -137,13 +137,13 @@ const submitPost = () => {
         time: Date.now(),
     };
 
-    axios.put(`/post/${props.postId}`, newPost)
+    axios.put(`post/${props.postId}`, newPost)
     .then((res) => {
         console.log(res);
         console.log("Submitted: ", newPost);
     })
     .catch((error) => {
-        console.log('the following error occured when trying to post a new deck', error);
+        console.log('the following error occurred when trying to update the post', error);
     });
 
     emit('closeDialog');
