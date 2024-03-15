@@ -27,12 +27,15 @@
                 <input id="remember-checkbox" type="checkbox" v-model="rememberMe" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="remember-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember Me</label>
               </div>
-              <ion-button expand="full" color="danger" @click="loginUser" class="sign-in-button">Sign In</ion-button>
+              <button @click="loginUser" class="my-2 p-2 w-full h-auto text-semibold text-lg rounded-sm" :class="{
+                'bg-[#cf3c4f]': !loading,
+                'bg-gray-500': loading
+              }">{{ loading ? "Signin In..." : "Sign In" }}</button>
               <router-link to="/forgotpass">
-              <ion-button expand="full" color="danger" class="forgot-pass-button mb-2">Forgot Password</ion-button>
+              <button @click="loginUser" class="bg-[#cf3c4f] my-2 p-2 w-full h-auto text-semibold text-lg rounded-sm">Forgot Password</button>
               </router-link>
               <router-link to="/createAccount">
-              <ion-button expand="full" class="join-now-button" color="dark" > Not a Member? <br> Join Now</ion-button>
+                <button class="bg-neutral-500 my-2 p-2 w-full h-auto text-semibold text-lg rounded-sm">Not a Member? <br> Join Now</button>
               </router-link>
           </ion-card-content>
         </ion-card>
@@ -95,7 +98,7 @@ const loginUser = () => {
       showErrorAlert('Incorrect Username/Password');
     });
 
-    loading.value = false;
+  loading.value = false;
 };
 
 const checkAuthentication = () => {
@@ -148,15 +151,6 @@ width: 100%;
 width: 120%; /* Adjust the width as needed */
 max-width: 600px; /* Set a maximum width if necessary */
 margin: auto;
-}
-
-.sign-in-button {
-background-color: #cf3c4f;
-color: #cf3c4f;
-border-radius: 15px;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-margin-bottom: 10px;
-margin-top: 10px;
 }
 
 .join-now-button {

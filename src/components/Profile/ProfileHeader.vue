@@ -57,13 +57,13 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, IonIcon } from '@ionic/vue';
+import { IonLabel, IonIcon } from '@ionic/vue';
 import axios from 'axios';
 import { checkmarkOutline } from 'ionicons/icons';
 import { onMounted, ref, Ref } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const loggedInId = sessionStorage.getItem('userId') ?? "";
+const loggedInId = (sessionStorage.getItem('userId') ?? localStorage.getItem('userId')) ?? "";
 
 const followers: Ref<Array<String>> = ref([]);
 const isThisUser = ref(route.params.id === loggedInId);

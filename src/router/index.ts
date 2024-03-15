@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/CreatePostTab.vue')
   },
   {
-    path: '/profile/:id',
+    path: '/profile/:id/:redirect?',
     component: () => import('@/views/ProfileTab.vue')
   },
   {
@@ -78,6 +78,13 @@ router.beforeEach((to, from, next) => {
   }
 
   next();
+});
+
+router.afterEach((to, from, next) => {
+  if (to.params.redirect) {
+    to.fullPath = to.fullPath.replace("/redirect", "");
+    window.location.href = to.fullPath;
+  }
 });
 
 export default router
