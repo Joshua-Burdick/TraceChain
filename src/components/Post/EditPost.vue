@@ -119,7 +119,7 @@ onMounted(async () => {
         .then((res) => res.data);
 });
 
-const submitPost = () => {
+const submitPost = async () => {
     const newInformative = post.value.sources
     .map((source) => {
         if (JSON.stringify(source.data) === '{}') {
@@ -137,7 +137,7 @@ const submitPost = () => {
         time: Date.now(),
     };
 
-    axios.put(`post/${props.postId}`, newPost)
+    await axios.put(`post/${props.postId}`, newPost)
     .then((res) => {
         console.log(res);
         console.log("Submitted: ", newPost);
