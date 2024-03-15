@@ -69,7 +69,7 @@ interface Post {
 let isSearchVisible = true;
 const feed = ref<Array<Post>>([]);
 const loading = ref(true);
-const userId = sessionStorage.getItem('userId');
+const userId = sessionStorage.getItem('userId') ?? localStorage.getItem('userId');
 
 onMounted(async () => {
     try {
