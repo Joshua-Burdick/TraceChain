@@ -175,8 +175,6 @@ onMounted(async () => {
             });
         parentPostMeta.value.username = parentPostHeader.username;
         parentPostMeta.value.usertag = parentPostHeader.usertag;
-
-        console.log(parentPostMeta.value);
     }
 
 });
