@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div
-                    v-if="post.parentPostId"
+                    v-if="post.parentPostId && !$route.fullPath.includes(`/post/${post.parentPostId}`)"
                     class="flex flex-col border-2 border-stone-400 bg-stone-600 hover:bg-stone-500 rounded-lg p-2 mx-8 mb-2 w-3/4"
                     @click="$router.push(`/post/${parentPost._id}`)"
                 >
@@ -177,7 +177,6 @@ onMounted(async () => {
                     dislikes: []
                 }
             });
-            
         parentPost.value = parentPostResponse;
 
         const parentPostHeader = await axios.get(`account/${parentPost.value.userId}/header`)

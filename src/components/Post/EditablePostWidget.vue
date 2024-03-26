@@ -33,11 +33,11 @@
                         </span>
                         <span class="text-xs text-slate-300">{{ parentPost.isEdited ? ' Edited' : ' Posted' }} @{{ timeString }} on {{ dateString }}</span>
                     </div>
-                    <div v-if="parentPost.content.length < 200" class="text-2xl px-2 py-3 mb-2">
-                    {{ parentPost.content }}
+                    <div v-if="parentPost.content?.length < 200" class="text-2xl px-2 py-3 mb-2">
+                        {{ parentPost.content }}
                     </div>
                     <div v-else class="text-2xl px-2 py-3 mb-2">
-                        {{ parentPost.content.substring(0,200) + "..." }} <p class="text-sm text-blue-400 hover:underline">Read More</p>
+                        {{ parentPost.content?.substring(0,200) + "..." }} <p class="text-sm text-blue-400 hover:underline">Read More</p>
                     </div>
                 </div>
                 <div
@@ -160,9 +160,8 @@ onMounted(async () => {
                     dislikes: []
                 }
             });
-            
         parentPost.value = parentPostResponse;
-        
+
         const parentPostHeader = await axios.get(`account/${parentPost.value.userId}/header`)
             .then((res) => res.data)
             .catch((err) => {
