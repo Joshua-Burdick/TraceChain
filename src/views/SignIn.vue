@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content class="ion-padding">
       <div class="flex flex-col items-center justify-center min-h-[75vh]">
-        <div class="flex items-center justify-center mt-5 mr-11">
+        <div class="flex items-center justify-center mt-5 mr-12">
           <ion-img class="w-32 mt-5" src="/TraceChain.svg" alt="Logo"></ion-img>
           <span class="text-5xl font-bold -ml-2">TraceChain</span>
         </div>
@@ -116,5 +116,3 @@ const checkAuthentication = () => {
 onMounted(checkAuthentication);
 
 </script>
-
-<style></style>
