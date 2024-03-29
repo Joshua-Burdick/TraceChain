@@ -12,14 +12,38 @@
           </ion-card-header>
           <ion-card-content>
             <div class="flex flex-col space-y-2">
+              <!--Email-->
               <label for="email" class="text-sm font-bold">Email:</label>
-              <input id="email" type="email" v-model="email" class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" required/>
+              <input 
+                id="email" 
+                type="email" 
+                v-model="email" 
+                class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" 
+                required/>
+              <!--Username-->
               <label for="username" class="text-sm font-bold">Username:</label>
-              <input id="username" type="text" v-model="username" class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" required/>
+              <input 
+                id="username"
+                type="text" 
+                v-model="username" 
+                class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" 
+                required/>
+              <!--Display Name-->
               <label for="displayName" class="text-sm font-bold">Display Name:</label>
-              <input id="displayName" type="text" v-model="displayName" class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" required/>
+              <input 
+                id="displayName" 
+                type="text" 
+                v-model="displayName" 
+                class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" 
+                required/>
+                <!--Password-->
               <label for="password" class="text-sm font-bold">Password:</label>
-              <input id="password" type="password" v-model="password" class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" required/>
+              <input 
+                id="password" 
+                type="password" 
+                v-model="password" 
+                class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" 
+                required/>
             </div>
             <button @click="registerUser" class="mt-4 bg-[#922525] text-white font-semibold py-2 px-4 rounded w-full">Create Account</button>
           </ion-card-content>

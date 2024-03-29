@@ -73,7 +73,7 @@ const user: Ref<User> = ref({
     following: []
 })
 const selectedTab: Ref<"Posts" | "Media" | "Communities"> = ref("Posts");
-const userId = ref(sessionStorage.getItem("userId") ?? "");
+const userId = ref(sessionStorage.getItem("userId") || (localStorage.getItem("userId)"))) ?? "";
 const isThisUser = ref(route.params.id === userId.value);
 
 onMounted(async () => {
