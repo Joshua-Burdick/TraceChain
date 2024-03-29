@@ -1,55 +1,51 @@
 <template>
-    <ion-page class="flex w-full">
-      <ion-content class="ion-padding">
-        <div class="createAccount-container">
-          <ion-img class="logo" src="/TraceChain.svg" alt="Logo"></ion-img>
-          <ion-card class="createAccount-card">
-            <ion-card-header>
-              <ion-card-title class="create-account-text" >Create Account</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-list>
-                <ion-item>
-            <ion-label position="stacked">Email</ion-label>
-            <ion-input  v-model="email" name="email" type="email"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Username</ion-label>
-            <ion-input  v-model="username" name="username" type="text"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Display Name</ion-label>
-            <ion-input  v-model="displayName" name="displayName" type="text"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Password</ion-label>
-            <ion-input  v-model="password" name="password" type="password"></ion-input>
-          </ion-item>
-          <div class="ion-text-center">
+  <ion-page class="w-full">
+    <ion-content>
+      <div class="flex flex-col items-center justify-center">
+        <div class="flex items-center justify-center mt-5 mr-12">
+          <ion-img class="w-32 mt-5" src="/TraceChain.svg" alt="Logo"></ion-img> <!-- width adjusted with Tailwind -->
+          <span class="text-5xl font-bold -ml-2">TraceChain</span>
         </div>
-                </ion-list>
-                <ion-button expand="full" color="danger" class="create-account-button" @click="registerUser" >Create Account</ion-button>
-            </ion-card-content>
-          </ion-card>
-        </div>
-      </ion-content>
-    </ion-page>
-  </template>
-  
-  <script setup lang="ts">
+        <ion-card class="bg-gradient-to-br from-neutral-900 to-neutral-700 text-white rounded-xl w-full max-w-lg m-auto p-5"> <!-- Tailwind gradient background -->
+          <ion-card-header class="flex flex-col items-center justify-center my-4">
+            <ion-card-title class="text-2xl text-white">Register</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div class="flex flex-col space-y-2">
+              <label for="email" class="text-sm font-bold">Email:</label>
+              <input id="email" type="email" v-model="email" class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" required/>
+              <label for="username" class="text-sm font-bold">Username:</label>
+              <input id="username" type="text" v-model="username" class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" required/>
+              <label for="displayName" class="text-sm font-bold">Display Name:</label>
+              <input id="displayName" type="text" v-model="displayName" class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" required/>
+              <label for="password" class="text-sm font-bold">Password:</label>
+              <input id="password" type="password" v-model="password" class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white" required/>
+            </div>
+            <button @click="registerUser" class="mt-4 bg-[#922525] text-white font-semibold py-2 px-4 rounded w-full">Create Account</button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-content>
+  </ion-page>
+</template>
+
+<script setup lang="ts">
   import { ref } from 'vue';
-  import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonInput, IonButton, IonImg } from '@ionic/vue';
+  import { IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg } from '@ionic/vue';
   import axios from 'axios';
-import router from '@/router';
+  import router from '@/router';
  
-  
   const username = ref('');
   const displayName = ref('');
   const email = ref('');
   const password = ref('');
-
-  
+ 
   const registerUser = () => {
+
+    if (!username.value || !displayName.value || !email.value || !password.value) {
+      alert('Please fill in all fields.'); // Show an alert or handle this more gracefully in your UI
+      return;
+    }
   
   const userRegister = {
     username: username.value,
@@ -72,50 +68,4 @@ import router from '@/router';
 
 };
   
-  </script>
-  
-  <style scoped>
-  .create-account-text{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    margin-top: 10px;
-  }
-  .createAccount-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 75vh;
-    
-  }
-  
-  .logo {
-    width: 150px;
-    height: 150px;
-    margin-top: 10px;
-  }
-  
-  .createAccount-card {
-    background: radial-gradient(circle, #050505, #0d0d0d, #1a1a1a, #2a2a2a, #3b3b3b);
-  color: #fff; 
-  border-radius: 15px;
-  width: 100%;
-  width: 120%; /* Adjust the width as needed */
-  max-width: 600px; /* Set a maximum width if necessary */
-  margin: auto;
-  }
-  
-  .create-account-button {
-  background-color: #cf3c4f;
-  color: #cf3c4f;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-  margin-top: 10px;
-  }
-  
-  </style>
-  
+</script>
