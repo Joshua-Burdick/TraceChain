@@ -46,7 +46,7 @@
                   id="password" 
                   :type="showPassword ? 'text' : 'password'" 
                   v-model="password"
-                  class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white mb-3 w-full pr-10" 
+                  class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white placeholder-neutral-500 mb-3 w-full pr-10" 
                   required
                   placeholder="Password"/>
                 <button 
