@@ -68,7 +68,7 @@
                             <!--Save + Delete buttons-->
                             <div class="flex justify-center items-center mt-4 space-x-4">
                                 <button type="submit" class="bg-green-800 px-4 py-2 rounded-md text-sm font-bold">Save Changes</button>
-                                <button @click="showDeleteConfirmation" class="bg-red-800 px-4 py-2 rounded-md font-bold text-sm">Delete Account</button>
+                                <button @click="showDeleteConfirmation" type="button" class="bg-red-800 px-4 py-2 rounded-md font-bold text-sm">Delete Account</button>
                             </div>
                         </form>
                     </div>
@@ -231,10 +231,26 @@ const onDelete = async () => {
     await axios.delete(`/accountVerification/${route.params.id}/delete`);
     sessionStorage.removeItem('user_token');
     sessionStorage.removeItem('userId');
+    localStorage.removeItem('user_token');
+    localStorage.removeItem('userId');
+    const toast = await toastController.create({
+        message: 'Your account has been successfully deleted!',
+        duration: 2000,
+        color: 'success',
+        position: 'top'
+    });
+    await toast.present();
     router.push('/login');
   } catch (error) {
     console.error('Error deleting account:', error);
-  }
+    const toast = await toastController.create({
+        message: 'Error deleting account. Please try again.',
+            duration: 2000,
+            color: 'danger',
+            position: 'top',
+        });
+        await toast.present();
+    }
 };
 
 </script>
