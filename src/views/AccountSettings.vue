@@ -1,23 +1,58 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-buttons slot="start">
-                    <ion-menu-button></ion-menu-button>
-                </ion-buttons>
-                <ion-buttons slot="end">
-                    <ion-button @click="$router.push('/feed')">
-                        <ion-icon slot="icon-only" :icon="homeOutline"></ion-icon>
-                    </ion-button>
-                </ion-buttons>
-            </ion-toolbar>
-        </ion-header>
-
-        <ion-content id="main-content">
-            <div class="min-h-screen bg-neutral-800 flex flex-col items-center justify-center">
-                <div class="absolute top-0 w-full h-25 h-1/2 bg-neutral-700"></div>
-
-                <div class="w-11/12 md:2/3 w-75 h-100 bg-neutral-900 rounded-sm shadow-xl z-10 p-9
+        <ion-content>
+            <div class="flex flex-col">
+                <!--Home + menu buttons-->
+                <div class="flex justify-between items-center p-4 bg-neutral-800 text-white">
+                    <button @click="toggleMenu" class="flex items-center justify-center">
+                      <ion-icon :icon="menuOutline" class="text-2xl"></ion-icon>
+                    </button>
+                    <button @click="$router.push('/feed')" class="flex items-center justify-center">
+                      <ion-icon :icon="homeOutline" class="text-2xl"></ion-icon>
+                    </button>
+                  </div>
+                <!-- Sidebar -->
+                <div 
+                :class="{ 'translate-x-0': showMenu, '-translate-x-full': !showMenu }"
+                class="w-64 bg-neutral-800 text-white h-screen fixed z-20 transform transition-transform duration-500 ease-in-out"
+                >
+                 <div class="flex justify-end">
+                    <button @click="toggleMenu" class="flex p-4">
+                      <ion-icon :icon="closeOutline" class="text-2xl"></ion-icon>
+                    </button>
+                  </div>
+                  <div class="font-bold text-2xl pl-12 mb-10 pt-32">Settings</div>
+                  <ul class="space-y-10 justify-start ml-7">
+                    <li>
+                      <button @click="$router.push('/settings'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
+                        <ion-icon aria-hidden="true" :icon="personCircleOutline" class="text-lg mr-2"/>
+                        Account
+                      </button>
+                    </li>
+                    <li>
+                      <button @click="$router.push('/settings/appearance'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
+                        <ion-icon aria-hidden="true" :icon="sunnyOutline" class="text-lg mr-2"/>
+                        Appearance
+                      </button>
+                    </li>
+                    <li>
+                      <button @click="$router.push('/settings/privacy'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
+                        <ion-icon aria-hidden="true" :icon="lockClosedOutline" class="text-lg mr-2"/>
+                        Privacy
+                      </button>
+                    </li>
+                    <li>
+                      <button @click="logout" class="w-full flex items-center text-md px-5 py-2">
+                        <ion-icon aria-hidden="true" :icon="logOutOutline" class="text-lg mr-2"/>
+                        Log Out
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            <!--Main-->
+            <div class="min-h-screen bg-neutral-900 flex flex-col items-center justify-center">
+                <div class="w-11/12 md:2/3 w-75 h-100 bg-neutral-800 rounded-sm shadow-xl z-10 p-9
                 flex flex-col lg:flex-row -mt-10 space-x-0 lg:space-x-10">
 
                     <div class="flex-1">
@@ -33,7 +68,7 @@
                                     type="text" 
                                     id="displayName" 
                                     v-model="user.displayName" 
-                                    class="shadow appearance-none rounded bg-neutral-800 w-full 
+                                    class="shadow appearance-none rounded bg-neutral-700 w-full 
                                     py-2 px-3 leading-tight mb-4"
                                 >
                                 <!--Username-->
@@ -42,7 +77,7 @@
                                     type="text" 
                                     id="uName" 
                                     v-model="user.username" 
-                                    class="shadow appearance-none rounded bg-neutral-800 w-full 
+                                    class="shadow appearance-none rounded bg-neutral-700 w-full 
                                     py-2 px-3 leading-tight mb-4"
                                 >
                                 <!--Email-->
@@ -51,7 +86,7 @@
                                     type="email" 
                                     id="email" 
                                     v-model="user.email" 
-                                    class="shadow appearance-none rounded bg-neutral-800 w-full
+                                    class="shadow appearance-none rounded bg-neutral-700 w-full
                                     py-2 px-3 leading-tight mb-4"
                                 >
                                 <!--Bio-->
@@ -60,7 +95,7 @@
                                     id="bio"
                                     rows="4" 
                                     placeholder="Tell us about yourself..." 
-                                    class="w-full h-28 px-3 py-2 text-white bg-neutral-800 rounded shadow appearance-none
+                                    class="w-full h-28 px-3 py-2 text-white bg-neutral-700 rounded shadow appearance-none
                                     leading-tight mb-4"
                                 >
                                 </textarea>
@@ -72,7 +107,6 @@
                             </div>
                         </form>
                     </div>
-
                     <!--Profile Picture-->
                     <div class="flex flex-col items-center justify-center lg:flex-1">
                         <div class="w-44 h-44 md:w-52 md:h-52 xl:w-60 xl:h-60 rounded-full overflow-hidden bg-stone-800 mt-6">
@@ -80,12 +114,11 @@
                             alt="Profile Image">
                         </div>
                         <input type="file" id="fileInput" style="display: none;" />
-                    
                         <!-- Button -->
                         <button
                           fill="solid"
                           color="light"
-                          class="mt-6 bg-neutral-800 py-2 px-4 font-bold rounded-md text-sm"
+                          class="mt-6 bg-neutral-700 py-2 px-4 font-bold rounded-md text-sm"
                           style="--background-activated: transparent; --background-focused: transparent;"
                           onclick="document.getElementById('fileInput').click();"
                         >
@@ -95,38 +128,6 @@
                 </div>
             </div>
         </ion-content> 
-        <ion-menu content-id="main-content" side="start">
-           
-
-            <ion-content>
-                <ion-list lines="none" class="h-full">
-                    <ion-menu-toggle auto-hide="false">
-                        <h1 class="font-bold text-2xl ml-10 pt-[190px] mb-3">Settings</h1>
-                        <ion-item @click="$router.push('/settings')" class="flex items-center p-3 hover:bg-neutral-700
-                        rounded"
-                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
-                            <ion-icon slot="start" :icon="personCircleOutline" class="text-lg mr-3 ml-4"></ion-icon>
-                            <ion-label>Account</ion-label>
-                        </ion-item>
-                        <ion-item @click="$router.push('/settings/appearance')" class="flex items-center p-3 hover:bg-neutral-700 rounded"
-                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
-                            <ion-icon slot="start" :icon="sunnyOutline" class="text-lg mr-3 ml-4"></ion-icon>
-                            <ion-label>Appearance</ion-label>
-                        </ion-item>
-                        <ion-item @click="$router.push('/settings/privacy')" class="flex items-center p-3 hover:bg-neutral-700 rounded" 
-                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
-                            <ion-icon slot="start" :icon="lockClosedOutline" class="text-lg mr-3 ml-4"></ion-icon>
-                            <ion-label>Privacy</ion-label>
-                        </ion-item>
-                        <ion-item @click.stop="logout" class="flex items-center p-3 hover:bg-neutral-700 rounded pb-"
-                        style="--background: transparent; --background-hover: bg-neutral-700; --ripple-color: transparent;">
-                            <ion-icon slot="start" :icon="logOutOutline" class="text-lg mr-3 ml-4"></ion-icon>
-                            <ion-label>Log Out</ion-label>
-                        </ion-item>
-                    </ion-menu-toggle>
-                </ion-list>
-            </ion-content>
-        </ion-menu>
         <ion-alert
       :isOpen="showDeleteAlert"
       @onDidDismiss="onDismissAlert"
@@ -138,10 +139,9 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonContent,
- IonList, IonItem, IonMenu, IonIcon, IonInput } from '@ionic/vue';
-import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline } from 'ionicons/icons';
-import {ref, onMounted, computed} from 'vue';
+import { IonPage, IonContent, IonIcon } from '@ionic/vue';
+import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline, menuOutline, closeOutline } from 'ionicons/icons';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import { toastController } from '@ionic/vue';
@@ -149,6 +149,11 @@ import { toastController } from '@ionic/vue';
 const route = useRoute();
 const showDeleteAlert = ref(false);
 const router = useRouter();
+const showMenu = ref(false);
+
+const toggleMenu = () => {
+    showMenu.value = !showMenu.value;
+}
 
 const deleteAlertButtons = computed(() => [
   { text: 'Cancel', role: 'cancel', handler: onCancel },
@@ -252,5 +257,6 @@ const onDelete = async () => {
         await toast.present();
     }
 };
+
 
 </script>
