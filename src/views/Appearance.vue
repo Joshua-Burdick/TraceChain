@@ -13,24 +13,29 @@
               </div>
           <!-- Sidebar -->
           <div :class="{ 'translate-x-0': showMenu, '-translate-x-full': !showMenu }"
-          class="w-64 bg-neutral-800 text-white h-screen fixed z-20 transform transition-transform duration-300"
+          class="w-64 bg-neutral-800 text-white h-screen fixed z-20 transform transition-transform duration-500 ease-in-out"
             >
-            <div class="font-bold text-2xl pl-12 mb-10 pt-40">Settings</div>
+            <div class="flex justify-end">
+              <button @click="toggleMenu" class="flex items-center justify-center p-4">
+                <ion-icon :icon="closeOutline" class="text-2xl"></ion-icon>
+              </button>
+            </div>
+            <div class="font-bold text-2xl pl-12 mb-10 pt-32">Settings</div>
             <ul class="space-y-10 justify-start ml-7">
                 <li>
-                <button @click="$router.push('/settings')" class="w-full flex items-center text-lg px-5 py-2">
+                <button @click="$router.push('/settings'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
                     <ion-icon aria-hidden="true" :icon="personCircleOutline" class="text-lg mr-2"/>
                     Account
                 </button>
                 </li>
                 <li>
-                <button @click="$router.push('/settings/appearance')" class="w-full flex items-center text-lg px-5 py-2">
+                <button @click="$router.push('/settings/appearance'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
                     <ion-icon aria-hidden="true" :icon="sunnyOutline" class="text-lg mr-2"/>
                     Appearance
                 </button>
                 </li>
                 <li>
-                <button @click="$router.push('/settings/privacy')" class="w-full flex items-center text-lg px-5 py-2">
+                <button @click="$router.push('/settings/privacy'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
                     <ion-icon aria-hidden="true" :icon="lockClosedOutline" class="text-lg mr-2"/>
                     Privacy
                 </button>
@@ -69,7 +74,7 @@
 
 <script setup lang="ts">
 import { IonPage, IonContent } from '@ionic/vue';
-import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline, moonOutline, menuOutline } from 'ionicons/icons';
+import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline, moonOutline, menuOutline, closeOutline } from 'ionicons/icons';
 import {useRouter} from 'vue-router';
 import { ref } from 'vue';
 
