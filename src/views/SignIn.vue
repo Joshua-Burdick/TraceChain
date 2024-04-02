@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content class="ion-padding">
       <div class="flex flex-col items-center justify-center min-h-[75vh]">
-        <div class="flex items-center justify-center mt-5 mr-11">
+        <div class="flex items-center justify-center mt-5 mr-12">
           <ion-img class="w-32 mt-5" src="/TraceChain.svg" alt="Logo"></ion-img>
           <span class="text-5xl font-bold -ml-2">TraceChain</span>
         </div>
@@ -15,9 +15,23 @@
               <label for="username" class="text-sm font-bold text-white">Username:</label>
               <input id="username" type="text" v-model="username" class="bg-neutral-700 w-full border rounded-sm h-12 mb-2 p-2.5">
               <label for="password" class="text-sm font-bold text-white">Password:</label>
-              <input id="password" type="password" v-model="password" @keyup.enter="loginUser" :disabled="loading" class="bg-neutral-700 w-full border rounded-sm h-12 p-2.5">
+              <div class="relative">
+                <input 
+                  id="password" 
+                  :type="showPassword ? 'text' : 'password'" 
+                  v-model="password"
+                  class="bg-neutral-700 border border-gray-600 rounded h-12 p-2.5 text-white mb-3 w-full pr-10" 
+                  required
+                  @keyup.enter="loginUser"/>
+                <button 
+                  type="button" 
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center mb-3"
+                  @click="togglePasswordVisibility">
+                  <ion-icon :icon="showPassword ? eyeOutline : eyeOffOutline" class="text-white text-lg"></ion-icon>
+                </button>
+              </div>
             </div>
-            <div class="flex items-center mt-2 mb-5">
+            <div class="flex items-center mb-5">
               <input id="remember-checkbox" type="checkbox" v-model="rememberMe" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
               <label for="remember-checkbox" class="ml-2 text-sm font-medium text-white">Remember Me</label>
             </div>
@@ -49,6 +63,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { IonAlert, IonPage, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg } from '@ionic/vue';
+import { eyeOutline, eyeOffOutline } from 'ionicons/icons';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
@@ -60,6 +75,11 @@ const showAlert = ref(false);
 const alertMessage = ref<string>('');
 const loading = ref(false);
 const rememberMe = ref(false);
+const showPassword = ref(false);
+
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
 
 const showErrorAlert = (message: string) => {
   console.log('Error alert triggered:', message);
@@ -116,5 +136,3 @@ const checkAuthentication = () => {
 onMounted(checkAuthentication);
 
 </script>
-
-<style></style>
