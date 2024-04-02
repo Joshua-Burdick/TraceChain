@@ -58,7 +58,8 @@
                                 <label for="bio" class="block text-stone-300 text-sm font-bold mb-1">Bio:</label>
                                 <textarea 
                                     id="bio"
-                                    rows="4" 
+                                    rows="4"
+                                    v-model="user.bio"
                                     placeholder="Tell us about yourself..." 
                                     class="w-full h-28 px-3 py-2 text-white bg-neutral-800 rounded shadow appearance-none
                                     leading-tight mb-4"
@@ -170,7 +171,8 @@ const onCancel = () => {
 const user = ref({
     displayName: '',
     username: '',
-    email: ''
+    email: '',
+    bio: ''
 });
 
 const userId = ref(sessionStorage.getItem("userId") ?? (localStorage.getItem("userId")) ?? "");
@@ -194,7 +196,8 @@ const updateAccount = async () => {
         const response = await axios.put(`accountVerification/${route.params.id}/changeAccount`, {
             displayName: user.value.displayName,
             username: user.value.username,
-            email: user.value.email
+            email: user.value.email,
+            bio: user.value.bio
             // Include other fields as needed
         });
         console.log('Account updated successfully:', response.data);
