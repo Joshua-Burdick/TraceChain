@@ -4,11 +4,9 @@
     >
       <div class="flex w-full rounded-lg bg-stone-700 block p-3 sm:text-sm md:text-lg lg:text-lg ion-text-wrap">
         <div class="flex flex-col items-start w-full">
-          <div @click.stop="$router.push(`/community/${community._id}`)">
             <div>
               <span class="text-md hover:underline">{{ community.name }}</span>
             </div>
-          </div>
           <div class="flex flex-row justify-center align-center text-slate-200">
           </div>
         </div>
