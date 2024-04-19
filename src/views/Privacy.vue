@@ -123,6 +123,8 @@ const logout = () => {
   // Clear user authentication state
   sessionStorage.removeItem('user_token');
   sessionStorage.removeItem('userId');
+  localStorage.removeItem('user_token');
+  localStorage.removeItem('userId');
   router.push({path: '/login'});
 };
 
