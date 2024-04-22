@@ -3,7 +3,7 @@
         <div class="flex flex-col items-center justify-center min-h-[75vh]">
             <!-- Adjust the margin here by changing mt-5 to a smaller value or removing it -->
             <div class="flex items-center justify-center mt-24 mr-12">
-              <ion-img class="w-32" src="/TraceChain.svg" alt="Logo"></ion-img>
+              <ion-img class="w-32 mt-5" src="/TraceChain.svg" alt="Logo"></ion-img>
               <span class="text-5xl font-bold -ml-2 text-white">TraceChain</span>
             </div>
           <ion-card class="bg-neutral-900 bg-gradient-to-br from-neutral-900 to-neutral-700 text-white rounded-xl w-full max-w-lg m-auto p-5">
