@@ -25,14 +25,6 @@ import { IonPage, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonImg }
 
 const email = ref('');
 
-const isValidEmail = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-};
-
 const submitEmail = async () => {
-  if (!isValidEmail(email.value)) {
-    alert("Please enter a valid email address.");
-    return;
-  }
 };
 </script>
