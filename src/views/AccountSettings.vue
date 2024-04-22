@@ -21,18 +21,12 @@
                       <ion-icon :icon="closeOutline" class="text-2xl"></ion-icon>
                     </button>
                   </div>
-                  <div class="font-bold text-2xl pl-12 mb-10 pt-32">Settings</div>
+                  <div class="font-bold text-2xl pl-12 mb-10 pt-40">Settings</div>
                   <ul class="space-y-10 justify-start ml-7">
                     <li>
                       <button @click="$router.push('/settings'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
                         <ion-icon aria-hidden="true" :icon="personCircleOutline" class="text-lg mr-2"/>
                         Account
-                      </button>
-                    </li>
-                    <li>
-                      <button @click="$router.push('/settings/appearance'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
-                        <ion-icon aria-hidden="true" :icon="sunnyOutline" class="text-lg mr-2"/>
-                        Appearance
                       </button>
                     </li>
                     <li>
@@ -56,7 +50,7 @@
                 flex flex-col lg:flex-row -mt-10 space-x-0 lg:space-x-10">
 
                     <div class="flex-1">
-                        <h2 class="text-2xl font-semibold">Account Settings</h2>
+                        <h2 class="text-2xl font-semibold text-white">Account Settings</h2>
                         <p class="text-stone-400 text-sm mb-6">Edit your name, avatar, etc</p>
 
                         <!--User Info-->
@@ -68,7 +62,7 @@
                                     type="text" 
                                     id="displayName" 
                                     v-model="user.displayName" 
-                                    class="shadow appearance-none rounded bg-neutral-700 w-full 
+                                    class="shadow text-white appearance-none rounded bg-neutral-700 w-full 
                                     py-2 px-3 leading-tight mb-4"
                                 >
                                 <!--Username-->
@@ -77,7 +71,7 @@
                                     type="text" 
                                     id="uName" 
                                     v-model="user.username" 
-                                    class="shadow appearance-none rounded bg-neutral-700 w-full 
+                                    class="shadow text-white appearance-none rounded bg-neutral-700 w-full 
                                     py-2 px-3 leading-tight mb-4"
                                 >
                                 <!--Email-->
@@ -86,7 +80,7 @@
                                     type="email" 
                                     id="email" 
                                     v-model="user.email" 
-                                    class="shadow appearance-none rounded bg-neutral-700 w-full
+                                    class="shadow text-white appearance-none rounded bg-neutral-700 w-full
                                     py-2 px-3 leading-tight mb-4"
                                 >
                                 <!--Bio-->
@@ -103,8 +97,8 @@
                             </div>
                             <!--Save + Delete buttons-->
                             <div class="flex justify-center items-center mt-4 space-x-4">
-                                <button type="submit" class="bg-green-800 px-4 py-2 rounded-md text-sm font-bold">Save Changes</button>
-                                <button @click="showDeleteConfirmation" type="button" class="bg-red-800 px-4 py-2 rounded-md font-bold text-sm">Delete Account</button>
+                                <button type="submit" class="bg-green-800 text-white px-4 py-2 rounded-md text-sm font-bold">Save Changes</button>
+                                <button @click="showDeleteConfirmation" type="button" class="bg-red-800 text-white px-4 py-2 rounded-md font-bold text-sm">Delete Account</button>
                             </div>
                         </form>
                     </div>
@@ -119,7 +113,7 @@
                         <button
                           fill="solid"
                           color="light"
-                          class="mt-6 bg-neutral-700 py-2 px-4 font-bold rounded-md text-sm"
+                          class="mt-6 text-white bg-neutral-700 py-2 px-4 font-bold rounded-md text-sm"
                           style="--background-activated: transparent; --background-focused: transparent;"
                           onclick="document.getElementById('fileInput').click();"
                         >
