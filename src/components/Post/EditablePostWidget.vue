@@ -191,43 +191,51 @@ const updateLikesDislikes = async (type: string) => {
 
     if (type === 'like') {
         if (props.post.likes.includes(userId)) {
-            props.post.likes.splice(props.post.likes.indexOf(userId), 1);
+            props.post.likes = props.post.likes.filter(id => id !== userId) as [String];
 
-            await axios.put(`post/${props.post._id}/likes_dislikes`,{
+            const response = await axios.put(`post/${props.post._id}/likes_dislikes`,{
                 userId: userId,
                 like: true,
                 remove: true
             }).then((res) => res.data);
+            
+            console.log(response);
         }
         else {
             props.post.likes.push(userId);
-            props.post.dislikes.splice(props.post.dislikes.indexOf(userId), 1);
+            props.post.dislikes = props.post.dislikes.filter(id => id !== userId) as [String];
     
-            await axios.put(`post/${props.post._id}/likes_dislikes`,{
+            const response = await axios.put(`post/${props.post._id}/likes_dislikes`,{
                 userId: userId,
                 like: true
             }).then((res) => res.data);
+
+            console.log(response);
         }
 
     }
     else if (type === 'dislike') {
         if (props.post.dislikes.includes(userId)) {
-            props.post.dislikes.splice(props.post.dislikes.indexOf(userId), 1);
+            props.post.dislikes = props.post.dislikes.filter(id => id !== userId) as [String];
 
-            await axios.put(`post/${props.post._id}/likes_dislikes`,{
+            const response = await axios.put(`post/${props.post._id}/likes_dislikes`,{
                 userId: userId,
                 dislike: true,
                 remove: true
             }).then((res) => res.data);
+            
+            console.log(response);
         }
         else {
             props.post.dislikes.push(userId);
-            props.post.likes.splice(props.post.dislikes.indexOf(userId), 1);
+            props.post.likes = props.post.likes.filter(id => id !== userId) as [String];
 
-            await axios.put(`post/${props.post._id}/likes_dislikes`,{
+            const response = await axios.put(`post/${props.post._id}/likes_dislikes`,{
                 userId: userId,
                 dislike: true
             }).then((res) => res.data);
+
+            console.log(response);
         }
     }
     else {
