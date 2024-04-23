@@ -20,8 +20,10 @@
                 <div class="lg:text-2xl text-sm ml-2">
                     @{{ usertag }}
                 </div>
-
-                <div class="flex flex-row text-md mt-7 ml-2">
+                <div class="text-sm ml-2 mt-5">
+                    {{ bio }}
+                </div>
+                <div class="flex flex-row text-md mt-4">
                     <button class="flex flex-col align-center mr-5 hover:bg-slate-700 hover:bg-opacity-70 active:bg-slate-800 active:bg-opacity-80 rounded-lg p-3 cursor-pointer">
                         <p>{{ numFollowers ? numFollowers : 0 }}</p>
                         <p>Followers</p>
@@ -57,13 +59,13 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, IonIcon } from '@ionic/vue';
+import { IonLabel, IonIcon } from '@ionic/vue';
 import axios from 'axios';
 import { checkmarkOutline } from 'ionicons/icons';
 import { onMounted, ref, Ref } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
-const loggedInId = sessionStorage.getItem('userId') ?? "";
+const loggedInId = (sessionStorage.getItem('userId') || localStorage.getItem('userId')) ?? "";
 
 const followers: Ref<Array<String>> = ref([]);
 const isThisUser = ref(route.params.id === loggedInId);
@@ -74,7 +76,8 @@ const props = defineProps({
     usertag: String,
     numFollowers: Number,
     numFollowing: Number,
-    numCommunities: Number
+    numCommunities: Number,
+    bio: String
 });
 
 onMounted(async () => {

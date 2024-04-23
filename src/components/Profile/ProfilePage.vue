@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col w-full h-full overflow-y-scroll">
-        <ProfileHeader :displayName="user.username" :usertag="user.usertag" :numFollowers="user.followers.length" :numFollowing="user.following.length" :numCommunities="0" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
+        <ProfileHeader :displayName="user.username" :usertag="user.usertag" :bio="user.bio" :numFollowers="user.followers.length" :numFollowing="user.following.length" :numCommunities="0" class="flex h-auto ml-1 lg:pb-5 sm:max-md:pb-1"/>
         <div class="flex text-xl bg-slate-800 bg-opacity-40 text-slate-100 justify-center border-b-2 border-slate-500 py-2">
             <div>
                 <button
@@ -63,17 +63,19 @@ type User = {
     username: string,
     usertag: string,
     followers: Array<string>,
-    following: Array<string>
+    following: Array<string>,
+    bio: string
 }
 
 const user: Ref<User> = ref({
     username: "",
     usertag: "",
     followers: [],
-    following: []
+    following: [],
+    bio: ""
 })
 const selectedTab: Ref<"Posts" | "Media" | "Communities"> = ref("Posts");
-const userId = ref(sessionStorage.getItem("userId") ?? "");
+const userId = ref(sessionStorage.getItem("userId") || (localStorage.getItem("userId)"))) ?? "";
 const isThisUser = ref(route.params.id === userId.value);
 
 onMounted(async () => {
@@ -85,7 +87,8 @@ onMounted(async () => {
         username: "deleted",
         usertag: "deleted-user",
         followers: [],
-        following: []
+        following: [],
+        bio: ""
     };
 });
 </script>

@@ -57,6 +57,7 @@ interface User {
 interface Post {
     _id: string,
     userId: string,
+    communityId: string,
     time: Date,
     content: String,
     sources: [String],
@@ -69,7 +70,7 @@ interface Post {
 let isSearchVisible = true;
 const feed = ref<Array<Post>>([]);
 const loading = ref(true);
-const userId = sessionStorage.getItem('userId');
+const userId = sessionStorage.getItem('userId') ?? localStorage.getItem('userId');
 
 onMounted(async () => {
     try {

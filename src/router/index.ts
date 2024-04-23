@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -21,6 +20,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/post/:id',
     component: () => import('@/views/PostView.vue')
+  },
+  {
+    path: '/community/:id',
+    component: () => import('@/views/CommunityPosts.vue')
   },
   {
     path: '/communities',
@@ -53,8 +56,15 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/forgotpass',
     component: () => import('@/views/ForgotPass.vue')
+  },
+  {
+    path: '/createCommunity',
+    component: () => import('@/views/CreateCommunity.vue')
+  },
+  {
+    path: '/passReset',
+    component: () => import('@/views/PasswordReset.vue')
   }
-
 ]
 
 const router = createRouter({
@@ -63,7 +73,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/createAccount', '/forgotpass'];
+  const publicPages = ['/login', '/createAccount', '/forgotpass', '/passReset'];
   const authRequired = !publicPages.includes(to.path);
   const loggedInToken = sessionStorage.getItem('user_token') || localStorage.getItem('user_token');
   const loggedInId = sessionStorage.getItem('userId') || localStorage.getItem('userId');

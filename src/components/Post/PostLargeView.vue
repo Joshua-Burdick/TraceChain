@@ -206,7 +206,7 @@ const updateLikesDislikes = async (type: string) => {
 
     if (type === 'like') {
         if (post.value.likes.includes(userId)) {
-            post.value.likes.splice(post.value.likes.indexOf(userId), 1);
+            post.value.likes = post.value.likes.filter(id => id !== userId) as [String];
 
             const response = await axios.put(`post/${post.value._id}/likes_dislikes`, {
                 userId: userId,
@@ -218,9 +218,9 @@ const updateLikesDislikes = async (type: string) => {
         }
         else {
             post.value.likes.push(userId);
-            post.value.dislikes.splice(post.value.dislikes.indexOf(userId), 1);
-
-            const response = await axios.put(`post/${post.value._id}/likes_dislikes`, {
+            post.value.dislikes = post.value.dislikes.filter(id => id !== userId) as [String];
+    
+            const response = await axios.put(`post/${post.value._id}/likes_dislikes`,{
                 userId: userId,
                 like: true
             }).then((res) => res.data);
@@ -231,7 +231,7 @@ const updateLikesDislikes = async (type: string) => {
     }
     else if (type === 'dislike') {
         if (post.value.dislikes.includes(userId)) {
-            post.value.dislikes.splice(post.value.dislikes.indexOf(userId), 1);
+            post.value.dislikes = post.value.dislikes.filter(id => id !== userId) as [String];
 
             const response = await axios.put(`post/${post.value._id}/likes_dislikes`, {
                 userId: userId,
@@ -243,7 +243,7 @@ const updateLikesDislikes = async (type: string) => {
         }
         else {
             post.value.dislikes.push(userId);
-            post.value.likes.splice(post.value.dislikes.indexOf(userId), 1);
+            post.value.likes = post.value.likes.filter(id => id !== userId) as [String];
 
             const response = await axios.put(`post/${post.value._id}/likes_dislikes`, {
                 userId: userId,

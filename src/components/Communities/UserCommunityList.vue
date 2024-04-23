@@ -1,26 +1,47 @@
 <template>
-    <div v-if="!loading" class="flex w-full h-full justify-center align-center">
+    <div class="flex flex-row h-full w-full justify-center align-center">
+      <ion-list v-if="!loading" class="flex flex-col w-1/2 bg-[#1d1f20]">
         <div v-if="communities.length === 0" class="flex flex-col">
-            <h1 class="text-4xl font-semibold text-gray-300">
-                {{ isThisUser ? 'No Communities' : 'This User is Not Part of Any Communities Yet' }}
-            </h1>
+          <h1 class="text-4xl font-semibold text-gray-300">
+            {{ 'This User Has not Joined any Communities Yet' }}
+          </h1>
         </div>
-    </div>
-    <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
+        <li v-else class="flex w-full mb-5" v-for="community in communities" :key="community._id">
+          <CommunityWidget :community="community" class="flex w-full"/>
+        </li>
+      </ion-list>
+      <div v-if="loading" class="flex flex-row w-full h-full justify-center items-center overflow-hidden">
         <v-progress-circular color="blue-lighten-3" class="flex w-1/2 h-1/2 justify-center items-center" :width="15" indeterminate></v-progress-circular>
+      </div>
     </div>
-</template>
-
-<script setup lang="ts">
-import { IonPage, IonHeader, IonContent, IonLabel, IonList, IonItem} from '@ionic/vue';
-import { onMounted, Ref, ref } from "vue";
-
-const communities: Ref<object[]> = ref([]);
-const isLoggedIn: Ref<boolean> = ref(true);
-const isThisUser: Ref<boolean> = ref(false);
-const loading: Ref<boolean> = ref(true);
-
-onMounted(() => {
+  </template>
+  
+  <script setup lang="ts">
+  import { IonList } from '@ionic/vue';
+  import axios from 'axios';
+  import { onMounted, Ref, ref } from 'vue';
+  import { useRoute } from 'vue-router';
+  
+  import CommunityWidget from '@/components/Communities/CommunityWidget.vue';
+  
+  const route = useRoute();
+  
+  interface Community {
+      _id: string,
+      name: string,
+  }
+  
+  const loading: Ref<boolean> = ref(true);
+  const communities: Ref<Array<Community>> = ref<Array<Community>>([]);
+  
+    onMounted(async () => {
+    try {
+        const userCommunities = await axios.get(`community/user/${route.params.id}`);
+        communities.value = userCommunities.data;
+    } catch (error) {
+        console.error('Error fetching user communities:', error);
+    }
     loading.value = false;
-})
-</script>
+    })
+  </script>
+  
