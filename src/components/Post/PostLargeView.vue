@@ -105,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar,} from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonImg, IonLabel, IonList, IonItem, IonAvatar, IonIcon} from '@ionic/vue';
 import { thumbsDownSharp, thumbsUpSharp, sendOutline } from 'ionicons/icons';
 import axios from 'axios';
 import { onMounted, ref, Ref } from 'vue';
@@ -127,6 +127,7 @@ interface Sources {
 interface Post {
     _id: string,
     userId: string,
+    communityId: string,
     time: Date,
     content: String,
     sources: [Sources],
@@ -134,6 +135,7 @@ interface Post {
     replies: [String],
     isInformative: Boolean,
     isEdited: Boolean,
+    parentPostId: String,
     likes: [String],
     dislikes: [String]
 }
@@ -193,6 +195,7 @@ onMounted(async () => {
                 return [];
             });
         postReplies.value = repliesResponse;
+        console.log("postReplies: ", postReplies.value);
     }
 
     repliesLoading.value = false;

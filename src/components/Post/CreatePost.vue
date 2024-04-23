@@ -227,10 +227,10 @@ const submitPost = async () => {
             console.log('the following error occured when trying to post a new post', error);
         });
     
-    await handleImages(fileElement, postId);
-    await axios.post(`/post/${postId}/images`, {
-        photos: photosSet.value
-    });
+    // await handleImages(fileElement, postId);
+    // await axios.post(`/post/${postId}/images`, {
+    //     photos: photosSet.value
+    // });
 
     sources.value = [];
     sourceTypes.value = [];

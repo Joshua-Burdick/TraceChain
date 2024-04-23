@@ -120,6 +120,7 @@ interface Post {
     time: Date,
     content: String,
     sources: [Sources],
+    photos: [String],
     replies: [String],
     isInformative: Boolean,
     isEdited: Boolean,

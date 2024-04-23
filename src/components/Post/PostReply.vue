@@ -157,7 +157,7 @@ const submitPost = async () => {
     sourceTypes.value = [];
     postContent.value = '';
 
-    router.push({ path: `/profile/${userId}` });
+    router.push({ path: `/profile/${userId}/redirect` });
     emit('closeDialog');
 };
 
