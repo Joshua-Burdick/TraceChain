@@ -175,7 +175,7 @@ onMounted(async () => {
     let image;
 
     for await (const photo of post.value.photos) {
-        image = await axios.get(`http://localhost:1776/api/upload/${encodeURIComponent(photo as string)}`).then((res) => res.data);
+        image = await axios.get(`/upload/${encodeURIComponent(photo as string)}`).then((res) => res.data);
         console.log("image: ", image);
         photosArray.push(image.img);
     }
