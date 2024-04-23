@@ -20,18 +20,12 @@
                       <ion-icon :icon="closeOutline" class="text-2xl"></ion-icon>
                     </button>
                   </div>
-                  <div class="font-bold text-2xl pl-12 mb-10 pt-32">Settings</div>
+                  <div class="font-bold text-2xl pl-12 mb-10 pt-40">Settings</div>
                   <ul class="space-y-10 justify-start ml-7">
                     <li>
                       <button @click="$router.push('/settings'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
                         <ion-icon aria-hidden="true" :icon="personCircleOutline" class="text-lg mr-2"/>
                         Account
-                      </button>
-                    </li>
-                    <li>
-                      <button @click="$router.push('/settings/appearance'); toggleMenu()" class="w-full flex items-center text-lg px-5 py-2">
-                        <ion-icon aria-hidden="true" :icon="sunnyOutline" class="text-lg mr-2"/>
-                        Appearance
                       </button>
                     </li>
                     <li>
@@ -50,9 +44,9 @@
                 </div>
               </div>
             <!--Main-->
-            <div class="flex flex-col items-center p-4">
+            <div class="flex flex-col items-center p-4 bg-neutral-900">
                 <!-- Large Card -->
-                <div class="bg-neutral-900 border-[7px] border-x-stone-700 border-y-stone-800 rounded-lg shadow-xl w-full h-[300px] lg:w-4/5 p-6 mt-6 mb-6">
+                <div class="bg-neutral-800 border-[7px] border-x-stone-700 border-y-stone-800 rounded-lg shadow-xl w-full h-[300px] lg:w-4/5 p-6 mt-6 mb-6 text-white">
                     <h1 style="font-weight: 800; font-size: 1.8em;
                     " class="pt-4 pb-6">Privacy Policy for TraceChain</h1>
                     <p style="color:darkgray" class="pb-6"><b>Last Updated:</b> December 7, 2023</p>
@@ -63,7 +57,7 @@
                 </div>
                 <div class="flex flex-row justify-center gap-4 w-full lg:w-4/5">
                 <!-- Medium Card 1 -->
-                <div class="bg-neutral-900 border-[7px] border-x-stone-700 border-y-stone-800 rounded-lg shadow-xl w-full h-[500px] p-4 divide-y px-15 divide-x-stone-700 mb-6">
+                <div class="bg-neutral-800 border-[7px] border-x-stone-700 border-y-stone-800 rounded-lg shadow-xl w-full h-[500px] p-4 divide-y px-15 divide-x-stone-700 mb-6 text-white">
                     <div>
                     <h1 style="font-weight: 900;" class=" text-2xl pt-8">Information We Collect</h1>
                     <h1 style="font-weight: 700; font-size: 1em; color: darkgray;" class="pt-5">What You Provide to Us:</h1>
@@ -76,7 +70,7 @@
                     your posts, likes, and the citations you provide.</p>
                 </div>
                 <!-- Medium Card 2 -->
-                <div class="bg-neutral-900 border-[7px] border-x-stone-700 border-y-stone-800 rounded-lg shadow-xl w-1/2  p-4 mb-6">
+                <div class="bg-neutral-800 border-[7px] border-x-stone-700 border-y-stone-800 rounded-lg shadow-xl w-1/2  p-4 mb-6 text-white">
                     <h1 class="text-2xl font-black pt-7">Sharing Policy</h1>
                     <h2 style="color: darkgray" class="text-base pt-5 font-bold">We Do Not:</h2>
                     <ul class="list-disc px-8 pt-5">
@@ -89,7 +83,7 @@
                     </ul>
                 </div>
                 </div>
-                <div class="bg-neutral-900 border-[7px] border-x-stone-700 border-y-stone-800 rounded-lg shadow-xl w-full h-[600px] lg:w-4/5 p-6 mb-6">
+                <div class="bg-neutral-800 border-[7px] border-x-stone-700 border-y-stone-800 rounded-lg shadow-xl w-full h-[600px] lg:w-4/5 p-6 mb-6 text-white">
                     <h1 style="font-weight: 800; font-size: 1.8em;
                     " class="pt-3 pb-6">Contact Us</h1>
                     <h1 class="font-base text-lg pb-3">Have Questions or Feedback?</h1>

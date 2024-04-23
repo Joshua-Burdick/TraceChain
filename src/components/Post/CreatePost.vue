@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col w-full h-full align-center">
         <div
-            class="flex flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold">
+            class="flex flex-row w-full h-auto py-7 bg-neutral-900 bg-opacity-70 align-center justify-center text-6xl font-semibold text-white">
             Make a Post
             <ion-icon :icon="pencilSharp" class="ml-2" />
         </div>
@@ -24,13 +24,13 @@
         </div>
 
         <div class="flex flex-col w-full h-auto pt-7 justify-center align-center">
-            <p class="text-4xl font-semibold pb-3">Sources</p>
+            <p class="text-4xl font-semibold pb-3 text-white">Sources</p>
             <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" class="sr-only peer" v-model="isInformative">
                 <div
                     class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
                 </div>
-                <span class="ms-3 text-lg text-gray-900 dark:text-gray-300">Is this post informative?</span>
+                <span class="ms-3 text-lg text-neutral-500">Is this post informative?</span>
             </label>
         </div>
         <div class="flex flex-col lg:w-1/2 h-full justify-center align-center overflow-y-scroll mt-5" :class="{
@@ -68,7 +68,7 @@
                         class="text-4xl hover:text-5xl hover:cursor-pointer text-red-600 ml-2" />
                 </div>
                 <button
-                    class="p-2 mt-2 w-full h-14 rounded-lg hover:bg-gray-700 hover:bg-opacity-70 active:bg-gray-600 active:bg-opacity-70 text-2xl"
+                    class="p-2 mt-2 w-full h-14 rounded-lg hover:bg-gray-700 hover:bg-opacity-70 active:bg-gray-600 active:bg-opacity-70 text-2xl text-white"
                     @click.stop="sourceTypes.push('Article'); sources.push({})">
                     +
                 </button>
