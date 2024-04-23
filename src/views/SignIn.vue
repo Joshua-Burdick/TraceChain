@@ -98,7 +98,10 @@ const loginUser = () => {
     password: password.value,
   };
 
-  axios.post('login', userlogin)
+  console.log("loginUser is actually executing this!! :D ");
+  console.log(userlogin);
+
+  axios.post('/login', userlogin)
     .then((res) => {
       console.log('login reposnse:', res);
       const token = res.data.token;
@@ -136,3 +139,49 @@ const checkAuthentication = () => {
 onMounted(checkAuthentication);
 
 </script>
+
+<style scoped>
+.sign-in-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+  margin-top: 20px;
+}
+
+.showAlert {
+  color: #000;
+}
+
+.login-card {
+  background: radial-gradient(circle, #050505, #0d0d0d, #1a1a1a, #2a2a2a, #3b3b3b);
+color: #fff; 
+border-radius: 15px;
+width: 100%;
+width: 120%; /* Adjust the width as needed */
+max-width: 600px; /* Set a maximum width if necessary */
+margin: auto;
+}
+
+.join-now-button {
+  color: dark;
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+</style>

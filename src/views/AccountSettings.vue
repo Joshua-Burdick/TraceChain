@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-        </ion-content> 
+        </ion-content>
         <ion-alert
       :isOpen="showDeleteAlert"
       @onDidDismiss="onDismissAlert"
@@ -140,7 +140,10 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonContent, IonIcon } from '@ionic/vue';
+import {
+    IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
+    IonList, IonItem, useIonRouter, IonMenu, IonIcon, IonInput
+} from '@ionic/vue';
 import { lockClosedOutline, personCircleOutline, sunnyOutline, logOutOutline, homeOutline, menuOutline, closeOutline } from 'ionicons/icons';
 import { ref, onMounted, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -223,6 +226,14 @@ const updateAccount = async () => {
         });
         await toast.present();
     }
+};
+
+const highlightItem = (event: MouseEvent) => {
+    (event.target as HTMLElement).classList.add('item-highlight');
+};
+
+const unhighlightItem = (event: MouseEvent) => {
+    (event.target as HTMLElement).classList.remove('item-highlight');
 };
 
 const logout = () => {
