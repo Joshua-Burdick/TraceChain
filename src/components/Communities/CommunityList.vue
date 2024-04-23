@@ -9,8 +9,9 @@
         <ion-button color="dark">Create Community</ion-button>
       </router-link>
     </div>      
-      <ion-list v-if="!loading" class="flex flex-col w-3/4 mx-auto" style="background-color: #1d1f20;">
-        <ion-card v-for="community in communities" :key="community._id" class="mb-4" style="border: 2px solid var(--ion-color-danger);">
+    <ion-list v-if="!loading" class="flex flex-col w-3/4 mx-auto" style="background-color: #1d1f20;">
+      <router-link v-for="community in communities" :key="community._id" :to="'/community/' + community._id" style="text-decoration: none;">
+        <ion-card class="mb-4" style="border: 2px solid var(--ion-color-danger);">
           <ion-card-content class="flex flex-row items-center justify-between" style="color: white;">
             <div>
               <h2 style="color: white;">{{ community.name }}</h2>
@@ -19,7 +20,8 @@
             <ion-button @click="joinCommunity(community)" color="danger">Join</ion-button>
           </ion-card-content>
         </ion-card>
-      </ion-list>
+      </router-link>
+    </ion-list>
     
     
   
@@ -48,7 +50,7 @@ const joinCommunity = async (community: Community) => {
     const communityId = community._id;
     console.log('Selected community ID:', communityId);
 
-    const response = await axios.post(`/community/${communityId}/join`);
+    const response = await axios.post(`/community/${communityId}/join/${userId}`);
     console.log(response.data); 
     console.log("Joined community:", community.name);
   } catch (error) {
