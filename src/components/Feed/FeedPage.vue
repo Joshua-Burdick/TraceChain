@@ -57,6 +57,7 @@ interface User {
 interface Post {
     _id: string,
     userId: string,
+    communityId: string,
     time: Date,
     content: String,
     sources: [String],

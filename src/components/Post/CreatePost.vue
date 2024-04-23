@@ -12,6 +12,16 @@
                     class="flex w-full justify-end pt-2 pr-2">{{ postContent.length }}/500</p>
             </div>
         </div>
+
+        <!-- Community dropdown -->
+        <div class="pt-5">
+            <label for="communityDropdown" class="text-2xl font-semibold text-white">Post to a Community:</label>
+                <select id="communityDropdown" v-model="selectedCommunity" class="mt-2 p-2 text-lg rounded-lg bg-gray-800 text-white">
+                    <option value="" disabled>Select a community</option>
+                    <option v-for="community in userCommunities" :key="community._id" :value="community._id">{{ community.name }}</option>
+                </select>
+        </div>
+
         <div class="flex flex-col w-full h-auto pt-7 justify-center align-center">
             <p class="text-4xl font-semibold pb-3">Sources</p>
             <label class="relative inline-flex items-center cursor-pointer">
@@ -75,19 +85,27 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
 import { pencilSharp, trash, alertCircle } from 'ionicons/icons';
-import { ref, Ref, watch } from 'vue';
+import { ref, Ref, watch, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
 import { Article, Book, Video } from '@/types/postTypes';
+import CommunityList from '../Communities/CommunityList.vue';
 
 const router = useRouter();
 
 const userId = sessionStorage.getItem("userId");
+const selectedCommunity: Ref<string> = ref(''); 
 const postContent = ref('');
 const isInformative = ref(true);
 const sourceTypes: Ref<string[]> = ref(['Article']);
 const sources: Ref<SourceContent[]> = ref([{}]);
+const userCommunities = ref<Community[]>([]); 
+
+const updateSelectedCommunity = (event: Event) => {
+    const target = event.target as HTMLSelectElement;
+    selectedCommunity.value = target.value;
+};
 
 interface SourceTypes {
     [key: string]: string[]
@@ -95,6 +113,11 @@ interface SourceTypes {
 
 interface SourceContent {
     [key: string]: string
+}
+
+interface Community {
+    _id: string;
+    name: string;
 }
 
 const sourceFields: SourceTypes = {
@@ -110,6 +133,7 @@ const loading = ref(false);
 const submitPost = async () => {
     loading.value = true;
     error.value = '';
+
 
     const reduced = sources.value
     .map((source, ind) => {
@@ -144,6 +168,7 @@ const submitPost = async () => {
     isInformative: isInformative.value,
     isEdited: false,
     time: Date.now(),
+    communityId: selectedCommunity.value
   };
 
   await axios.post(`/post/${userId}`, post)
@@ -164,5 +189,14 @@ const submitPost = async () => {
         router.push({ path: `/profile/${userId}/redirect` });
     }, 100);
 };
+
+onMounted(async () => {
+    try {
+        const response = await axios.get(`/community/user/${userId}`);
+        userCommunities.value = response.data;
+    } catch (error) {
+        console.error('Error fetching user communities:', error);
+    }
+});
 
 </script>

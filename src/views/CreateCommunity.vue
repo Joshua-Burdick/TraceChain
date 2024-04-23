@@ -55,7 +55,6 @@ const maxNameLength = 50;
 const error = ref('');
 
 const createCommunity = () => {
-console.log('hello');
 
   const community = {
     userId: userId,
@@ -64,11 +63,9 @@ console.log('hello');
     time: Date.now(),
   };
 
-    console.log('are we in');
 
     axios.post(`/community/${userId}`, community)
     .then((res) => {
-      console.log('lets see');
       console.log(res);
       console.log("Submitted: ", community);
       router.push({ path: `/communities` });

@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -21,6 +20,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/post/:id',
     component: () => import('@/views/PostView.vue')
+  },
+  {
+    path: '/community/:id',
+    component: () => import('@/views/CommunityPosts.vue')
   },
   {
     path: '/communities',
@@ -61,7 +64,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/passReset',
     component: () => import('@/views/PasswordReset.vue')
-  },
+  }
 ]
 
 const router = createRouter({

@@ -34,13 +34,14 @@
   const loading: Ref<boolean> = ref(true);
   const communities: Ref<Array<Community>> = ref<Array<Community>>([]);
   
-  onMounted(async () => {
-      const userCommunities = await axios.get(`community/user/${route.params.id}`)
-          .then((res) => communities.value = res.data)
-          .catch((error) => {
-              console.error('Error fetching user communities:', error);
-          });
-      loading.value = false;
-  })
+    onMounted(async () => {
+    try {
+        const userCommunities = await axios.get(`community/user/${route.params.id}`);
+        communities.value = userCommunities.data;
+    } catch (error) {
+        console.error('Error fetching user communities:', error);
+    }
+    loading.value = false;
+    })
   </script>
   
