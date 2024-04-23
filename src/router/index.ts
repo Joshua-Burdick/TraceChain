@@ -46,6 +46,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/AccountSettings.vue')
   },
   {
+    path: '/settings/appearance',
+    component: () => import('@/views/Appearance.vue')
+  },
+  {
     path: '/settings/privacy',
     component: () => import('@/views/Privacy.vue')
   },
@@ -57,6 +61,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/createCommunity',
     component: () => import('@/views/CreateCommunity.vue')
   },
+  {
+    path: '/passReset',
+    component: () => import('@/views/PasswordReset.vue')
+  }
 ]
 
 const router = createRouter({
@@ -65,7 +73,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/createAccount', '/forgotpass'];
+  const publicPages = ['/login', '/createAccount', '/forgotpass', '/passReset'];
   const authRequired = !publicPages.includes(to.path);
   const loggedInToken = sessionStorage.getItem('user_token') || localStorage.getItem('user_token');
   const loggedInId = sessionStorage.getItem('userId') || localStorage.getItem('userId');

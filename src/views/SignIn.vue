@@ -1,11 +1,12 @@
 <template>
-  <ion-page class="bg-neutral-900">
+  <ion-page>
+    <ion-content class="ion-padding">
       <div class="flex flex-col items-center justify-center min-h-[75vh]">
         <div class="flex items-center justify-center mt-5 mr-12">
           <ion-img class="w-32 mt-5" src="/TraceChain.svg" alt="Logo"></ion-img>
-          <span class="text-5xl font-bold -ml-2 text-white">TraceChain</span>
+          <span class="text-5xl font-bold -ml-2">TraceChain</span>
         </div>
-        <ion-card class="bg-neutral-900 bg-gradient-to-br from-neutral-900 to-neutral-700 text-white rounded-xl w-full max-w-lg m-auto p-5">
+        <ion-card class="bg-gradient-to-br from-neutral-900 to-neutral-700 text-white rounded-xl w-full max-w-lg m-auto p-5">
           <ion-card-header class="flex flex-col items-center justify-center mb-2 mt-2">
             <ion-card-title class="text-2xl text-white">Sign In</ion-card-title>
           </ion-card-header>
@@ -55,6 +56,7 @@
         :message="alertMessage"
         :buttons="[{ text: 'OK', handler: () => showAlert = false }]"
       />
+    </ion-content>
   </ion-page>
 </template>
 
