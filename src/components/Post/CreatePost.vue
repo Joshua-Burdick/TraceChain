@@ -156,7 +156,7 @@ const handleImages = async (fileElement: HTMLInputElement | null, postId: string
         formData.append('file', file);
         
         try {
-            const response = await axios.post(`http://localhost:1776/api/upload/${postId}`, formData, {
+            const response = await axios.post(`/upload/${postId}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -221,7 +221,7 @@ const submitPost = async () => {
       communityId: selectedCommunity.value
     };
 
-    const postId = await axios.post(`http://localhost:1776/api/post/${userId}`, post)
+    const postId = await axios.post(`/post/${userId}`, post)
         .then((res) => res.data)
         .catch((error) => {
             console.log('the following error occured when trying to post a new post', error);
