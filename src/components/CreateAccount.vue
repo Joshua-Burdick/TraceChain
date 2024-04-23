@@ -1,11 +1,12 @@
 <template>
-  <ion-page class="w-full bg-neutral-900">
+  <ion-page class="w-full">
+    <ion-content>
       <div class="flex flex-col items-center justify-center">
         <div class="flex items-center justify-center mt-5 mr-12">
           <ion-img class="w-32 mt-5" src="/TraceChain.svg" alt="Logo"></ion-img> <!-- width adjusted with Tailwind -->
-          <span class="text-5xl font-bold -ml-2 text-white">TraceChain</span>
+          <span class="text-5xl font-bold -ml-2">TraceChain</span>
         </div>
-        <ion-card class="bg-neutral-900 bg-gradient-to-br from-neutral-900 to-neutral-700 text-white rounded-xl w-full max-w-lg m-auto p-5"> <!-- Tailwind gradient background -->
+        <ion-card class="bg-gradient-to-br from-neutral-900 to-neutral-700 text-white rounded-xl w-full max-w-lg m-auto p-5"> <!-- Tailwind gradient background -->
           <ion-card-header class="flex flex-col items-center justify-center my-4">
             <ion-card-title class="text-2xl text-white font-bold">Register</ion-card-title>
           </ion-card-header>
@@ -60,6 +61,7 @@
           </ion-card-content>
         </ion-card>
       </div>
+    </ion-content>
   </ion-page>
 </template>
 

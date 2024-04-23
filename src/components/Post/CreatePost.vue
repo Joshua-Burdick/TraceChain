@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col w-full h-full align-center">
-        <div class="flex text-white flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold">
+        <div class="flex flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold">
             Make a Post
             <ion-icon :icon="pencilSharp" class="ml-2" />
         </div>
@@ -12,12 +12,22 @@
                     class="flex w-full justify-end pt-2 pr-2">{{ postContent.length }}/500</p>
             </div>
         </div>
+
+        <!-- Community dropdown -->
+        <div class="pt-5">
+            <label for="communityDropdown" class="text-2xl font-semibold text-white">Post to a Community:</label>
+                <select id="communityDropdown" v-model="selectedCommunity" class="mt-2 p-2 text-lg rounded-lg bg-gray-800 text-white">
+                    <option value="" disabled>Select a community</option>
+                    <option v-for="community in userCommunities" :key="community._id" :value="community._id">{{ community.name }}</option>
+                </select>
+        </div>
+
         <div class="flex flex-col w-full h-auto pt-7 justify-center align-center">
-            <p class="text-4xl font-semibold pb-3 text-white">Sources</p>
+            <p class="text-4xl font-semibold pb-3">Sources</p>
             <label class="relative inline-flex items-center cursor-pointer">
                 <input type="checkbox" value="" class="sr-only peer" v-model="isInformative">
                 <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                <span class="ms-3 text-lg text-white dark:text-gray-300">Is this post informative?</span>
+                <span class="ms-3 text-lg text-gray-900 dark:text-gray-300">Is this post informative?</span>
             </label>
         </div>
         <div
@@ -52,7 +62,7 @@
                         class="text-4xl hover:text-5xl hover:cursor-pointer text-red-600 ml-2" />
                 </div>
                 <button
-                    class="p-2 mt-2 w-full text-white h-14 rounded-lg hover:bg-gray-700 hover:bg-opacity-70 active:bg-gray-600 active:bg-opacity-70 text-2xl"
+                    class="p-2 mt-2 w-full h-14 rounded-lg hover:bg-gray-700 hover:bg-opacity-70 active:bg-gray-600 active:bg-opacity-70 text-2xl"
                     @click.stop="sourceTypes.push('Article'); sources.push({})"
                 >
                     +
@@ -75,19 +85,27 @@
 <script setup lang="ts">
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonToggle, IonIcon } from '@ionic/vue';
 import { pencilSharp, trash, alertCircle } from 'ionicons/icons';
-import { ref, Ref, watch } from 'vue';
+import { ref, Ref, watch, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
 import { Article, Book, Video } from '@/types/postTypes';
+import CommunityList from '../Communities/CommunityList.vue';
 
 const router = useRouter();
 
 const userId = sessionStorage.getItem("userId");
+const selectedCommunity: Ref<string> = ref(''); 
 const postContent = ref('');
 const isInformative = ref(true);
 const sourceTypes: Ref<string[]> = ref(['Article']);
 const sources: Ref<SourceContent[]> = ref([{}]);
+const userCommunities = ref<Community[]>([]); 
+
+const updateSelectedCommunity = (event: Event) => {
+    const target = event.target as HTMLSelectElement;
+    selectedCommunity.value = target.value;
+};
 
 interface SourceTypes {
     [key: string]: string[]
@@ -95,6 +113,11 @@ interface SourceTypes {
 
 interface SourceContent {
     [key: string]: string
+}
+
+interface Community {
+    _id: string;
+    name: string;
 }
 
 const sourceFields: SourceTypes = {
@@ -110,6 +133,7 @@ const loading = ref(false);
 const submitPost = async () => {
     loading.value = true;
     error.value = '';
+
 
     const reduced = sources.value
     .map((source, ind) => {
@@ -144,6 +168,7 @@ const submitPost = async () => {
     isInformative: isInformative.value,
     isEdited: false,
     time: Date.now(),
+    communityId: selectedCommunity.value
   };
 
   await axios.post(`/post/${userId}`, post)
@@ -164,5 +189,14 @@ const submitPost = async () => {
         router.push({ path: `/profile/${userId}/redirect` });
     }, 100);
 };
+
+onMounted(async () => {
+    try {
+        const response = await axios.get(`/community/user/${userId}`);
+        userCommunities.value = response.data;
+    } catch (error) {
+        console.error('Error fetching user communities:', error);
+    }
+});
 
 </script>
