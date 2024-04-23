@@ -5,17 +5,17 @@
     </div>
     <div style="border-bottom: 2px solid rgba(255, 255, 255, 0.8);"></div> 
      <div class="mt-4 px-4 self-end"> 
-      <router-link to="/createCommunity" class="create-community-button" style="color: white;">
-        <ion-button color="dark">Create Community</ion-button>
+      <router-link to="/createCommunity" class="create-community-button">
+        <button class="bg-white rounded p-3 font-bold">Create Community</button>
       </router-link>
     </div>      
     <ion-list v-if="!loading" class="flex flex-col w-3/4 mx-auto" style="background-color: #1d1f20;">
       <router-link v-for="community in communities" :key="community._id" :to="'/community/' + community._id" style="text-decoration: none;">
         <ion-card class="mb-4" style="border: 2px solid var(--ion-color-danger);">
-          <ion-card-content class="flex flex-row items-center justify-between" style="color: white;">
+          <ion-card-content class="flex flex-row items-center justify-between bg-stone-800">
             <div>
-              <h2 style="color: white;">{{ community.name }}</h2>
-              <p style="color: white;">{{ community.description }}</p>
+              <h2 class="text-white">{{ community.name }}</h2>
+              <p class="text-white">{{ community.description }}</p>
             </div>
             <ion-button @click="joinCommunity(community)" color="danger">Join</ion-button>
           </ion-card-content>

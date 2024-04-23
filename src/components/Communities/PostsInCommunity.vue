@@ -5,7 +5,7 @@
     </div>
     <div style="border-bottom: 2px solid rgba(255, 255, 255, 0.8);"></div> 
     <router-link to="/communities" class="leave-community-button" style="color: white;">
-        <ion-button @click="leaveCommunity" color="dark">Leave Community</ion-button>
+        <button class="bg-red-800 rounded p-3 mt-10 font-bold absolute right-0 mr-5" @click="leaveCommunity">Leave Community</button>
       </router-link>
     <div class="flex flex-row h-full w-full justify-center align-center">
         <ion-list v-if="!loading" class="flex flex-col w-1/2 bg-[#1d1f20]">
@@ -14,7 +14,7 @@
                     {{ 'This Community has no posts yet!' }}
                 </h1>
             </div>
-            <li v-else class="flex w-full mb-5" v-for="post in posts" :key="post._id">
+            <li v-else class="flex w-full mb-5 ml-10" v-for="post in posts" :key="post._id">
                 <PostWidget :post="post" class="flex w-full"/>
             </li>
         </ion-list>

@@ -1,6 +1,6 @@
 <template>
-    <div class="flex flex-col w-full h-full align-center">
-        <div class="flex flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold">
+    <div class="flex flex-col w-full h-full align-center bg-neutral-900">
+        <div class="flex flex-row w-full h-auto py-7 bg-stone-800 bg-opacity-70 align-center justify-center text-6xl font-semibold text-white">
             Create your own Community
             <ion-icon :icon="peopleCircleSharp" class="ml-2" />
         </div>
@@ -14,7 +14,7 @@
         </div>
         <div class="flex flex-col align-center pt-15 w-full h-full">
             <div class="px-2 py-2 w-3/4 rounded-lg bg-zinc-800 h-full shadow-md shadow-black">
-                <textarea class="focus:outline-none text-white text-lg w-full h-full resize-none" :maxlength="maxLength"
+                <textarea class="focus:outline-none text-white text-lg w-full h-full resize-none text-white" :maxlength="maxLength"
                     v-model="communityDescription" placeholder="Provide a description of your community..."></textarea>
                 <p :class="communityDescription.length == maxLength ? 'text-red' : 'text-white'"
                     class="flex w-full justify-end pt-2 pr-2">{{ communityDescription.length }}/500</p>
